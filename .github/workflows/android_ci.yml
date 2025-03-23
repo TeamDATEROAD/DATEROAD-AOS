@@ -49,13 +49,13 @@ jobs:
       - name: Access local properties
         env:
           HFM_BASE_URL: ${{ secrets.BASE_URL }}
-          IO_SENTRY_TOKEN: ${{ secrets.IO_SENTRY_DSN }}
+#          IO_SENTRY_TOKEN: ${{ secrets.IO_SENTRY_DSN }}
           KAKAO_NATIVE_APP_KEY_MANIFEST: ${{ secrets.KAKAO_NATIVE_APP_KEY }}
           KAKAO_NATIVE_APP_KEY: ${{ secrets.KAKAO_NATIVE_APP_KEY }}
           AMPLITUDE_API_KEY: ${{ secrets.AMPLITUDE_API_KEY }}
         run: |
           echo "dev.base.url=\"$BASE_URL\"" >> local.properties
-          echo "io.sentry.dsn=\"$IO_SENTRY_DSN\"" >> local.properties
+#          echo "io.sentry.dsn=\"$IO_SENTRY_DSN\"" >> local.properties
           echo "kakao.native.app.key.manifest=\"$KAKAO_NATIVE_APP_KEY_MANIFEST\"" >> local.properties
           echo "kakao.native.app.key=\"$KAKAO_NATIVE_APP_KEY\"" >> local.properties
           echo "amplitude.dev.api.key=\"AMPLITUDE_API_KEY\"" >> local.properties
@@ -76,22 +76,22 @@ jobs:
       - name: Build with Gradle
         run: ./gradlew build -PcompileSdkVersion=34
 
-      # - name: Discord Notify - Success
-      #   if: ${{ success() }}
-      #   uses: sarisia/actions-status-discord@v1
-      #   with:
-      #     title: ✅ PR Success ✅
-      #     webhook: ${{ secrets.DISCORD_WEBHOOK_URL }}
-      #     color: D3EB77
-      #     username: DATEROAD-ANDROID 🍫
-      #     content: PR이 완료되었습니다! 👩‍❤️‍👨
-
-      # - name: Discord Notify - Failure
-      #   if: ${{ failure() }}
-      #   uses: sarisia/actions-status-discord@v1
-      #   with:
-      #     title: ❌ PR Failed ❌
-      #     webhook: ${{ secrets.DISCORD_WEBHOOK_URL }}
-      #     color: FF0000
-      #     username: DATEROAD-ANDROID 🍫
-      #     content: 에러를 확인해 주세요 🫨
+#      - name: Discord Notify - Success
+#        if: ${{ success() }}
+#        uses: sarisia/actions-status-discord@v1
+#        with:
+#          title: ✅ PR Success ✅
+#          webhook: ${{ secrets.DISCORD_WEBHOOK_URL }}
+#          color: D3EB77
+#          username: DATEROAD-ANDROID 🍫
+#          content: PR이 완료되었습니다! 👩‍❤️‍👨
+#
+#      - name: Discord Notify - Failure
+#        if: ${{ failure() }}
+#        uses: sarisia/actions-status-discord@v1
+#        with:
+#          title: ❌ PR Failed ❌
+#          webhook: ${{ secrets.DISCORD_WEBHOOK_URL }}
+#          color: FF0000
+#          username: DATEROAD-ANDROID 🍫
+#          content: 에러를 확인해 주세요 🫨
