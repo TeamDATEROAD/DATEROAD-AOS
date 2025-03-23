@@ -7,3 +7,6 @@ annotation class DateRoad
 
 @Qualifier
 annotation class Auth
+
+@Qualifier
+annotation class PlaceSearch

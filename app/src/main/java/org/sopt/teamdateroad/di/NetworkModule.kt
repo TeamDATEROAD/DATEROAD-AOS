@@ -5,8 +5,6 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import java.util.concurrent.TimeUnit
-import javax.inject.Singleton
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.json.Json
 import okhttp3.Interceptor
@@ -18,7 +16,11 @@ import org.sopt.teamdateroad.BuildConfig.DEBUG
 import org.sopt.teamdateroad.data.dataremote.interceptor.AuthInterceptor
 import org.sopt.teamdateroad.di.qualifier.Auth
 import org.sopt.teamdateroad.di.qualifier.DateRoad
+import org.sopt.teamdateroad.di.qualifier.PlaceSearch
 import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
+import java.util.concurrent.TimeUnit
+import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -74,5 +76,31 @@ object NetworkModule {
             .addConverterFactory(
                 json.asConverterFactory(requireNotNull("application/json".toMediaTypeOrNull()))
             )
+            .build()
+
+    @Provides
+    @PlaceSearch
+    @Singleton
+    fun providesPlaceSearchAuthInterceptor(): Interceptor = Interceptor { chain ->
+        val request = chain.request().newBuilder()
+            .addHeader("Authorization", "KakaoAK ${BuildConfig.KAKAO_REST_API_KEY}")
+            .build()
+        chain.proceed(request)
+    }
+
+    @Provides
+    @PlaceSearch
+    @Singleton
+    fun providesPlaceSearchRetrofit(
+        @PlaceSearch interceptor: Interceptor,
+    ): Retrofit =
+        Retrofit.Builder()
+            .baseUrl(BuildConfig.KAKAO_BASE_URL)
+            .client(
+                OkHttpClient.Builder()
+                    .addInterceptor(interceptor)
+                    .build()
+            )
+            .addConverterFactory(GsonConverterFactory.create())
             .build()
 }

@@ -32,6 +32,7 @@ android {
         }
 
         buildConfigField("String", "KAKAO_NATIVE_APP_KEY", properties["kakao.native.app.key"].toString())
+        buildConfigField("String", "KAKAO_REST_API_KEY", properties["kakao.rest.api.key"].toString())
 
         manifestPlaceholders["KAKAO_NATIVE_APP_KEY_MANIFEST"] = properties["kakao.native.app.key.manifest"] as String
     }
@@ -40,6 +41,7 @@ android {
         debug {
             isMinifyEnabled = false
             buildConfigField("String", "BASE_URL", properties["dev.base.url"].toString())
+            buildConfigField("String", "KAKAO_BASE_URL", properties["kakao.base.url"].toString())
             buildConfigField("String", "AMPLITUDE_API_KEY", properties["amplitude.dev.api.key"].toString())
         }
 
