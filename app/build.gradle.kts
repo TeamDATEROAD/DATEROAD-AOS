@@ -9,7 +9,6 @@ plugins {
     alias(libs.plugins.google.firebase.crashlytics)
     alias(libs.plugins.dagger.hilt)
     alias(libs.plugins.ktlint)
-    alias(libs.plugins.sentry)
 }
 
 val properties = Properties().apply {
