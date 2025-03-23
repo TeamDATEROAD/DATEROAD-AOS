@@ -14,10 +14,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v3
 
       - name: Gradle cache
-        uses: actions/cache@v4
+        uses: actions/cache@v3
         with:
           path: |
             ~/.gradle/caches
@@ -27,7 +27,7 @@ jobs:
             ${{ runner.os }}-gradle-
 
       - name: set up JDK 17
-        uses: actions/setup-java@v4
+        uses: actions/setup-java@v3
         with:
           java-version: 17
           distribution: 'temurin'
@@ -49,22 +49,14 @@ jobs:
       - name: Access local properties
         env:
           HFM_BASE_URL: ${{ secrets.BASE_URL }}
-          KAKAO_BASE_URL: ${{ secrets.KAKAO_BASE_URL }}
           KAKAO_NATIVE_APP_KEY_MANIFEST: ${{ secrets.KAKAO_NATIVE_APP_KEY }}
           KAKAO_NATIVE_APP_KEY: ${{ secrets.KAKAO_NATIVE_APP_KEY }}
-          KAKAO_REST_API_KEY: ${{ secrets.KAKAO_REST_API_KEY }}
           AMPLITUDE_API_KEY: ${{ secrets.AMPLITUDE_API_KEY }}
-          GOOGLE_ADS_API_ID: ${{ secrets.GOOGLE_ADS_API_ID }}
-          GOOGLE_ADS_API_ID_MANIFEST: ${{ secrets.GOOGLE_ADS_API_ID }}
         run: |
           echo "dev.base.url=\"$BASE_URL\"" >> local.properties
-          echo "kakao.base.url=\"$KAKAO_BASE_URL\"" >> local.properties
           echo "kakao.native.app.key.manifest=\"$KAKAO_NATIVE_APP_KEY_MANIFEST\"" >> local.properties
           echo "kakao.native.app.key=\"$KAKAO_NATIVE_APP_KEY\"" >> local.properties
-          echo "kakao.rest.api.key=\"$KAKAO_REST_API_KEY\"" >> local.properties
           echo "amplitude.dev.api.key=\"$AMPLITUDE_API_KEY\"" >> local.properties
-          echo "google.ads.api.id=\"GOOGLE_ADS_API_ID\"" >> local.properties
-          echo "google.ads.api.id.manifest=\"GOOGLE_ADS_API_ID_MANIFEST\"" >> local.properties
 
       - name: Lint Check
         run: ./gradlew ktlintCheck -PcompileSdkVersion=34
