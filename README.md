@@ -10,23 +10,9 @@
 
 ## 💟 *****Contributors*****
 
-|                                       [🐸 배지현 Lead](https://github.com/jihyunniiii)                                       |                                           [신민석](https://github.com/t1nm1ksun)                                            |                                                  [이현진](https://github.com/2hyunjinn)                                                  |
-|:-------------------------------------------------------------------------------------------------------------------------:|:------------------------------------------------------------------------------------------------------------------------:|:------------------------------------------------------------------------------------------------------------------------------------:|
-| <img src="https://github.com/user-attachments/assets/b5f2b36e-4875-4de0-b1b2-b5f36ffef093" width="200px"  height="320dp"> | <img src="https://github.com/user-attachments/assets/31310105-159e-4447-ab09-cd34970151f1" width="200px" height="320dp"> | <img src="https://github.com/user-attachments/assets/fd1f8c1d-209b-48a6-9d40-01b5465a420e" width="200px" height="320dp"> |
-|                         `포인트내역`<br>`열람한 코스`<br>`코스둘러보기`<br>`코스등록하기+일정등록하기`<br>`마이페이지`<br>`지난 데이트`                         |                   `스플래시`<br>`로그인/온보딩`<br>`프로필 등록하기`<br>`코스상세 + 관리자 아카이빙`<br>`포인트 제도 소개`<br>`프로필 수정하기`                    |                                                            `홈`<br>`데이트 일정`<br>`데이트 일정 상세`<br>`내가 등록한 코스`<br>`내가 열람한 코스`<br>`카카오톡 공유하기`                                                             
-
-## 📷 *****ScreenShot*****
-| <img width="250" src="https://github.com/user-attachments/assets/8f4db261-f782-438d-bf1f-54e0c1b0c444"/> | <img width="250" src="https://github.com/user-attachments/assets/eecea233-7b33-4299-84c2-004f4889d690"/> | <img width="250" src="https://github.com/user-attachments/assets/6d4ca8d4-f34e-4c7f-bcba-6ca4e9a344d7"/> |
-|:-------------------------:|:-------------------------:|:-------------------------:|
-|         `로그인/온보딩`         |        `프로필 등록하기`         |            `홈`            |                 
-| <img width="250" src="https://github.com/user-attachments/assets/b607ac13-63eb-4c84-a6c7-0da7318a693e"/> | <img width="250" src="https://github.com/user-attachments/assets/e65d7d0e-fcf7-4e55-8206-cd2f5c82c107"/> | <img width="250" src="https://github.com/user-attachments/assets/47338fa1-9835-487d-aa32-c455ec933658">  
-|         `코스 둘러보기`         |         `데이트 일정`          |         `지난 데이트`          |
-| <img width="250" src="https://github.com/user-attachments/assets/a3a219ad-c7ea-421b-bb1f-a3c2725dfdfd"/> | <img width="250" src="https://github.com/user-attachments/assets/d8081bb6-7736-4bde-b153-349da99ddb77"/> | <img width="250" src="https://github.com/user-attachments/assets/5b61849c-71fa-453c-82ee-49f2256a9b65">  
-|         `코스 등록하기`         |         `일정 등록하기`         |         `열람한 코스`          |
-| <img width="250" src="https://github.com/user-attachments/assets/b8ca6858-8b21-4bf7-9523-939007bd04a3"/> | <img width="250" src="https://github.com/user-attachments/assets/54c3bdc9-74c3-41be-89cd-2d8ddd35d7bb"/> | <img width="250" src="https://github.com/user-attachments/assets/c2c0ce43-8e76-4eb3-b6af-7e677c80c610">  
-|          `마이페이지`          |         `프로필 수정`          |         `포인트 내역`          |
-| <img width="250" src="https://github.com/user-attachments/assets/ed231f24-c720-4662-a8fc-0e8fe4f2c797"/> | <img width="250" src="https://github.com/user-attachments/assets/3547a872-70b7-435e-9087-56620f1405b0"/> | <img width="250" src="https://github.com/user-attachments/assets/6041b4a9-999e-4370-acca-b86a08fca7c8">  
-|          `데이트 일정 상세 - 무료 열람 기회`          |         `데이트 일정 상세 - 포인트 사용`          |         `데이트 일정 상세 - 내가 쓴 글`          |
+| <img alt="image" src="https://github.com/woowacourse-study/2024-GaegSa5-study/assets/85734140/80896a2a-d417-498b-81cc-9e2c239f37ee" width="100" height="100">  | <img alt="image" src="https://github.com/chaehyuns/GaegSa5/assets/80222352/aea5197f-8651-45a4-8bec-1e28baeae41c" width="100" height="100"> |  
+|---------------------------------------------------------------------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| 누누([@jinuemong](https://github.com/jinuemong))                                                                                                                | 채드([@dpcks0509](https://github.com/dpcks0509))  | 
 
 ## 👩🏻‍💻 ***𝙏𝙚𝙘𝙝 𝙎𝙩𝙖𝙘𝙠***
 
