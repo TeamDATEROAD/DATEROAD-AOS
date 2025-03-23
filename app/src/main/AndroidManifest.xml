@@ -18,10 +18,6 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
 
-        <!-- Admob -->
-        <meta-data
-            android:name="com.google.android.gms.ads.APPLICATION_ID"
-            android:value="${GOOGLE_ADS_API_ID_MANIFEST}"/>
         <!-- Kakao SDK configuration -->
         <meta-data
             android:name="com.kakao.sdk.AppKey"
