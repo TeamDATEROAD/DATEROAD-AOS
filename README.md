@@ -16,20 +16,20 @@
 
 ## 👩🏻‍💻 ***𝙏𝙚𝙘𝙝 𝙎𝙩𝙖𝙘𝙠***
 
-| Title                   | Content                                                                       |
-|-------------------------|-------------------------------------------------------------------------------|
-| Architecture            | Clean Architecture, MVI, Single Activity Architecture                         |
-| Design Pattern          | Repository Pattern, Delegation Pattern                                        |
-| UI                      | Jetpack Compose                                                               |
-| Jetpack Components      | encryptedsharedpreferences, Lifecycle, ViewModel, Navigation                  |
-| Dependency Injection    | Hilt                                                                          |
-| Network                 | Retrofit, OkHttp, MultiPart                                                   |
-| Asynchronous Processing | Coroutine                                                                     |
-| Third Party Library     | Coil, Firebase, Timber, kotlinSerialization, sentry, Amplitude, Lottie, Kakao |
-| Strategy                | Git Flow                                                                      |
-| CI                      | GitHub Action(KtLint, Complie Check)                                          |
-| CD                      | GitHub Action                                                                 |
-| Other Tool              | Slack, Notion, Figma, Postman, Discord                                        |
+| Title                   | Content                                                                     |
+|-------------------------|-----------------------------------------------------------------------------|
+| Architecture            | Clean Architecture, MVI, Single Activity Architecture                       |
+| Design Pattern          | Repository Pattern, Delegation Pattern                                      |
+| UI                      | Jetpack Compose                                                             |
+| Jetpack Components      | encryptedsharedpreferences, Lifecycle, ViewModel, Navigation                |
+| Dependency Injection    | Hilt                                                                        |
+| Network                 | Retrofit, OkHttp, MultiPart                                                 |
+| Asynchronous Processing | Coroutine                                                                   |
+| Third Party Library     | Coil, Firebase, Timber, kotlinSerialization, Amplitude, Lottie, Kakao |
+| Strategy                | Git Flow                                                                    |
+| CI                      | GitHub Action(KtLint, Complie Check)                                        |
+| CD                      | GitHub Action                                                               |
+| Other Tool              | Slack, Notion, Figma, Postman, Discord                                      |
 
 <br>
 

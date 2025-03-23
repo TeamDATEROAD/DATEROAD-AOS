@@ -16,5 +16,4 @@ plugins {
     alias(libs.plugins.google.firebase.crashlytics) apply false
     alias(libs.plugins.dagger.hilt) apply false
     alias(libs.plugins.ktlint) apply false
-    alias(libs.plugins.sentry) apply false
 }
