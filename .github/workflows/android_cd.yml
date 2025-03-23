@@ -57,7 +57,7 @@ jobs:
 #          echo "io.sentry.dsn=\"$IO_SENTRY_DSN\"" >> local.properties
           echo "kakao.native.app.key.manifest=\"$KAKAO_NATIVE_APP_KEY_MANIFEST\"" >> local.properties
           echo "kakao.native.app.key=\"$KAKAO_NATIVE_APP_KEY\"" >> local.properties
-          echo "amplitude.dev.api.key=\"AMPLITUDE_API_KEY\"" >> local.properties
+          echo "amplitude.dev.api.key=\"$AMPLITUDE_API_KEY\"" >> local.properties
 
       # - name: Access sentry properties
       #   env:
