@@ -34,7 +34,6 @@ android {
 
         buildConfigField("String", "KAKAO_NATIVE_APP_KEY", properties["kakao.native.app.key"].toString())
 
-        manifestPlaceholders["IO_SENTRY_DSN"] = properties["io.sentry.dsn"] as String
         manifestPlaceholders["KAKAO_NATIVE_APP_KEY_MANIFEST"] = properties["kakao.native.app.key.manifest"] as String
     }
 
