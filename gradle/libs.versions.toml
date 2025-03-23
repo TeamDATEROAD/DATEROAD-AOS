@@ -47,7 +47,6 @@ hiltNavigationCompose = "1.2.0"
 ktlint = "11.5.1"
 coil = "2.6.0"
 timber = "5.0.1"
-sentry = "4.1.1"
 kakao = "2.20.3"
 amplitude = "1.+"
 lottieCompose = "6.1.0"
@@ -121,7 +120,6 @@ google-services = { id = "com.google.gms.google-services", version.ref = "google
 google-firebase-crashlytics = { id = "com.google.firebase.crashlytics", version.ref = "firebaseCrashlytics" }
 dagger-hilt = { id = "com.google.dagger.hilt.android", version.ref = "daggerHilt" }
 ktlint = { id = "org.jlleitschuh.gradle.ktlint", version.ref = "ktlint" }
-sentry = { id = "io.sentry.android.gradle", version.ref = "sentry" }
 
 [bundles]
 androidx = [
