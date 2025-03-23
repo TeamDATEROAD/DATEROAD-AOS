@@ -9,6 +9,7 @@ plugins {
     alias(libs.plugins.google.firebase.crashlytics)
     alias(libs.plugins.dagger.hilt)
     alias(libs.plugins.ktlint)
+    alias(libs.plugins.sentry)
 }
 
 val properties = Properties().apply {
@@ -34,10 +35,8 @@ android {
         }
 
         buildConfigField("String", "KAKAO_NATIVE_APP_KEY", properties["kakao.native.app.key"].toString())
-        buildConfigField("String", "KAKAO_REST_API_KEY", properties["kakao.rest.api.key"].toString())
-        buildConfigField("String", "GOOGLE_ADS_API_ID", properties["google.ads.api.id"].toString())
+
         manifestPlaceholders["KAKAO_NATIVE_APP_KEY_MANIFEST"] = properties["kakao.native.app.key.manifest"] as String
-        manifestPlaceholders["GOOGLE_ADS_API_ID_MANIFEST"] = properties["google.ads.api.id.manifest"] as String
     }
     signingConfigs {
         if (keystoreFile.exists()) {
@@ -54,7 +53,6 @@ android {
         debug {
             isMinifyEnabled = false
             buildConfigField("String", "BASE_URL", properties["dev.base.url"].toString())
-            buildConfigField("String", "KAKAO_BASE_URL", properties["kakao.base.url"].toString())
             buildConfigField("String", "AMPLITUDE_API_KEY", properties["amplitude.dev.api.key"].toString())
         }
 
@@ -65,7 +63,6 @@ android {
             isMinifyEnabled = true
             isShrinkResources = true
             buildConfigField("String", "BASE_URL", properties["prod.base.url"].toString())
-            buildConfigField("String", "KAKAO_BASE_URL", properties["kakao.base.url"].toString())
             buildConfigField("String", "AMPLITUDE_API_KEY", properties["amplitude.prod.api.key"].toString())
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
@@ -113,7 +110,6 @@ dependencies {
     implementation(platform(libs.google.firebase.bom))
     implementation(libs.google.firebase.crashlytics)
     implementation(libs.firebase.crashlytics.buildtools)
-    implementation(libs.google.gms.ads)
 
     // Network
     implementation(platform(libs.okhttp.bom))
@@ -145,9 +141,6 @@ dependencies {
 
     // Lottie
     implementation(libs.lottie.compose)
-
-    // BottomSheet
-    implementation(libs.bottom.sheet)
 }
 
 ktlint {
