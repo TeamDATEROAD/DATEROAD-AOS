@@ -12,7 +12,7 @@
 
 | <img alt="image" src="https://github.com/woowacourse-study/2024-GaegSa5-study/assets/85734140/80896a2a-d417-498b-81cc-9e2c239f37ee" width="100" height="100">  | <img alt="image" src="https://github.com/chaehyuns/GaegSa5/assets/80222352/aea5197f-8651-45a4-8bec-1e28baeae41c" width="100" height="100"> |  
 |---------------------------------------------------------------------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| 누누([@jinuemong](https://github.com/jinuemong))                                                                                                                | 채드([@dpcks0509](https://github.com/dpcks0509))  | 
+| 김진우([@jinuemong](https://github.com/jinuemong))                                                                                                                | 박예찬([@dpcks0509](https://github.com/dpcks0509))  | 
 
 ## 👩🏻‍💻 ***𝙏𝙚𝙘𝙝 𝙎𝙩𝙖𝙘𝙠***
 
