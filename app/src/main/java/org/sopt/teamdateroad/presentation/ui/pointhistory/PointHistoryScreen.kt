@@ -27,6 +27,7 @@ import org.sopt.teamdateroad.domain.model.PointHistory
 import org.sopt.teamdateroad.domain.model.UserPoint
 import org.sopt.teamdateroad.presentation.type.EmptyViewType
 import org.sopt.teamdateroad.presentation.type.PointHistoryTabType
+import org.sopt.teamdateroad.presentation.ui.component.bottomsheet.DateRoadPointBottomSheet
 import org.sopt.teamdateroad.presentation.ui.component.tabbar.DateRoadTabBar
 import org.sopt.teamdateroad.presentation.ui.component.tabbar.DateRoadTabTitle
 import org.sopt.teamdateroad.presentation.ui.component.topbar.DateRoadBasicTopBar
@@ -78,7 +79,8 @@ fun PointHistoryRoute(
                     )
                 },
                 onTopBarIconClicked = { viewModel.setSideEffect(PointHistoryContract.PointHistorySideEffect.PopBackStack) },
-                onClickCollectPoint = { viewModel.setEvent(PointHistoryContract.PointHistoryEvent.OnPointCollectBottomSheetClick)}
+                onClickCollectPoint = { viewModel.setEvent(PointHistoryContract.PointHistoryEvent.OnPointCollectBottomSheetClick)},
+                onDisMissCollectPoint = {viewModel.setEvent(PointHistoryContract.PointHistoryEvent.OnPointCollectBottomSheetDismiss)}
             )
         }
 
@@ -93,6 +95,7 @@ fun PointHistoryScreen(
     onTabBarClicked: (PointHistoryTabType) -> Unit,
     onTopBarIconClicked: () -> Unit,
     onClickCollectPoint: () -> Unit,
+    onDisMissCollectPoint : () -> Unit,
 ) {
     Column(
         modifier = Modifier
@@ -159,7 +162,15 @@ fun PointHistoryScreen(
         }
     }
 
-
+    DateRoadPointBottomSheet(
+        isBottomSheetOpen = pointHistoryUiState.isPointCollectBottomSheetOpen,
+        onClick = {
+            onDisMissCollectPoint()
+        },
+        onDismissRequest = {
+            onDisMissCollectPoint()
+        }
+    )
 }
 
 @Preview
@@ -183,6 +194,7 @@ fun PointHistoryPreview() {
             onTabBarClicked = {},
             onTopBarIconClicked = {},
             onClickCollectPoint = {},
+            onDisMissCollectPoint = {},
         )
     }
 }

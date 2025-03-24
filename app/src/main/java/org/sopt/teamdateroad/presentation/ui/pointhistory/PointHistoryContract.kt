@@ -26,5 +26,6 @@ class PointHistoryContract {
         data class FetchUserPoint(val loadState: LoadState, val userPoint: UserPoint) : PointHistoryEvent()
         data class OnTabBarClicked(val pointHistoryTabType: PointHistoryTabType) : PointHistoryEvent()
         data object OnPointCollectBottomSheetClick : PointHistoryEvent()
+        data object OnPointCollectBottomSheetDismiss : PointHistoryEvent()
     }
 }

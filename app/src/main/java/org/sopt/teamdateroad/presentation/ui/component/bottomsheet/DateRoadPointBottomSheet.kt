@@ -2,6 +2,7 @@ package org.sopt.teamdateroad.presentation.ui.component.bottomsheet
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -22,27 +23,54 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import org.sopt.teamdateroad.R
 import org.sopt.teamdateroad.presentation.ui.component.bottomsheet.model.collect.DateRoadCollectPointType
+import org.sopt.teamdateroad.presentation.util.modifier.noRippleClickable
 import org.sopt.teamdateroad.ui.theme.DateRoadTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DateRoadPointBottomSheet(
     isBottomSheetOpen: Boolean,
-    onClick : (DateRoadCollectPointType) -> Unit
+    onClick: (DateRoadCollectPointType) -> Unit,
+    onDismissRequest: () -> Unit = {},
 ) {
     DefaultDateRoadBottomSheet(
         isBottomSheetOpen = isBottomSheetOpen,
+        onDismissRequest = onDismissRequest,
         content = {
-            Column {
-                DateRoadBottonSheetContent(
-                    dateLoadCollectPoint = DateRoadCollectPointType.WATCH_ADS,
-                    onClick = onClick
+            Spacer(modifier = Modifier.height(15.dp))
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(
+                        start = 16.dp,
+                        end = 6.dp,
+                    )
+            ) {
+                Text(
+                    text = stringResource(R.string.point_box_get_point_button_text),
+                    color = DateRoadTheme.colors.black,
+                    style = DateRoadTheme.typography.bodyBold17,
+                    modifier = Modifier.align(Alignment.CenterStart)
                 )
-                DateRoadBottonSheetContent(
-                    dateLoadCollectPoint = DateRoadCollectPointType.COURSE_REGISTRATION,
-                    onClick = onClick
+                Image(
+                    modifier = Modifier
+                        .align(Alignment.CenterEnd)
+                        .padding(start = 15.dp, end = 15.dp, top = 15.dp, bottom = 15.dp)
+                        .noRippleClickable(onClick = onDismissRequest),
+                    painter = painterResource(id = R.drawable.ic_bottom_sheet_close),
+                    contentDescription = null,
                 )
             }
+            Spacer(modifier = Modifier.height(17.dp))
+            DateRoadBottonSheetContent(
+                dateLoadCollectPoint = DateRoadCollectPointType.WATCH_ADS,
+                onClick = onClick
+            )
+            DateRoadBottonSheetContent(
+                dateLoadCollectPoint = DateRoadCollectPointType.COURSE_REGISTRATION,
+                onClick = onClick
+            )
+            Spacer(modifier = Modifier.height(10.dp))
         }
     )
 }
@@ -51,22 +79,22 @@ fun DateRoadPointBottomSheet(
 fun DateRoadBottonSheetContent(
     dateLoadCollectPoint: DateRoadCollectPointType,
     onClick: (DateRoadCollectPointType) -> Unit,
-){
+) {
     Row(
-       modifier = Modifier
-           .fillMaxWidth()
-           .clickable {
-               onClick(dateLoadCollectPoint)
-           }
-           .padding(
-               start = 20.dp,
-               end = 23.dp,
-           )
-           .padding(vertical = 15.dp),
+        modifier = Modifier
+            .fillMaxWidth()
+            .clickable {
+                onClick(dateLoadCollectPoint)
+            }
+            .padding(
+                start = 20.dp,
+                end = 23.dp,
+            )
+            .padding(vertical = 15.dp),
         verticalAlignment = Alignment.CenterVertically
-    ){
+    ) {
         Image(
-            modifier = Modifier.size(40.dp),
+            modifier = Modifier.size(48.dp),
             painter = painterResource(id = dateLoadCollectPoint.imageResource),
             contentDescription = null,
         )
@@ -87,6 +115,7 @@ fun DateRoadBottonSheetContent(
 
             )
         }
+        Spacer(modifier = Modifier.weight(1f))
         Image(
             painter = painterResource(R.drawable.ic_my_page_arrow),
             contentDescription = null,
@@ -97,9 +126,9 @@ fun DateRoadBottonSheetContent(
 
 @Preview
 @Composable
-fun DateRoadPointBottomSheetPreView(){
+fun DateRoadPointBottomSheetPreView() {
     DateRoadPointBottomSheet(
-        isBottomSheetOpen = true ,
+        isBottomSheetOpen = true,
         onClick = {}
     )
 }
