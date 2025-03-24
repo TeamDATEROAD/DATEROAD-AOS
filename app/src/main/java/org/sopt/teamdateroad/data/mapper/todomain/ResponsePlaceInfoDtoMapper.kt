@@ -5,5 +5,5 @@ import org.sopt.teamdateroad.domain.model.PlaceInfo
 
 fun ResponsePlaceInfoDto.toDomain(): PlaceInfo = PlaceInfo(
     placeName = this.placeName,
-    addressName = this.addressName
+    addressName = this.address_name
 )

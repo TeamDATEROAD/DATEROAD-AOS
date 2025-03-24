@@ -1,12 +1,12 @@
 package org.sopt.teamdateroad.data.dataremote.model.response
 
-import kotlinx.serialization.SerialName
+import com.google.gson.annotations.SerializedName
 import kotlinx.serialization.Serializable
 
 @Serializable
 data class ResponsePlaceInfoDto(
-    @SerialName("place_name")
+    @SerializedName("place_name")
     val placeName: String,
-    @SerialName("address_name")
-    val addressName: String,
+    @SerializedName("address_name")
+    val address_name: String,
 )

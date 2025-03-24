@@ -37,7 +37,7 @@ class MainActivity : ComponentActivity() {
 
                     launch(Dispatchers.IO) {
                         try {
-                            val placeSearchResult = placeSearchRepository.getPlaceSearchResult("치킨").execute()
+                            val placeSearchResult = placeSearchRepository.getPlaceSearchResult("치킨").execute().body()
                             println(placeSearchResult)
                         } catch (e: Exception) {
                             println("Error: ${e}")
