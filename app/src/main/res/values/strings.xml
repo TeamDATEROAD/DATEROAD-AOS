@@ -284,6 +284,12 @@
     <string name="point_guide_fourth_title">모인 포인트는 데이트 장소를\n예약할 때 현금처럼 사용 가능해요</string>
     <string name="point_guide_fourth_description">추후 만들어질 기능을 기대해주세요</string>
 
+    <!--CollectPoint -->
+    <string name="collect_point_ads_title">광고 시청하기</string>
+    <string name="collect_point_ads_content">짧은 광고 보고 바로 포인트 획득하기</string>
+    <string name="collect_point_registration_title">코스 등록하기</string>
+    <string name="collect_point_registration_content">나만의 코스 등록하고 포인트 획득하기</string>
+    
     <!-- Profile -->
     <string name="profile_enroll_top_bar_title">내 프로필</string>
     <string name="profile_edit_top_bar_title">프로필 변경</string>
