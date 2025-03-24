@@ -49,6 +49,7 @@ android {
             isMinifyEnabled = true
             isShrinkResources = true
             buildConfigField("String", "BASE_URL", properties["prod.base.url"].toString())
+            buildConfigField("String", "KAKAO_BASE_URL", properties["kakao.base.url"].toString())
             buildConfigField("String", "AMPLITUDE_API_KEY", properties["amplitude.prod.api.key"].toString())
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
