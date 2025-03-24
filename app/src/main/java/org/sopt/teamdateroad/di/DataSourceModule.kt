@@ -4,6 +4,7 @@ import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import javax.inject.Singleton
 import org.sopt.teamdateroad.data.datalocal.datasource.UserInfoLocalDataSource
 import org.sopt.teamdateroad.data.datalocal.datasourceimpl.UserInfoLocalDataSourceImpl
 import org.sopt.teamdateroad.data.dataremote.datasource.AdvertisementRemoteDataSource
@@ -22,7 +23,6 @@ import org.sopt.teamdateroad.data.dataremote.datasourceimpl.PlaceSearchDataSourc
 import org.sopt.teamdateroad.data.dataremote.datasourceimpl.ProfileRemoteDataSourceImpl
 import org.sopt.teamdateroad.data.dataremote.datasourceimpl.TimelineRemoteDataSourceImpl
 import org.sopt.teamdateroad.data.dataremote.datasourceimpl.UserPointRemoteDataSourceImpl
-import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)

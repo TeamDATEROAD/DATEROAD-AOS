@@ -5,6 +5,8 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import java.util.concurrent.TimeUnit
+import javax.inject.Singleton
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.json.Json
 import okhttp3.Interceptor
@@ -19,8 +21,6 @@ import org.sopt.teamdateroad.di.qualifier.DateRoad
 import org.sopt.teamdateroad.di.qualifier.PlaceSearch
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import java.util.concurrent.TimeUnit
-import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -92,7 +92,7 @@ object NetworkModule {
     @PlaceSearch
     @Singleton
     fun providesPlaceSearchRetrofit(
-        @PlaceSearch interceptor: Interceptor,
+        @PlaceSearch interceptor: Interceptor
     ): Retrofit =
         Retrofit.Builder()
             .baseUrl(BuildConfig.KAKAO_BASE_URL)

@@ -8,5 +8,5 @@ data class ResponsePlaceInfoDto(
     @SerializedName("place_name")
     val placeName: String,
     @SerializedName("address_name")
-    val address_name: String,
+    val address_name: String
 )

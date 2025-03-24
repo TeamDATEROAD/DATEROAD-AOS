@@ -4,6 +4,6 @@ import org.sopt.teamdateroad.domain.model.PlaceSearchResult
 
 interface PlaceSearchRepository {
     suspend fun getPlaceSearchResult(
-        keyword: String,
+        keyword: String
     ): Result<PlaceSearchResult>
 }
