@@ -7,5 +7,6 @@ import org.sopt.teamdateroad.domain.repository.PlaceSearchRepository
 class GetPlaceSearchResultUseCase @Inject constructor(
     private val placeSearchRepository: PlaceSearchRepository
 ) {
-    suspend operator fun invoke(keyword: String): Result<PlaceSearchResult> = placeSearchRepository.getPlaceSearchResult(keyword)
+    suspend operator fun invoke(keyword: String): Result<PlaceSearchResult> =
+        placeSearchRepository.getPlaceSearchResult(keyword)
 }
