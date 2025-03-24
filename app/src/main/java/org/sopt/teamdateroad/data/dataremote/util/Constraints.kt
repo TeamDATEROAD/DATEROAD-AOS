@@ -77,5 +77,6 @@ object TotalCostZero {
 }
 
 object PlaceSearch {
-    const val PLACE_SEARCH_URL = "v2/local/search/keyword.json"
+    private const val VERSION = "v2"
+    const val LOCAL_SEARCH_KEYWORD_JSON = "$VERSION/local/search/keyword.json"
 }
