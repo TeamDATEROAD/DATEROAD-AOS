@@ -31,7 +31,7 @@ import org.sopt.teamdateroad.ui.theme.DateRoadTheme
 fun DateRoadPointBottomSheet(
     isBottomSheetOpen: Boolean,
     onClick: (DateRoadCollectPointType) -> Unit,
-    onDismissRequest: () -> Unit = {},
+    onDismissRequest: () -> Unit = {}
 ) {
     DefaultDateRoadBottomSheet(
         isBottomSheetOpen = isBottomSheetOpen,
@@ -43,7 +43,7 @@ fun DateRoadPointBottomSheet(
                     .fillMaxWidth()
                     .padding(
                         start = 16.dp,
-                        end = 6.dp,
+                        end = 6.dp
                     )
             ) {
                 Text(
@@ -58,7 +58,7 @@ fun DateRoadPointBottomSheet(
                         .padding(start = 15.dp, end = 15.dp, top = 15.dp, bottom = 15.dp)
                         .noRippleClickable(onClick = onDismissRequest),
                     painter = painterResource(id = R.drawable.ic_bottom_sheet_close),
-                    contentDescription = null,
+                    contentDescription = null
                 )
             }
             Spacer(modifier = Modifier.height(17.dp))
@@ -78,7 +78,7 @@ fun DateRoadPointBottomSheet(
 @Composable
 fun DateRoadBottonSheetContent(
     dateLoadCollectPoint: DateRoadCollectPointType,
-    onClick: (DateRoadCollectPointType) -> Unit,
+    onClick: (DateRoadCollectPointType) -> Unit
 ) {
     Row(
         modifier = Modifier
@@ -88,7 +88,7 @@ fun DateRoadBottonSheetContent(
             }
             .padding(
                 start = 20.dp,
-                end = 23.dp,
+                end = 23.dp
             )
             .padding(vertical = 15.dp),
         verticalAlignment = Alignment.CenterVertically
@@ -96,7 +96,7 @@ fun DateRoadBottonSheetContent(
         Image(
             modifier = Modifier.size(48.dp),
             painter = painterResource(id = dateLoadCollectPoint.imageResource),
-            contentDescription = null,
+            contentDescription = null
         )
         Spacer(modifier = Modifier.width(14.dp))
         Column(

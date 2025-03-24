@@ -5,10 +5,10 @@ import androidx.annotation.StringRes
 import org.sopt.teamdateroad.R
 
 enum class DateRoadCollectPointType(
-    @StringRes val titleRes :Int,
+    @StringRes val titleRes: Int,
     @StringRes val contentRes: Int,
-    @DrawableRes val imageResource : Int,
-){
+    @DrawableRes val imageResource: Int
+) {
     WATCH_ADS(
         titleRes = R.string.collect_point_ads_title,
         contentRes = R.string.collect_point_ads_content,

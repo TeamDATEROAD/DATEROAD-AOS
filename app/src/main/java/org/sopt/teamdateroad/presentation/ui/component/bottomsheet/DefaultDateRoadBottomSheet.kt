@@ -9,8 +9,6 @@ import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.windowInsetsBottomHeight
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.SheetState
@@ -26,7 +24,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.launch
-import org.sopt.teamdateroad.presentation.ui.component.button.DateRoadBasicButton
 import org.sopt.teamdateroad.ui.theme.DATEROADTheme
 import org.sopt.teamdateroad.ui.theme.DateRoadTheme
 
@@ -35,7 +32,7 @@ import org.sopt.teamdateroad.ui.theme.DateRoadTheme
 @Composable
 fun DefaultDateRoadBottomSheet(
     modifier: Modifier = Modifier,
-    sheetShape : RoundedCornerShape  = RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp),
+    sheetShape: RoundedCornerShape = RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp),
     sheetState: SheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true),
     isBottomSheetOpen: Boolean,
     onDismissRequest: () -> Unit = {},
@@ -70,7 +67,6 @@ fun DefaultDateRoadBottomSheet(
 fun DefaultDateRoadBottomSheetPreview() {
     DATEROADTheme {
         var isBottomSheetOpen by rememberSaveable { mutableStateOf(false) }
-
 
         DefaultDateRoadBottomSheet(
             modifier = Modifier.padding(top = 20.dp, bottom = 16.dp, start = 16.dp, end = 16.dp),

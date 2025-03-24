@@ -20,7 +20,7 @@ import org.sopt.teamdateroad.ui.theme.DateRoadTheme
 fun PointHistoryPointBox(
     modifier: Modifier = Modifier,
     userPoint: UserPoint,
-    onClickCollectPoint : () -> Unit,
+    onClickCollectPoint: () -> Unit
 ) {
     Column(
         modifier = modifier.fillMaxWidth()
@@ -41,7 +41,7 @@ fun PointHistoryPointBox(
         Spacer(modifier = Modifier.height(20.dp))
         DateRoadBasicButton(
             textContent = stringResource(R.string.point_box_get_point_button_text),
-            onClick = onClickCollectPoint,
+            onClick = onClickCollectPoint
         )
     }
 }
