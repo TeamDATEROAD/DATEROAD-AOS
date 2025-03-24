@@ -77,7 +77,8 @@ fun PointHistoryRoute(
                         PointHistoryContract.PointHistoryEvent.OnTabBarClicked(pointHistoryTabType)
                     )
                 },
-                onTopBarIconClicked = { viewModel.setSideEffect(PointHistoryContract.PointHistorySideEffect.PopBackStack) }
+                onTopBarIconClicked = { viewModel.setSideEffect(PointHistoryContract.PointHistorySideEffect.PopBackStack) },
+                onClickCollectPoint = { viewModel.setEvent(PointHistoryContract.PointHistoryEvent.OnPointCollectBottomSheetClick)}
             )
         }
 
@@ -90,7 +91,8 @@ fun PointHistoryScreen(
     padding: PaddingValues,
     pointHistoryUiState: PointHistoryContract.PointHistoryUiState = PointHistoryContract.PointHistoryUiState(),
     onTabBarClicked: (PointHistoryTabType) -> Unit,
-    onTopBarIconClicked: () -> Unit
+    onTopBarIconClicked: () -> Unit,
+    onClickCollectPoint: () -> Unit,
 ) {
     Column(
         modifier = Modifier
@@ -104,10 +106,11 @@ fun PointHistoryScreen(
             backGroundColor = DateRoadTheme.colors.white,
             onLeftIconClick = onTopBarIconClicked
         )
-        Spacer(modifier = Modifier.height(22.dp))
+        Spacer(modifier = Modifier.height(16.dp))
         PointHistoryPointBox(
             modifier = Modifier.padding(horizontal = 16.dp),
-            userPoint = pointHistoryUiState.userPoint
+            userPoint = pointHistoryUiState.userPoint,
+            onClickCollectPoint = onClickCollectPoint,
         )
         Spacer(modifier = Modifier.height(16.dp))
         DateRoadTabBar(
@@ -155,6 +158,8 @@ fun PointHistoryScreen(
             }
         }
     }
+
+
 }
 
 @Preview
@@ -176,7 +181,8 @@ fun PointHistoryPreview() {
                 )
             ),
             onTabBarClicked = {},
-            onTopBarIconClicked = {}
+            onTopBarIconClicked = {},
+            onClickCollectPoint = {},
         )
     }
 }

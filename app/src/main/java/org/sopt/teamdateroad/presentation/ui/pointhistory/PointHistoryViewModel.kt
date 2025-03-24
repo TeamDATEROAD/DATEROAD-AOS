@@ -22,6 +22,7 @@ class PointHistoryViewModel @Inject constructor(
             is PointHistoryContract.PointHistoryEvent.FetchPointHistory -> setState { copy(loadState = event.loadState, pointHistory = event.pointHistory) }
             is PointHistoryContract.PointHistoryEvent.OnTabBarClicked -> setState { copy(pointHistoryTabType = event.pointHistoryTabType) }
             is PointHistoryContract.PointHistoryEvent.FetchUserPoint -> setState { copy(loadState = event.loadState, userPoint = event.userPoint) }
+            PointHistoryContract.PointHistoryEvent.OnPointCollectBottomSheetClick -> setState { copy(isPointCollectBottomSheetOpen = true)  }
         }
     }
 

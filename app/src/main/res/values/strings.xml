@@ -191,6 +191,7 @@
     <!-- PointBox -->
     <string name="point_box_nickname"> %1$s\님의 포인트</string>
     <string name="point_box_point"> %1$d P</string>
+    <string name="point_box_get_point_button_text">포인트 모으러 가기</string>
     <string name="my_page_point_card_text">포인트 내역 보기</string>
 
     <!-- RegionBottomSheet -->

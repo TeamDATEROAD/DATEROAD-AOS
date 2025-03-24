@@ -12,6 +12,7 @@ class PointHistoryContract {
     data class PointHistoryUiState(
         val loadState: LoadState = LoadState.Idle,
         val userPoint: UserPoint = UserPoint(),
+        val isPointCollectBottomSheetOpen: Boolean = false,
         val pointHistoryTabType: PointHistoryTabType = PointHistoryTabType.GAINED_HISTORY,
         val pointHistory: PointHistory = PointHistory()
     ) : UiState
@@ -24,5 +25,6 @@ class PointHistoryContract {
         data class FetchPointHistory(val loadState: LoadState, val pointHistory: PointHistory) : PointHistoryEvent()
         data class FetchUserPoint(val loadState: LoadState, val userPoint: UserPoint) : PointHistoryEvent()
         data class OnTabBarClicked(val pointHistoryTabType: PointHistoryTabType) : PointHistoryEvent()
+        data object OnPointCollectBottomSheetClick : PointHistoryEvent()
     }
 }
