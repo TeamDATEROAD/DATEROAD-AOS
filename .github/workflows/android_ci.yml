@@ -49,13 +49,17 @@ jobs:
       - name: Access local properties
         env:
           HFM_BASE_URL: ${{ secrets.BASE_URL }}
+          KAKAO_BASE_URL: ${{ secrets.KAKAO_BASE_URL }}
           KAKAO_NATIVE_APP_KEY_MANIFEST: ${{ secrets.KAKAO_NATIVE_APP_KEY }}
           KAKAO_NATIVE_APP_KEY: ${{ secrets.KAKAO_NATIVE_APP_KEY }}
+          KAKAO_REST_API_KEY: ${{ secrets.KAKAO_REST_API_KEY }}
           AMPLITUDE_API_KEY: ${{ secrets.AMPLITUDE_API_KEY }}
         run: |
           echo "dev.base.url=\"$BASE_URL\"" >> local.properties
+          echo "kakao.base.url=\"$KAKAO_BASE_URL\"" >> local.properties
           echo "kakao.native.app.key.manifest=\"$KAKAO_NATIVE_APP_KEY_MANIFEST\"" >> local.properties
           echo "kakao.native.app.key=\"$KAKAO_NATIVE_APP_KEY\"" >> local.properties
+          echo "kakao.rest.api.key=\"$KAKAO_REST_API_KEY\"" >> local.properties
           echo "amplitude.dev.api.key=\"$AMPLITUDE_API_KEY\"" >> local.properties
 
       - name: Lint Check
