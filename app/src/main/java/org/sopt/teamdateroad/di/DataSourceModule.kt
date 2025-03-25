@@ -11,6 +11,7 @@ import org.sopt.teamdateroad.data.dataremote.datasource.AdvertisementRemoteDataS
 import org.sopt.teamdateroad.data.dataremote.datasource.AuthRemoteDataSource
 import org.sopt.teamdateroad.data.dataremote.datasource.CourseRemoteDataSource
 import org.sopt.teamdateroad.data.dataremote.datasource.MyCourseRemoteDataSource
+import org.sopt.teamdateroad.data.dataremote.datasource.PlaceSearchDataSource
 import org.sopt.teamdateroad.data.dataremote.datasource.ProfileRemoteDataSource
 import org.sopt.teamdateroad.data.dataremote.datasource.TimelineRemoteDataSource
 import org.sopt.teamdateroad.data.dataremote.datasource.UserPointRemoteDataSource
@@ -18,6 +19,7 @@ import org.sopt.teamdateroad.data.dataremote.datasourceimpl.AdvertisementRemoteD
 import org.sopt.teamdateroad.data.dataremote.datasourceimpl.AuthRemoteDataSourceImpl
 import org.sopt.teamdateroad.data.dataremote.datasourceimpl.CourseRemoteDataSourceImpl
 import org.sopt.teamdateroad.data.dataremote.datasourceimpl.MyCourseRemoteDataSourceImpl
+import org.sopt.teamdateroad.data.dataremote.datasourceimpl.PlaceSearchDataSourceImpl
 import org.sopt.teamdateroad.data.dataremote.datasourceimpl.ProfileRemoteDataSourceImpl
 import org.sopt.teamdateroad.data.dataremote.datasourceimpl.TimelineRemoteDataSourceImpl
 import org.sopt.teamdateroad.data.dataremote.datasourceimpl.UserPointRemoteDataSourceImpl
@@ -56,4 +58,8 @@ abstract class DataSourceModule {
     @Binds
     @Singleton
     abstract fun bindsUserPointRemoteDataSource(userPointRemoteDataSourceImpl: UserPointRemoteDataSourceImpl): UserPointRemoteDataSource
+
+    @Binds
+    @Singleton
+    abstract fun bindsPlaceSearchDataSource(placeSearchDataSourceImpl: PlaceSearchDataSourceImpl): PlaceSearchDataSource
 }

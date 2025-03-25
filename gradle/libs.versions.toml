@@ -39,7 +39,7 @@ accompanistWebview = "0.24.13-rc"
 
 # Third Party
 okhttp = "4.11.0"
-retrofit = "2.9.0"
+retrofit = "2.11.0"
 retrofitKotlinSerializationConverter = "1.0.0"
 kotlinxSerializationJson = "1.6.3"
 daggerHilt = "2.51"

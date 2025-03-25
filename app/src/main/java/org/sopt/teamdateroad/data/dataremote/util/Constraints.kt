@@ -75,3 +75,8 @@ object Point {
 object TotalCostZero {
     const val ZERO_COST = "무지출"
 }
+
+object PlaceSearch {
+    private const val VERSION = "v2"
+    const val LOCAL_SEARCH_KEYWORD_JSON = "$VERSION/local/search/keyword.json"
+}
