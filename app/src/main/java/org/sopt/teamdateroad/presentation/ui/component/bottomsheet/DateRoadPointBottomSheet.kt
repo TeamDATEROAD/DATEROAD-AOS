@@ -55,7 +55,7 @@ fun DateRoadPointBottomSheet(
                 Image(
                     modifier = Modifier
                         .align(Alignment.CenterEnd)
-                        .padding(start = 15.dp, end = 15.dp, top = 15.dp, bottom = 15.dp)
+                        .padding(15.dp)
                         .noRippleClickable(onClick = onDismissRequest),
                     painter = painterResource(id = R.drawable.ic_bottom_sheet_close),
                     contentDescription = null
