@@ -81,26 +81,37 @@ object NetworkModule {
     @Provides
     @PlaceSearch
     @Singleton
+    fun providesPlaceSearchRetrofit(
+        @PlaceSearch okHttpClient: OkHttpClient,
+    ): Retrofit =
+        Retrofit.Builder()
+            .baseUrl(BuildConfig.KAKAO_BASE_URL)
+            .client(okHttpClient)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+
+    @Provides
+    @PlaceSearch
+    @Singleton
+    fun providesPlaceSearchOkHttpClient(
+        loggingInterceptor: HttpLoggingInterceptor,
+        @PlaceSearch interceptor: Interceptor
+    ): OkHttpClient =
+        OkHttpClient.Builder().apply {
+            connectTimeout(10, TimeUnit.SECONDS)
+            writeTimeout(10, TimeUnit.SECONDS)
+            readTimeout(10, TimeUnit.SECONDS)
+            addInterceptor(interceptor)
+            if (DEBUG) addInterceptor(loggingInterceptor)
+        }.build()
+
+    @Provides
+    @PlaceSearch
+    @Singleton
     fun providesPlaceSearchAuthInterceptor(): Interceptor = Interceptor { chain ->
         val request = chain.request().newBuilder()
             .addHeader("Authorization", "KakaoAK ${BuildConfig.KAKAO_REST_API_KEY}")
             .build()
         chain.proceed(request)
     }
-
-    @Provides
-    @PlaceSearch
-    @Singleton
-    fun providesPlaceSearchRetrofit(
-        @PlaceSearch interceptor: Interceptor
-    ): Retrofit =
-        Retrofit.Builder()
-            .baseUrl(BuildConfig.KAKAO_BASE_URL)
-            .client(
-                OkHttpClient.Builder()
-                    .addInterceptor(interceptor)
-                    .build()
-            )
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
 }
