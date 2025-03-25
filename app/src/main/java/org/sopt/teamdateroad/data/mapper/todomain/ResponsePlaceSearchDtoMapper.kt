@@ -4,6 +4,5 @@ import org.sopt.teamdateroad.data.dataremote.model.response.ResponsePlaceSearchR
 import org.sopt.teamdateroad.domain.model.PlaceSearchResult
 
 fun ResponsePlaceSearchResultDto.toDomain(): PlaceSearchResult = PlaceSearchResult(
-    placeInfos = this.placeInfos.map { responsePlaceInfoDto -> responsePlaceInfoDto.toDomain() },
-    isEnd = this.meta.isEnd
+    placeInfos = this.placeInfos.map { responsePlaceInfoDto -> responsePlaceInfoDto.toDomain() }
 )
