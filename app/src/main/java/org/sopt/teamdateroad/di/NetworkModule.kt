@@ -37,6 +37,7 @@ object NetworkModule {
         }
 
     @Provides
+    @DateRoad
     @Singleton
     fun providesOkHttpClient(
         loggingInterceptor: HttpLoggingInterceptor,
@@ -67,7 +68,7 @@ object NetworkModule {
     @DateRoad
     @Singleton
     fun providesDateRoadRetrofit(
-        okHttpClient: OkHttpClient,
+        @DateRoad okHttpClient: OkHttpClient,
         json: Json
     ): Retrofit =
         Retrofit.Builder()
@@ -78,8 +79,8 @@ object NetworkModule {
             )
             .build()
 
-    @Provides
     @PlaceSearch
+    @Provides
     @Singleton
     fun providesPlaceSearchRetrofit(
         @PlaceSearch okHttpClient: OkHttpClient
@@ -90,8 +91,8 @@ object NetworkModule {
             .addConverterFactory(GsonConverterFactory.create())
             .build()
 
-    @Provides
     @PlaceSearch
+    @Provides
     @Singleton
     fun providesPlaceSearchOkHttpClient(
         loggingInterceptor: HttpLoggingInterceptor,
@@ -105,8 +106,8 @@ object NetworkModule {
             if (DEBUG) addInterceptor(loggingInterceptor)
         }.build()
 
-    @Provides
     @PlaceSearch
+    @Provides
     @Singleton
     fun providesPlaceSearchAuthInterceptor(): Interceptor = Interceptor { chain ->
         val request = chain.request().newBuilder()
