@@ -82,7 +82,7 @@ object NetworkModule {
     @PlaceSearch
     @Singleton
     fun providesPlaceSearchRetrofit(
-        @PlaceSearch okHttpClient: OkHttpClient,
+        @PlaceSearch okHttpClient: OkHttpClient
     ): Retrofit =
         Retrofit.Builder()
             .baseUrl(BuildConfig.KAKAO_BASE_URL)
