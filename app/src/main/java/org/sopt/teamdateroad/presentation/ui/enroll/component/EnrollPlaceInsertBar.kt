@@ -59,11 +59,14 @@ fun EnrollPlaceInsertBar(
             contentPadding = PaddingValues(0.dp),
             onClick = onPlaceSearchButtonClick
         ) {
-            Box(modifier = Modifier.fillMaxWidth()) {
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(21.dp)
+                    .padding(horizontal = 14.dp)
+            ) {
                 Text(
-                    modifier = Modifier
-                        .padding(horizontal = 14.dp)
-                        .align(Alignment.CenterStart),
+                    modifier = Modifier.align(Alignment.CenterStart),
                     text = if (placeName.isEmpty()) stringResource(id = R.string.enroll_place_insert_bar_enter_place_placeholder) else placeName,
                     color = if (placeName.isEmpty()) DateRoadTheme.colors.gray300 else DateRoadTheme.colors.black,
                     style = DateRoadTheme.typography.bodySemi13,
@@ -93,8 +96,8 @@ fun EnrollPlaceInsertBar(
                 .size(44.dp),
             isEnabled = duration.isNotEmpty() && placeName.isNotEmpty(),
             cornerRadius = 14.dp,
-            paddingHorizontal = 15.dp,
-            paddingVertical = 15.dp,
+            paddingHorizontal = 0.dp,
+            paddingVertical = 0.dp,
             disabledBackgroundColor = DateRoadTheme.colors.gray100,
             disabledContentColor = DateRoadTheme.colors.gray300,
             onClick = { if (duration.isNotEmpty() && placeName.isNotEmpty()) onAddCourseButtonClick() else Unit }

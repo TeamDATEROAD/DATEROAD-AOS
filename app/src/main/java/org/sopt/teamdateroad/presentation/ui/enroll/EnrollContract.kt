@@ -3,6 +3,8 @@ package org.sopt.teamdateroad.presentation.ui.enroll
 import org.sopt.teamdateroad.domain.model.CourseDetail
 import org.sopt.teamdateroad.domain.model.Enroll
 import org.sopt.teamdateroad.domain.model.Place
+import org.sopt.teamdateroad.domain.model.PlaceInfo
+import org.sopt.teamdateroad.domain.model.PlaceSearchResult
 import org.sopt.teamdateroad.domain.model.TimelineDetail
 import org.sopt.teamdateroad.domain.type.RegionType
 import org.sopt.teamdateroad.presentation.type.EnrollScreenType
@@ -54,7 +56,11 @@ class EnrollContract {
         val isRegionBottomSheetOpen: Boolean = false,
         val onRegionBottomSheetRegionSelected: RegionType? = RegionType.SEOUL,
         val onRegionBottomSheetAreaSelected: Any? = null,
+        val isPlaceSearchBottomSheetOpen: Boolean = false,
+        val keyword: String = "",
         val place: Place = Place(),
+        val placeSearchResult: PlaceSearchResult = PlaceSearchResult(placeInfos = emptyList()),
+        val placeInfos: List<PlaceInfo> = emptyList(),
         val isPlaceEditable: Boolean = true,
         val isDurationBottomSheetOpen: Boolean = false,
         val durationPicker: List<Picker> = listOf(Picker(items = (DURATION_START..DURATION_END).map { (it * 0.5).toString() })),
@@ -77,6 +83,11 @@ class EnrollContract {
         data object OnDurationBottomSheetDismissRequest : EnrollEvent()
         data object OnTimeTextFieldClick : EnrollEvent()
         data object OnRegionTextFieldClick : EnrollEvent()
+        data object OnPlaceSearchButtonClick : EnrollEvent()
+        data class OnKeywordChanged(val keyword: String) : EnrollEvent()
+        data object OnSearch : EnrollEvent()
+        data class OnPlaceSelected(val placeInfo: PlaceInfo) : EnrollEvent()
+        data object OnPlaceSearchBottomSheetDismiss : EnrollEvent()
         data class FetchEnrollCourseType(val enrollType: EnrollType) : EnrollEvent()
         data class FetchCourseDetail(val fetchEnrollState: LoadState, val courseDetail: CourseDetail?) : EnrollEvent()
         data class FetchTimelineDetail(val fetchEnrollState: LoadState, val timelineDetail: TimelineDetail?) : EnrollEvent()

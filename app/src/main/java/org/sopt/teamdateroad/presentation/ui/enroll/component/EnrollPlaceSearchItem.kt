@@ -13,18 +13,24 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import org.sopt.teamdateroad.domain.model.PlaceInfo
+import org.sopt.teamdateroad.presentation.util.modifier.noRippleClickable
 import org.sopt.teamdateroad.ui.theme.DATEROADTheme
 import org.sopt.teamdateroad.ui.theme.DateRoadTheme
 
 @Composable
 fun EnrollPlaceSearchItem(
-    placeInfo: PlaceInfo
+    keyword: String,
+    placeInfo: PlaceInfo,
+    onClick: (PlaceInfo) -> Unit
 ) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
             .height(75.dp)
-            .padding(horizontal = 25.dp),
+            .padding(horizontal = 25.dp)
+            .noRippleClickable {
+                onClick(placeInfo)
+            },
         verticalArrangement = Arrangement.Center
     ) {
         Spacer(modifier = Modifier.height(11.dp))
@@ -52,6 +58,6 @@ fun EnrollPlaceSearchItem(
 @Composable
 fun EnrollPlacerSearchItemPreview() {
     DATEROADTheme {
-        EnrollPlaceSearchItem(placeInfo = PlaceInfo("카페 나랑", "경기 의왕시 청계로 217"))
+        EnrollPlaceSearchItem(keyword = "카페", placeInfo = PlaceInfo("의왕 카페 나랑", "경기 의왕시 청계로 217"), onClick = {})
     }
 }

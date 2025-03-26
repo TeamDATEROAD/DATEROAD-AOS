@@ -35,7 +35,9 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import org.sopt.teamdateroad.R
 import org.sopt.teamdateroad.domain.model.Place
+import org.sopt.teamdateroad.domain.model.PlaceInfo
 import org.sopt.teamdateroad.presentation.type.PlaceCardType
+import org.sopt.teamdateroad.presentation.ui.component.bottomsheet.DateRoadPlaceSearchBottomSheet
 import org.sopt.teamdateroad.presentation.ui.component.button.DateRoadTextButton
 import org.sopt.teamdateroad.presentation.ui.component.card.DateRoadPlaceCard
 import org.sopt.teamdateroad.presentation.ui.enroll.component.EnrollPlaceInsertBar
@@ -49,6 +51,11 @@ import org.sopt.teamdateroad.ui.theme.DateRoadTheme
 @Composable
 fun EnrollSecondScreen(
     enrollUiState: EnrollContract.EnrollUiState = EnrollContract.EnrollUiState(),
+    onPlaceSearchButtonClick: () -> Unit,
+    onKeywordChanged: (String) -> Unit,
+    onSearch: () -> Unit,
+    onPlaceSelected: (PlaceInfo) -> Unit,
+    onPlaceSearchBottomSheetDismiss: () -> Unit,
     onSelectedPlaceCourseTimeClick: () -> Unit,
     onAddPlaceButtonClick: (Place) -> Unit,
     onPlaceEditButtonClick: (Boolean) -> Unit,
@@ -89,6 +96,7 @@ fun EnrollSecondScreen(
                 .padding(horizontal = 16.dp),
             placeName = enrollUiState.place.title,
             duration = enrollUiState.place.duration,
+            onPlaceSearchButtonClick = onPlaceSearchButtonClick,
             onSelectedCourseTimeClick = onSelectedPlaceCourseTimeClick,
             onAddCourseButtonClick = {
                 onAddPlaceButtonClick(Place(title = enrollUiState.place.title, duration = enrollUiState.place.duration + Time.TIME))
@@ -168,18 +176,33 @@ fun EnrollSecondScreen(
         }
         Spacer(modifier = Modifier.height(16.dp))
     }
+
+    DateRoadPlaceSearchBottomSheet(
+        isBottomSheetOpen = enrollUiState.isPlaceSearchBottomSheetOpen,
+        keyword = enrollUiState.keyword,
+        placeSearchResult = enrollUiState.placeSearchResult,
+        onKeywordChanged = onKeywordChanged,
+        onSearch = onSearch,
+        onPlaceSelected = onPlaceSelected,
+        onDismissRequest = onPlaceSearchBottomSheetDismiss
+    )
 }
 
-@Preview
+@Preview(showBackground = true)
 @Composable
 fun EnrollSecondScreenPreview() {
     DATEROADTheme {
         EnrollSecondScreen(
+            onPlaceSearchButtonClick = {},
             onAddPlaceButtonClick = {},
             onSelectedPlaceCourseTimeClick = {},
             onPlaceEditButtonClick = {},
             onPlaceCardDeleteButtonClick = {},
-            onPlaceCardDragAndDrop = {}
+            onPlaceSearchBottomSheetDismiss = {},
+            onKeywordChanged = {},
+            onPlaceCardDragAndDrop = {},
+            onSearch = {},
+            onPlaceSelected = {}
         )
     }
 }

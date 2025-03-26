@@ -33,6 +33,7 @@ import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import org.sopt.teamdateroad.R
 import org.sopt.teamdateroad.domain.model.Place
+import org.sopt.teamdateroad.domain.model.PlaceInfo
 import org.sopt.teamdateroad.domain.type.RegionType
 import org.sopt.teamdateroad.presentation.type.DateRoadRegionBottomSheetType
 import org.sopt.teamdateroad.presentation.type.DateTagType
@@ -253,6 +254,11 @@ fun EnrollRoute(
         onDateTextFieldClick = { viewModel.setEvent(EnrollContract.EnrollEvent.OnDateTextFieldClick) },
         onTimeTextFieldClick = { viewModel.setEvent(EnrollContract.EnrollEvent.OnTimeTextFieldClick) },
         onRegionTextFieldClick = { viewModel.setEvent(EnrollContract.EnrollEvent.OnRegionTextFieldClick) },
+        onPlaceSearchButtonClick = { viewModel.setEvent(EnrollContract.EnrollEvent.OnPlaceSearchButtonClick) },
+        onKeywordChanged = { keyword -> viewModel.setEvent(EnrollContract.EnrollEvent.OnKeywordChanged(keyword = keyword)) },
+        onSearch = { viewModel.setEvent(EnrollContract.EnrollEvent.OnSearch) },
+        onPlaceSelected = { placeInfo -> viewModel.setEvent(EnrollContract.EnrollEvent.OnPlaceSelected(placeInfo = placeInfo)) },
+        onPlaceSearchBottomSheetDismiss = { viewModel.setEvent(EnrollContract.EnrollEvent.OnPlaceSearchBottomSheetDismiss) },
         onSelectedPlaceCourseTimeClick = { viewModel.setEvent(EnrollContract.EnrollEvent.OnSelectedPlaceCourseTimeClick) },
         onDatePickerBottomSheetDismissRequest = { viewModel.setEvent(EnrollContract.EnrollEvent.OnDatePickerBottomSheetDismissRequest) },
         onTimePickerBottomSheetDismissRequest = { viewModel.setEvent(EnrollContract.EnrollEvent.OnTimePickerBottomSheetDismissRequest) },
@@ -336,6 +342,11 @@ fun EnrollScreen(
     onDateTextFieldClick: () -> Unit,
     onTimeTextFieldClick: () -> Unit,
     onRegionTextFieldClick: () -> Unit,
+    onPlaceSearchButtonClick: () -> Unit,
+    onKeywordChanged: (String) -> Unit,
+    onSearch: () -> Unit,
+    onPlaceSelected: (PlaceInfo) -> Unit,
+    onPlaceSearchBottomSheetDismiss: () -> Unit,
     onSelectedPlaceCourseTimeClick: () -> Unit,
     onDatePickerBottomSheetDismissRequest: () -> Unit,
     onTimePickerBottomSheetDismissRequest: () -> Unit,
@@ -436,6 +447,11 @@ fun EnrollScreen(
 
                 EnrollScreenType.SECOND -> EnrollSecondScreen(
                     enrollUiState = enrollUiState,
+                    onPlaceSearchButtonClick = onPlaceSearchButtonClick,
+                    onKeywordChanged = onKeywordChanged,
+                    onSearch = onSearch,
+                    onPlaceSelected = onPlaceSelected,
+                    onPlaceSearchBottomSheetDismiss = onPlaceSearchBottomSheetDismiss,
                     onSelectedPlaceCourseTimeClick = onSelectedPlaceCourseTimeClick,
                     onAddPlaceButtonClick = onAddPlaceButtonClick,
                     onPlaceEditButtonClick = onPlaceEditButtonClick,
@@ -565,6 +581,7 @@ fun EnrollScreenPreview() {
             onDateTextFieldClick = {},
             onTimeTextFieldClick = {},
             onRegionTextFieldClick = {},
+            onPlaceSearchButtonClick = {},
             onSelectedPlaceCourseTimeClick = {},
             onDatePickerBottomSheetDismissRequest = {},
             onTimePickerBottomSheetDismissRequest = {},
@@ -587,7 +604,12 @@ fun EnrollScreenPreview() {
             onDescriptionValueChange = {},
             onCostValueChange = {},
             onEnrollSuccessDialogButtonClick = {},
-            onSelectThumbnail = {}
+            onSelectThumbnail = {},
+            onEnrollSuccessDialogButtonClick = {},
+            onPlaceSearchBottomSheetDismiss = {},
+            onKeywordChanged = { },
+            onSearch = { },
+            onPlaceSelected = { }
         )
     }
 }
