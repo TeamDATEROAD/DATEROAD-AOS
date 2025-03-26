@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.windowInsetsBottomHeight
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.SheetState
@@ -68,14 +67,6 @@ fun DefaultDateRoadBottomSheet(
 fun DefaultDateRoadBottomSheetPreview() {
     DATEROADTheme {
         var isBottomSheetOpen by rememberSaveable { mutableStateOf(false) }
-
-        Button(onClick = { isBottomSheetOpen = true }) {
-            Text(
-                text = "DefaultDateRoadBottomSheet",
-                color = DateRoadTheme.colors.black,
-                style = DateRoadTheme.typography.titleExtra20
-            )
-        }
 
         DefaultDateRoadBottomSheet(
             modifier = Modifier.padding(top = 20.dp, bottom = 16.dp, start = 16.dp, end = 16.dp),
