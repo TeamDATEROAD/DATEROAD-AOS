@@ -51,7 +51,6 @@ fun EnrollSecondScreen(
     enrollUiState: EnrollContract.EnrollUiState = EnrollContract.EnrollUiState(),
     onSelectedPlaceCourseTimeClick: () -> Unit,
     onAddPlaceButtonClick: (Place) -> Unit,
-    onPlaceTitleValueChange: (String) -> Unit,
     onPlaceEditButtonClick: (Boolean) -> Unit,
     onPlaceCardDeleteButtonClick: (Int) -> Unit,
     onPlaceCardDragAndDrop: (List<Place>) -> Unit
@@ -84,10 +83,12 @@ fun EnrollSecondScreen(
         )
         Spacer(modifier = Modifier.height(13.dp))
         EnrollPlaceInsertBar(
-            modifier = Modifier.padding(horizontal = 16.dp),
-            title = enrollUiState.place.title,
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(44.dp)
+                .padding(horizontal = 16.dp),
+            placeName = enrollUiState.place.title,
             duration = enrollUiState.place.duration,
-            onTitleChange = onPlaceTitleValueChange,
             onSelectedCourseTimeClick = onSelectedPlaceCourseTimeClick,
             onAddCourseButtonClick = {
                 onAddPlaceButtonClick(Place(title = enrollUiState.place.title, duration = enrollUiState.place.duration + Time.TIME))
@@ -176,7 +177,6 @@ fun EnrollSecondScreenPreview() {
         EnrollSecondScreen(
             onAddPlaceButtonClick = {},
             onSelectedPlaceCourseTimeClick = {},
-            onPlaceTitleValueChange = {},
             onPlaceEditButtonClick = {},
             onPlaceCardDeleteButtonClick = {},
             onPlaceCardDragAndDrop = {}
