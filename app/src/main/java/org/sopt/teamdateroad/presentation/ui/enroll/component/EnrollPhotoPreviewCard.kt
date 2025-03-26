@@ -40,7 +40,7 @@ fun EnrollPhotoPreviewCard(
     isThumbnail: Boolean,
     image: String,
     onDeleteButtonClick: (Int) -> Unit = {},
-    onSelectThumbnail: (Int) -> Unit = {},
+    onSelectThumbnail: (Int) -> Unit = {}
 ) {
     val borderColor = if (isThumbnail && isEditable) DateRoadTheme.colors.purple600 else Color.Transparent
     Box(
@@ -64,7 +64,7 @@ fun EnrollPhotoPreviewCard(
                 .border(
                     width = 2.dp,
                     color = borderColor,
-                    shape = RoundedCornerShape(14.dp),
+                    shape = RoundedCornerShape(14.dp)
                 )
                 .noRippleClickable {
                     if (isEditable) {
@@ -114,7 +114,7 @@ fun EnrollPhotoPreviewCardPreview() {
             id = 0,
             isEditable = true,
             image = "",
-            isThumbnail = true,
+            isThumbnail = true
         )
     }
 }

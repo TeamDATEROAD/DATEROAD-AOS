@@ -87,7 +87,7 @@ class EnrollViewModel @Inject constructor(
             is EnrollContract.EnrollEvent.OnImageDeleteButtonClick -> setState {
                 copy(
                     enroll = currentState.enroll.copy(
-                        images = currentState.enroll.images.toMutableList().apply { removeAt(event.index) },
+                        images = currentState.enroll.images.toMutableList().apply { removeAt(event.index) }
                     ),
                     thumbnailIndex = if (event.moveThumbnail) (thumbnailIndex - 1).coerceAtLeast(0) else thumbnailIndex
                 )

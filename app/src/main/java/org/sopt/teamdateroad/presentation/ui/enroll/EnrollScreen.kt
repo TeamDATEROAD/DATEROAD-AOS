@@ -29,6 +29,8 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.flowWithLifecycle
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 import org.sopt.teamdateroad.R
 import org.sopt.teamdateroad.domain.model.Place
 import org.sopt.teamdateroad.domain.type.RegionType
@@ -93,8 +95,6 @@ import org.sopt.teamdateroad.presentation.util.amplitude.AmplitudeUtils
 import org.sopt.teamdateroad.presentation.util.view.LoadState
 import org.sopt.teamdateroad.ui.theme.DATEROADTheme
 import org.sopt.teamdateroad.ui.theme.DateRoadTheme
-import java.time.LocalDate
-import java.time.format.DateTimeFormatter
 
 @Composable
 fun EnrollRoute(
@@ -271,7 +271,7 @@ fun EnrollRoute(
             viewModel.setEvent(
                 EnrollContract.EnrollEvent.OnImageDeleteButtonClick(
                     index = index,
-                    moveThumbnail = index <= uiState.thumbnailIndex,
+                    moveThumbnail = index <= uiState.thumbnailIndex
                 )
             )
         },
@@ -360,7 +360,7 @@ fun EnrollScreen(
     onDescriptionValueChange: (String) -> Unit,
     onCostValueChange: (String) -> Unit,
     onEnrollSuccessDialogButtonClick: () -> Unit,
-    onSelectThumbnail: (Int) -> Unit,
+    onSelectThumbnail: (Int) -> Unit
 ) {
     val focusManager = LocalFocusManager.current
 
@@ -390,7 +390,7 @@ fun EnrollScreen(
                     thumbnailIndex = enrollUiState.thumbnailIndex,
                     onPhotoButtonClick = onPhotoButtonClick,
                     onDeleteButtonClick = onImageDeleteButtonClick,
-                    onSelectThumbnail = onSelectThumbnail,
+                    onSelectThumbnail = onSelectThumbnail
                 )
             }
 
@@ -591,7 +591,7 @@ fun EnrollScreenPreview() {
             onDescriptionValueChange = {},
             onCostValueChange = {},
             onEnrollSuccessDialogButtonClick = {},
-            onSelectThumbnail = {},
+            onSelectThumbnail = {}
         )
     }
 }

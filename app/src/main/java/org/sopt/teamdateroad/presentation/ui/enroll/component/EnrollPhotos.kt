@@ -29,10 +29,10 @@ fun EnrollPhotos(
     modifier: Modifier = Modifier,
     isEditable: Boolean,
     images: List<String>,
-    thumbnailIndex : Int,
+    thumbnailIndex: Int,
     onPhotoButtonClick: () -> Unit = {},
     onDeleteButtonClick: (Int) -> Unit = {},
-    onSelectThumbnail : (Int) -> Unit = {},
+    onSelectThumbnail: (Int) -> Unit = {}
 ) {
     Box(
         modifier = modifier
@@ -91,7 +91,7 @@ fun EnrollPhotosPreview() {
         EnrollPhotos(
             isEditable = false,
             images = listOf(),
-            thumbnailIndex = 0,
+            thumbnailIndex = 0
         )
     }
 }
