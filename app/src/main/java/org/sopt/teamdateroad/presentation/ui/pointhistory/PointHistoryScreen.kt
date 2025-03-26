@@ -27,6 +27,7 @@ import org.sopt.teamdateroad.domain.model.PointHistory
 import org.sopt.teamdateroad.domain.model.UserPoint
 import org.sopt.teamdateroad.presentation.type.EmptyViewType
 import org.sopt.teamdateroad.presentation.type.PointHistoryTabType
+import org.sopt.teamdateroad.presentation.ui.component.bottomsheet.DateRoadPointBottomSheet
 import org.sopt.teamdateroad.presentation.ui.component.tabbar.DateRoadTabBar
 import org.sopt.teamdateroad.presentation.ui.component.tabbar.DateRoadTabTitle
 import org.sopt.teamdateroad.presentation.ui.component.topbar.DateRoadBasicTopBar
@@ -77,7 +78,9 @@ fun PointHistoryRoute(
                         PointHistoryContract.PointHistoryEvent.OnTabBarClicked(pointHistoryTabType)
                     )
                 },
-                onTopBarIconClicked = { viewModel.setSideEffect(PointHistoryContract.PointHistorySideEffect.PopBackStack) }
+                onTopBarIconClicked = { viewModel.setSideEffect(PointHistoryContract.PointHistorySideEffect.PopBackStack) },
+                onClickCollectPoint = { viewModel.setEvent(PointHistoryContract.PointHistoryEvent.OnPointCollectBottomSheetClick) },
+                onDisMissCollectPoint = { viewModel.setEvent(PointHistoryContract.PointHistoryEvent.OnPointCollectBottomSheetDismiss) }
             )
         }
 
@@ -90,7 +93,9 @@ fun PointHistoryScreen(
     padding: PaddingValues,
     pointHistoryUiState: PointHistoryContract.PointHistoryUiState = PointHistoryContract.PointHistoryUiState(),
     onTabBarClicked: (PointHistoryTabType) -> Unit,
-    onTopBarIconClicked: () -> Unit
+    onTopBarIconClicked: () -> Unit,
+    onClickCollectPoint: () -> Unit,
+    onDisMissCollectPoint: () -> Unit
 ) {
     Column(
         modifier = Modifier
@@ -104,10 +109,11 @@ fun PointHistoryScreen(
             backGroundColor = DateRoadTheme.colors.white,
             onLeftIconClick = onTopBarIconClicked
         )
-        Spacer(modifier = Modifier.height(22.dp))
+        Spacer(modifier = Modifier.height(16.dp))
         PointHistoryPointBox(
             modifier = Modifier.padding(horizontal = 16.dp),
-            userPoint = pointHistoryUiState.userPoint
+            userPoint = pointHistoryUiState.userPoint,
+            onClickCollectPoint = onClickCollectPoint
         )
         Spacer(modifier = Modifier.height(16.dp))
         DateRoadTabBar(
@@ -155,6 +161,16 @@ fun PointHistoryScreen(
             }
         }
     }
+
+    DateRoadPointBottomSheet(
+        isBottomSheetOpen = pointHistoryUiState.isPointCollectBottomSheetOpen,
+        onClick = {
+            onDisMissCollectPoint()
+        },
+        onDismissRequest = {
+            onDisMissCollectPoint()
+        }
+    )
 }
 
 @Preview
@@ -176,7 +192,9 @@ fun PointHistoryPreview() {
                 )
             ),
             onTabBarClicked = {},
-            onTopBarIconClicked = {}
+            onTopBarIconClicked = {},
+            onClickCollectPoint = {},
+            onDisMissCollectPoint = {}
         )
     }
 }
