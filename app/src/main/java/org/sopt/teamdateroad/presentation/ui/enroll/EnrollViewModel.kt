@@ -83,8 +83,15 @@ class EnrollViewModel @Inject constructor(
             is EnrollContract.EnrollEvent.FetchCourseDetail -> setState { copy(fetchEnrollState = event.fetchEnrollState, enroll = event.courseDetail?.toEnroll() ?: currentState.enroll) }
             is EnrollContract.EnrollEvent.FetchTimelineDetail -> setState { copy(fetchEnrollState = event.fetchEnrollState, enroll = event.timelineDetail?.toEnroll() ?: currentState.enroll) }
             is EnrollContract.EnrollEvent.SetEnrollButtonEnabled -> setState { copy(isEnrollButtonEnabled = event.isEnrollButtonEnabled) }
-            is EnrollContract.EnrollEvent.SetImage -> setState { copy(enroll = currentState.enroll.copy(images = event.images)) }
-            is EnrollContract.EnrollEvent.OnImageDeleteButtonClick -> setState { copy(enroll = currentState.enroll.copy(images = currentState.enroll.images.toMutableList().apply { removeAt(event.index) })) }
+            is EnrollContract.EnrollEvent.SetImage -> setState { copy(enroll = currentState.enroll.copy(images = event.images), thumbnailIndex = 0) }
+            is EnrollContract.EnrollEvent.OnImageDeleteButtonClick -> setState {
+                copy(
+                    enroll = currentState.enroll.copy(
+                        images = currentState.enroll.images.toMutableList().apply { removeAt(event.index) },
+                    ),
+                    thumbnailIndex = if (event.moveThumbnail) (thumbnailIndex - 1).coerceAtLeast(0) else thumbnailIndex
+                )
+            }
             is EnrollContract.EnrollEvent.OnTitleValueChange -> setState { copy(enroll = currentState.enroll.copy(title = event.title)) }
 
             is EnrollContract.EnrollEvent.OnDatePickerBottomSheetButtonClick -> setState { copy(enroll = currentState.enroll.copy(date = event.date), isDatePickerBottomSheetOpen = false) }

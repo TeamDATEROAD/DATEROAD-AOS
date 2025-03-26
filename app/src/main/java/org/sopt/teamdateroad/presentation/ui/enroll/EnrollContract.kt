@@ -83,7 +83,7 @@ class EnrollContract {
         data class SetEnrollButtonEnabled(val isEnrollButtonEnabled: Boolean) : EnrollEvent()
         data class SetImage(val images: List<String>) : EnrollEvent()
         data class OnSelectThumbnail(val index: Int) : EnrollEvent()
-        data class OnImageDeleteButtonClick(val index: Int) : EnrollEvent()
+        data class OnImageDeleteButtonClick(val index: Int,val moveThumbnail : Boolean) : EnrollEvent()
         data class OnTitleValueChange(val title: String) : EnrollEvent()
         data class OnDatePickerBottomSheetButtonClick(val date: String) : EnrollEvent()
         data class OnTimePickerBottomSheetButtonClick(val startAt: String) : EnrollEvent()

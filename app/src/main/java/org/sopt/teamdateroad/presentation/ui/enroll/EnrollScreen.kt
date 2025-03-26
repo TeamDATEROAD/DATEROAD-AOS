@@ -267,7 +267,14 @@ fun EnrollRoute(
                 )
             }
         },
-        onImageDeleteButtonClick = { index -> viewModel.setEvent(EnrollContract.EnrollEvent.OnImageDeleteButtonClick(index = index)) },
+        onImageDeleteButtonClick = { index ->
+            viewModel.setEvent(
+                EnrollContract.EnrollEvent.OnImageDeleteButtonClick(
+                    index = index,
+                    moveThumbnail = index <= uiState.thumbnailIndex,
+                )
+            )
+        },
         onTitleValueChange = { title -> viewModel.setEvent(EnrollContract.EnrollEvent.OnTitleValueChange(title = title)) },
         onDatePickerBottomSheetButtonClick = { date -> viewModel.setEvent(EnrollContract.EnrollEvent.OnDatePickerBottomSheetButtonClick(date = date)) },
         onTimePickerBottomSheetButtonClick = { startAt -> viewModel.setEvent(EnrollContract.EnrollEvent.OnTimePickerBottomSheetButtonClick(startAt = startAt)) },

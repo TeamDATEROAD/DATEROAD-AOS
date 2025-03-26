@@ -4,13 +4,11 @@ import android.content.Context
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -39,10 +37,10 @@ fun EnrollPhotoPreviewCard(
     context: Context = LocalContext.current,
     id: Int,
     isEditable: Boolean,
-    isThumbnail : Boolean,
+    isThumbnail: Boolean,
     image: String,
     onDeleteButtonClick: (Int) -> Unit = {},
-    onSelectThumbnail : (Int) -> Unit = {},
+    onSelectThumbnail: (Int) -> Unit = {},
 ) {
     val borderColor = if (isThumbnail && isEditable) DateRoadTheme.colors.purple600 else Color.Transparent
     Box(
@@ -69,26 +67,26 @@ fun EnrollPhotoPreviewCard(
                     shape = RoundedCornerShape(14.dp),
                 )
                 .noRippleClickable {
-                    if (isEditable){
+                    if (isEditable) {
                         onSelectThumbnail(id)
                     }
                 }
 
         )
-        if (isThumbnail){
-          Box(
-              modifier = modifier
-                  .width(56.dp)
-                  .height(26.dp)
-                  .background(DateRoadTheme.colors.purple600)
-          ){
-              Text(
-                  text = stringResource(R.string.enroll_thumbnail_text),
-                  color = DateRoadTheme.colors.white,
-                  style = DateRoadTheme.typography.bodySemi13,
-                  modifier = Modifier.align(Alignment.Center)
-              )
-          }
+        if (isThumbnail) {
+            Box(
+                modifier = modifier
+                    .width(56.dp)
+                    .height(26.dp)
+                    .background(DateRoadTheme.colors.purple600)
+            ) {
+                Text(
+                    text = stringResource(R.string.enroll_thumbnail_text),
+                    color = DateRoadTheme.colors.white,
+                    style = DateRoadTheme.typography.bodySemi13,
+                    modifier = Modifier.align(Alignment.Center)
+                )
+            }
         }
         if (isEditable) {
             Image(
@@ -98,7 +96,9 @@ fun EnrollPhotoPreviewCard(
                     .clip(CircleShape)
                     .background(DateRoadTheme.colors.gray200)
                     .padding(5.dp)
-                    .noRippleClickable(onClick = { onDeleteButtonClick(id) }),
+                    .noRippleClickable {
+                        onDeleteButtonClick(id)
+                    },
                 painter = painterResource(id = R.drawable.ic_all_close),
                 contentDescription = null
             )
