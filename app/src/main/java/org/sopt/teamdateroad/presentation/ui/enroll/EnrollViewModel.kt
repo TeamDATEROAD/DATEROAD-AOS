@@ -115,7 +115,8 @@ class EnrollViewModel @Inject constructor(
             is EnrollContract.EnrollEvent.OnPlaceCardDeleteButtonClick -> setState { copy(enroll = currentState.enroll.copy(places = currentState.enroll.places.toMutableList().apply { removeAt(event.index) })) }
             is EnrollContract.EnrollEvent.OnDescriptionValueChange -> setState { copy(enroll = currentState.enroll.copy(description = event.description)) }
             is EnrollContract.EnrollEvent.OnCostValueChange -> setState { copy(enroll = currentState.enroll.copy(cost = event.cost)) }
-            is EnrollContract.EnrollEvent.Enroll -> setState { copy(loadState = event.loadState) }
+            is EnrollContract.EnrollEvent.Enroll -> setState { copy(loadState = event.loadState, thumbnailIndex = 0) }
+            is EnrollContract.EnrollEvent.OnSelectThumbnail -> setState { copy(thumbnailIndex = event.index) }
             is EnrollContract.EnrollEvent.SetTitleValidationState -> setState { copy(titleValidateState = event.titleValidationState) }
             is EnrollContract.EnrollEvent.SetDateValidationState -> setState { copy(dateValidateState = event.dateValidationState) }
             is EnrollContract.EnrollEvent.SetIsEnrollSuccessDialogOpen -> setState { copy(isEnrollSuccessDialogOpen = event.isEnrollSuccessDialogOpen) }
