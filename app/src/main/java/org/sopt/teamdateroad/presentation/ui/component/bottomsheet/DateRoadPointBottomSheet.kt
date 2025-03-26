@@ -22,7 +22,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import org.sopt.teamdateroad.R
-import org.sopt.teamdateroad.domain.util.PointCollect
 import org.sopt.teamdateroad.presentation.ui.component.bottomsheet.model.collect.DateRoadCollectPointType
 import org.sopt.teamdateroad.presentation.util.modifier.noRippleClickable
 import org.sopt.teamdateroad.ui.theme.DateRoadTheme
@@ -31,7 +30,6 @@ import org.sopt.teamdateroad.ui.theme.DateRoadTheme
 @Composable
 fun DateRoadPointBottomSheet(
     isBottomSheetOpen: Boolean,
-    title: String,
     onClick: (DateRoadCollectPointType) -> Unit,
     onDismissRequest: () -> Unit = {}
 ) {
@@ -49,7 +47,7 @@ fun DateRoadPointBottomSheet(
                     )
             ) {
                 Text(
-                    text = title,
+                    text = stringResource(R.string.point_box_get_point_button_text),
                     color = DateRoadTheme.colors.black,
                     style = DateRoadTheme.typography.bodyBold17,
                     modifier = Modifier.align(Alignment.CenterStart)
@@ -64,11 +62,11 @@ fun DateRoadPointBottomSheet(
                 )
             }
             Spacer(modifier = Modifier.height(17.dp))
-            DateRoadBottomSheetContent(
+            DateRoadBottonSheetContent(
                 dateLoadCollectPoint = DateRoadCollectPointType.WATCH_ADS,
                 onClick = onClick
             )
-            DateRoadBottomSheetContent(
+            DateRoadBottonSheetContent(
                 dateLoadCollectPoint = DateRoadCollectPointType.COURSE_REGISTRATION,
                 onClick = onClick
             )
@@ -78,15 +76,10 @@ fun DateRoadPointBottomSheet(
 }
 
 @Composable
-fun DateRoadBottomSheetContent(
+fun DateRoadBottonSheetContent(
     dateLoadCollectPoint: DateRoadCollectPointType,
     onClick: (DateRoadCollectPointType) -> Unit
 ) {
-    val pointAmount = when (dateLoadCollectPoint) {
-        DateRoadCollectPointType.WATCH_ADS -> PointCollect.ADS
-        DateRoadCollectPointType.COURSE_REGISTRATION -> PointCollect.COURSE
-    }
-
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -116,7 +109,7 @@ fun DateRoadBottomSheetContent(
             )
             Spacer(modifier = Modifier.height(4.dp))
             Text(
-                text = stringResource(dateLoadCollectPoint.contentRes, pointAmount),
+                text = stringResource(dateLoadCollectPoint.contentRes),
                 color = DateRoadTheme.colors.gray400,
                 style = DateRoadTheme.typography.bodySemi13
 
@@ -136,7 +129,6 @@ fun DateRoadBottomSheetContent(
 fun DateRoadPointBottomSheetPreView() {
     DateRoadPointBottomSheet(
         isBottomSheetOpen = true,
-        onClick = {},
-        title = ""
+        onClick = {}
     )
 }
