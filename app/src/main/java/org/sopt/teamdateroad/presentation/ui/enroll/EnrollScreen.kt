@@ -29,8 +29,6 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.flowWithLifecycle
-import java.time.LocalDate
-import java.time.format.DateTimeFormatter
 import org.sopt.teamdateroad.R
 import org.sopt.teamdateroad.domain.model.Place
 import org.sopt.teamdateroad.domain.type.RegionType
@@ -95,6 +93,8 @@ import org.sopt.teamdateroad.presentation.util.amplitude.AmplitudeUtils
 import org.sopt.teamdateroad.presentation.util.view.LoadState
 import org.sopt.teamdateroad.ui.theme.DATEROADTheme
 import org.sopt.teamdateroad.ui.theme.DateRoadTheme
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 
 @Composable
 fun EnrollRoute(
@@ -283,9 +283,8 @@ fun EnrollRoute(
         onPlaceCardDeleteButtonClick = { index -> viewModel.setEvent(EnrollContract.EnrollEvent.OnPlaceCardDeleteButtonClick(index = index)) },
         onDescriptionValueChange = { description -> viewModel.setEvent(EnrollContract.EnrollEvent.OnDescriptionValueChange(description = description)) },
         onCostValueChange = { cost -> viewModel.setEvent(EnrollContract.EnrollEvent.OnCostValueChange(cost = cost)) },
-        onEnrollSuccessDialogButtonClick = {
-            viewModel.setSideEffect(EnrollContract.EnrollSideEffect.PopBackStack)
-        }
+        onEnrollSuccessDialogButtonClick = { viewModel.setSideEffect(EnrollContract.EnrollSideEffect.PopBackStack) },
+        onSelectThumbnail = { viewModel.setEvent(EnrollContract.EnrollEvent.OnSelectThumbnail(index = it)) }
     )
 
     when (uiState.loadState) {
@@ -353,7 +352,8 @@ fun EnrollScreen(
     onPlaceCardDeleteButtonClick: (Int) -> Unit,
     onDescriptionValueChange: (String) -> Unit,
     onCostValueChange: (String) -> Unit,
-    onEnrollSuccessDialogButtonClick: () -> Unit
+    onEnrollSuccessDialogButtonClick: () -> Unit,
+    onSelectThumbnail: (Int) -> Unit,
 ) {
     val focusManager = LocalFocusManager.current
 
@@ -378,10 +378,12 @@ fun EnrollScreen(
                 )
                 Spacer(modifier = Modifier.height(8.dp))
                 EnrollPhotos(
-                    isDeletable = enrollUiState.page == EnrollScreenType.FIRST,
+                    isEditable = enrollUiState.page == EnrollScreenType.FIRST,
                     images = enrollUiState.enroll.images,
+                    thumbnailIndex = enrollUiState.thumbnailIndex,
                     onPhotoButtonClick = onPhotoButtonClick,
-                    onDeleteButtonClick = onImageDeleteButtonClick
+                    onDeleteButtonClick = onImageDeleteButtonClick,
+                    onSelectThumbnail = onSelectThumbnail,
                 )
             }
 
@@ -581,7 +583,8 @@ fun EnrollScreenPreview() {
             onPlaceCardDragAndDrop = {},
             onDescriptionValueChange = {},
             onCostValueChange = {},
-            onEnrollSuccessDialogButtonClick = {}
+            onEnrollSuccessDialogButtonClick = {},
+            onSelectThumbnail = {},
         )
     }
 }

@@ -27,10 +27,12 @@ import org.sopt.teamdateroad.ui.theme.DateRoadTheme
 @Composable
 fun EnrollPhotos(
     modifier: Modifier = Modifier,
-    isDeletable: Boolean,
+    isEditable: Boolean,
     images: List<String>,
+    thumbnailIndex : Int,
     onPhotoButtonClick: () -> Unit = {},
-    onDeleteButtonClick: (Int) -> Unit = {}
+    onDeleteButtonClick: (Int) -> Unit = {},
+    onSelectThumbnail : (Int) -> Unit = {},
 ) {
     Box(
         modifier = modifier
@@ -51,13 +53,15 @@ fun EnrollPhotos(
             items(images.size) { index ->
                 EnrollPhotoPreviewCard(
                     id = index,
-                    isDeletable = isDeletable,
+                    isEditable = isEditable,
+                    isThumbnail = thumbnailIndex == index,
                     image = images[index],
-                    onDeleteButtonClick = { onDeleteButtonClick(index) }
+                    onDeleteButtonClick = onDeleteButtonClick,
+                    onSelectThumbnail = onSelectThumbnail
                 )
             }
         }
-        if (images.isNotEmpty() && isDeletable) {
+        if (images.isNotEmpty() && isEditable) {
             Image(
                 modifier = Modifier
                     .align(Alignment.BottomStart)
@@ -85,8 +89,9 @@ fun EnrollPhotos(
 fun EnrollPhotosPreview() {
     DATEROADTheme {
         EnrollPhotos(
-            isDeletable = false,
-            images = listOf()
+            isEditable = false,
+            images = listOf(),
+            thumbnailIndex = 0,
         )
     }
 }
