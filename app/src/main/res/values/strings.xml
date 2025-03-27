@@ -251,6 +251,7 @@
     <string name="enroll_cost_title">총 비용을 입력해 주세요</string>
     <string name="enroll_cost_placeholder">데이트 예상 총 비용을 숫자로만 입력해 주세요</string>
     <string name="enroll_button_text_completion">완료</string>
+    <string name="enroll_thumbnail_text">대표</string>
 
     <!-- Home -->
     <string name="home_hot_date_course_title">%s님, 오늘은\n이런 데이트 코스 어떠세요?</string>
