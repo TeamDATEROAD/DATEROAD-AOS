@@ -34,6 +34,7 @@ class EnrollContract {
         val fetchEnrollState: LoadState = LoadState.Idle,
         val enrollType: EnrollType = EnrollType.COURSE,
         val page: EnrollScreenType = EnrollScreenType.FIRST,
+        val thumbnailIndex: Int = 0,
         val enroll: Enroll = Enroll(),
         val isEnrollButtonEnabled: Boolean = false,
         val titleValidateState: TextFieldValidateResult = TextFieldValidateResult.Basic,
@@ -81,7 +82,8 @@ class EnrollContract {
         data class FetchTimelineDetail(val fetchEnrollState: LoadState, val timelineDetail: TimelineDetail?) : EnrollEvent()
         data class SetEnrollButtonEnabled(val isEnrollButtonEnabled: Boolean) : EnrollEvent()
         data class SetImage(val images: List<String>) : EnrollEvent()
-        data class OnImageDeleteButtonClick(val index: Int) : EnrollEvent()
+        data class OnSelectThumbnail(val index: Int) : EnrollEvent()
+        data class OnImageDeleteButtonClick(val index: Int, val moveThumbnail: Boolean) : EnrollEvent()
         data class OnTitleValueChange(val title: String) : EnrollEvent()
         data class OnDatePickerBottomSheetButtonClick(val date: String) : EnrollEvent()
         data class OnTimePickerBottomSheetButtonClick(val startAt: String) : EnrollEvent()

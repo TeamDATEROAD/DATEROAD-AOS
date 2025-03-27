@@ -267,7 +267,14 @@ fun EnrollRoute(
                 )
             }
         },
-        onImageDeleteButtonClick = { index -> viewModel.setEvent(EnrollContract.EnrollEvent.OnImageDeleteButtonClick(index = index)) },
+        onImageDeleteButtonClick = { index ->
+            viewModel.setEvent(
+                EnrollContract.EnrollEvent.OnImageDeleteButtonClick(
+                    index = index,
+                    moveThumbnail = index <= uiState.thumbnailIndex
+                )
+            )
+        },
         onTitleValueChange = { title -> viewModel.setEvent(EnrollContract.EnrollEvent.OnTitleValueChange(title = title)) },
         onDatePickerBottomSheetButtonClick = { date -> viewModel.setEvent(EnrollContract.EnrollEvent.OnDatePickerBottomSheetButtonClick(date = date)) },
         onTimePickerBottomSheetButtonClick = { startAt -> viewModel.setEvent(EnrollContract.EnrollEvent.OnTimePickerBottomSheetButtonClick(startAt = startAt)) },
@@ -283,9 +290,8 @@ fun EnrollRoute(
         onPlaceCardDeleteButtonClick = { index -> viewModel.setEvent(EnrollContract.EnrollEvent.OnPlaceCardDeleteButtonClick(index = index)) },
         onDescriptionValueChange = { description -> viewModel.setEvent(EnrollContract.EnrollEvent.OnDescriptionValueChange(description = description)) },
         onCostValueChange = { cost -> viewModel.setEvent(EnrollContract.EnrollEvent.OnCostValueChange(cost = cost)) },
-        onEnrollSuccessDialogButtonClick = {
-            viewModel.setSideEffect(EnrollContract.EnrollSideEffect.PopBackStack)
-        }
+        onEnrollSuccessDialogButtonClick = { viewModel.setSideEffect(EnrollContract.EnrollSideEffect.PopBackStack) },
+        onSelectThumbnail = { viewModel.setEvent(EnrollContract.EnrollEvent.OnSelectThumbnail(index = it)) }
     )
 
     when (uiState.loadState) {
@@ -353,7 +359,8 @@ fun EnrollScreen(
     onPlaceCardDeleteButtonClick: (Int) -> Unit,
     onDescriptionValueChange: (String) -> Unit,
     onCostValueChange: (String) -> Unit,
-    onEnrollSuccessDialogButtonClick: () -> Unit
+    onEnrollSuccessDialogButtonClick: () -> Unit,
+    onSelectThumbnail: (Int) -> Unit
 ) {
     val focusManager = LocalFocusManager.current
 
@@ -378,10 +385,12 @@ fun EnrollScreen(
                 )
                 Spacer(modifier = Modifier.height(8.dp))
                 EnrollPhotos(
-                    isDeletable = enrollUiState.page == EnrollScreenType.FIRST,
+                    isEditable = enrollUiState.page == EnrollScreenType.FIRST,
                     images = enrollUiState.enroll.images,
+                    thumbnailIndex = enrollUiState.thumbnailIndex,
                     onPhotoButtonClick = onPhotoButtonClick,
-                    onDeleteButtonClick = onImageDeleteButtonClick
+                    onDeleteButtonClick = onImageDeleteButtonClick,
+                    onSelectThumbnail = onSelectThumbnail
                 )
             }
 
@@ -581,7 +590,8 @@ fun EnrollScreenPreview() {
             onPlaceCardDragAndDrop = {},
             onDescriptionValueChange = {},
             onCostValueChange = {},
-            onEnrollSuccessDialogButtonClick = {}
+            onEnrollSuccessDialogButtonClick = {},
+            onSelectThumbnail = {}
         )
     }
 }
