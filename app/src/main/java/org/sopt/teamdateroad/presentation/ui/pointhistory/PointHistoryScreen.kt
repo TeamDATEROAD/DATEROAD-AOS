@@ -26,8 +26,10 @@ import org.sopt.teamdateroad.domain.model.Point
 import org.sopt.teamdateroad.domain.model.PointHistory
 import org.sopt.teamdateroad.domain.model.UserPoint
 import org.sopt.teamdateroad.presentation.type.EmptyViewType
+import org.sopt.teamdateroad.presentation.type.EnrollType
 import org.sopt.teamdateroad.presentation.type.PointHistoryTabType
 import org.sopt.teamdateroad.presentation.ui.component.bottomsheet.DateRoadPointBottomSheet
+import org.sopt.teamdateroad.presentation.ui.component.bottomsheet.model.collect.DateRoadCollectPointType
 import org.sopt.teamdateroad.presentation.ui.component.tabbar.DateRoadTabBar
 import org.sopt.teamdateroad.presentation.ui.component.tabbar.DateRoadTabTitle
 import org.sopt.teamdateroad.presentation.ui.component.topbar.DateRoadBasicTopBar
@@ -37,6 +39,7 @@ import org.sopt.teamdateroad.presentation.ui.component.view.DateRoadIdleView
 import org.sopt.teamdateroad.presentation.ui.component.view.DateRoadLoadingView
 import org.sopt.teamdateroad.presentation.ui.pointhistory.component.PointHistoryCard
 import org.sopt.teamdateroad.presentation.ui.pointhistory.component.PointHistoryPointBox
+import org.sopt.teamdateroad.presentation.util.ViewPath.POINT_HISTORY
 import org.sopt.teamdateroad.presentation.util.view.LoadState
 import org.sopt.teamdateroad.ui.theme.DATEROADTheme
 import org.sopt.teamdateroad.ui.theme.DateRoadTheme
@@ -45,7 +48,8 @@ import org.sopt.teamdateroad.ui.theme.DateRoadTheme
 fun PointHistoryRoute(
     padding: PaddingValues,
     viewModel: PointHistoryViewModel = hiltViewModel(),
-    popBackStack: () -> Unit
+    popBackStack: () -> Unit,
+    navigateToEnroll: (EnrollType, String, Int?) -> Unit,
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     val lifecycleOwner = LocalLifecycleOwner.current
@@ -60,6 +64,11 @@ fun PointHistoryRoute(
             .collect { pointHistorySideEffect ->
                 when (pointHistorySideEffect) {
                     is PointHistoryContract.PointHistorySideEffect.PopBackStack -> popBackStack()
+                    is PointHistoryContract.PointHistorySideEffect.NavigateToEnroll -> navigateToEnroll(
+                        pointHistorySideEffect.enrollType,
+                        pointHistorySideEffect.viewPath,
+                        pointHistorySideEffect.id
+                    )
                 }
             }
     }
@@ -80,7 +89,16 @@ fun PointHistoryRoute(
                 },
                 onTopBarIconClicked = { viewModel.setSideEffect(PointHistoryContract.PointHistorySideEffect.PopBackStack) },
                 onClickCollectPoint = { viewModel.setEvent(PointHistoryContract.PointHistoryEvent.OnPointCollectBottomSheetClick) },
-                onDisMissCollectPoint = { viewModel.setEvent(PointHistoryContract.PointHistoryEvent.OnPointCollectBottomSheetDismiss) }
+                onDisMissCollectPoint = { viewModel.setEvent(PointHistoryContract.PointHistoryEvent.OnPointCollectBottomSheetDismiss) },
+                onSelectEnroll = {
+                    viewModel.setSideEffect(
+                        PointHistoryContract.PointHistorySideEffect.NavigateToEnroll(
+                            enrollType = EnrollType.COURSE,
+                            viewPath = POINT_HISTORY,
+                            id = null,
+                        )
+                    )
+                }
             )
         }
 
@@ -95,7 +113,8 @@ fun PointHistoryScreen(
     onTabBarClicked: (PointHistoryTabType) -> Unit,
     onTopBarIconClicked: () -> Unit,
     onClickCollectPoint: () -> Unit,
-    onDisMissCollectPoint: () -> Unit
+    onDisMissCollectPoint: () -> Unit,
+    onSelectEnroll: () -> Unit,
 ) {
     Column(
         modifier = Modifier
@@ -164,7 +183,12 @@ fun PointHistoryScreen(
 
     DateRoadPointBottomSheet(
         isBottomSheetOpen = pointHistoryUiState.isPointCollectBottomSheetOpen,
-        onClick = {
+        onClick = { dateRoadCollectPointType ->
+            when(dateRoadCollectPointType){
+                //TODO  : add ADS
+                DateRoadCollectPointType.WATCH_ADS -> Unit
+                DateRoadCollectPointType.COURSE_REGISTRATION ->onSelectEnroll()
+            }
             onDisMissCollectPoint()
         },
         onDismissRequest = {
@@ -194,7 +218,8 @@ fun PointHistoryPreview() {
             onTabBarClicked = {},
             onTopBarIconClicked = {},
             onClickCollectPoint = {},
-            onDisMissCollectPoint = {}
+            onDisMissCollectPoint = {},
+            onSelectEnroll = {},
         )
     }
 }
