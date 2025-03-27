@@ -59,7 +59,7 @@ fun DateRoadPlaceSearchBottomSheet(
     DefaultDateRoadBottomSheet(
         modifier = Modifier
             .fillMaxWidth()
-            .height(LocalConfiguration.current.screenHeightDp.dp * 0.77f),
+            .height(LocalConfiguration.current.screenHeightDp.dp * 0.8f),
         isBottomSheetOpen = isBottomSheetOpen,
         onDismissRequest = onDismissRequest
     ) {
