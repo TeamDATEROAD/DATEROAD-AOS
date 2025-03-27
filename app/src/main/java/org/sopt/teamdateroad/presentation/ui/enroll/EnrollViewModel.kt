@@ -78,7 +78,13 @@ class EnrollViewModel @Inject constructor(
             is EnrollContract.EnrollEvent.OnTimeTextFieldClick -> setState { copy(isTimePickerBottomSheetOpen = true) }
             is EnrollContract.EnrollEvent.OnRegionTextFieldClick -> setState { copy(isRegionBottomSheetOpen = true, onRegionBottomSheetRegionSelected = RegionType.SEOUL, onRegionBottomSheetAreaSelected = null) }
             is EnrollContract.EnrollEvent.OnPlaceSearchButtonClick -> setState { copy(isPlaceSearchBottomSheetOpen = true) }
-            is EnrollContract.EnrollEvent.OnKeywordChanged -> setState { copy(keyword = event.keyword) }
+            is EnrollContract.EnrollEvent.OnKeywordChanged -> {
+                setState {
+                    copy(keyword = event.keyword)
+                }
+                getPlaceSearchResult()
+            }
+
             is EnrollContract.EnrollEvent.OnPlaceSearchBottomSheetDismiss -> setState { copy(isPlaceSearchBottomSheetOpen = false, keyword = "", placeSearchResult = PlaceSearchResult(emptyList())) }
             is EnrollContract.EnrollEvent.OnSelectedPlaceCourseTimeClick -> setState { copy(isDurationBottomSheetOpen = true) }
             is EnrollContract.EnrollEvent.OnDatePickerBottomSheetDismissRequest -> setState { copy(isDatePickerBottomSheetOpen = false) }
@@ -99,7 +105,6 @@ class EnrollViewModel @Inject constructor(
                 )
             }
             is EnrollContract.EnrollEvent.OnTitleValueChange -> setState { copy(enroll = currentState.enroll.copy(title = event.title)) }
-            is EnrollContract.EnrollEvent.OnSearch -> getPlaceSearchResult()
             is EnrollContract.EnrollEvent.OnPlaceSelected -> {
                 setState { copy(keyword = "", placeSearchResult = PlaceSearchResult(emptyList()), place = currentState.place.copy(title = event.placeInfo.placeName), placeInfos = currentState.placeInfos + event.placeInfo, isPlaceSearchBottomSheetOpen = false) }
             }

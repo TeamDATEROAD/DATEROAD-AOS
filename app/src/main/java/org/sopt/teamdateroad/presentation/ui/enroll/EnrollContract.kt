@@ -85,7 +85,6 @@ class EnrollContract {
         data object OnRegionTextFieldClick : EnrollEvent()
         data object OnPlaceSearchButtonClick : EnrollEvent()
         data class OnKeywordChanged(val keyword: String) : EnrollEvent()
-        data object OnSearch : EnrollEvent()
         data class OnPlaceSelected(val placeInfo: PlaceInfo) : EnrollEvent()
         data object OnPlaceSearchBottomSheetDismiss : EnrollEvent()
         data class FetchEnrollCourseType(val enrollType: EnrollType) : EnrollEvent()

@@ -53,7 +53,6 @@ fun EnrollSecondScreen(
     enrollUiState: EnrollContract.EnrollUiState = EnrollContract.EnrollUiState(),
     onPlaceSearchButtonClick: () -> Unit,
     onKeywordChanged: (String) -> Unit,
-    onSearch: () -> Unit,
     onPlaceSelected: (PlaceInfo) -> Unit,
     onPlaceSearchBottomSheetDismiss: () -> Unit,
     onSelectedPlaceCourseTimeClick: () -> Unit,
@@ -182,7 +181,6 @@ fun EnrollSecondScreen(
         keyword = enrollUiState.keyword,
         placeSearchResult = enrollUiState.placeSearchResult,
         onKeywordChanged = onKeywordChanged,
-        onSearch = onSearch,
         onPlaceSelected = onPlaceSelected,
         onDismissRequest = onPlaceSearchBottomSheetDismiss
     )
@@ -201,7 +199,6 @@ fun EnrollSecondScreenPreview() {
             onPlaceSearchBottomSheetDismiss = {},
             onKeywordChanged = {},
             onPlaceCardDragAndDrop = {},
-            onSearch = {},
             onPlaceSelected = {}
         )
     }

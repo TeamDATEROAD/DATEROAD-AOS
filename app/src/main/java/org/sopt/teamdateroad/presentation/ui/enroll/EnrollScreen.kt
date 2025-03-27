@@ -256,7 +256,6 @@ fun EnrollRoute(
         onRegionTextFieldClick = { viewModel.setEvent(EnrollContract.EnrollEvent.OnRegionTextFieldClick) },
         onPlaceSearchButtonClick = { viewModel.setEvent(EnrollContract.EnrollEvent.OnPlaceSearchButtonClick) },
         onKeywordChanged = { keyword -> viewModel.setEvent(EnrollContract.EnrollEvent.OnKeywordChanged(keyword = keyword)) },
-        onSearch = { viewModel.setEvent(EnrollContract.EnrollEvent.OnSearch) },
         onPlaceSelected = { placeInfo -> viewModel.setEvent(EnrollContract.EnrollEvent.OnPlaceSelected(placeInfo = placeInfo)) },
         onPlaceSearchBottomSheetDismiss = { viewModel.setEvent(EnrollContract.EnrollEvent.OnPlaceSearchBottomSheetDismiss) },
         onSelectedPlaceCourseTimeClick = { viewModel.setEvent(EnrollContract.EnrollEvent.OnSelectedPlaceCourseTimeClick) },
@@ -344,7 +343,6 @@ fun EnrollScreen(
     onRegionTextFieldClick: () -> Unit,
     onPlaceSearchButtonClick: () -> Unit,
     onKeywordChanged: (String) -> Unit,
-    onSearch: () -> Unit,
     onPlaceSelected: (PlaceInfo) -> Unit,
     onPlaceSearchBottomSheetDismiss: () -> Unit,
     onSelectedPlaceCourseTimeClick: () -> Unit,
@@ -449,7 +447,6 @@ fun EnrollScreen(
                     enrollUiState = enrollUiState,
                     onPlaceSearchButtonClick = onPlaceSearchButtonClick,
                     onKeywordChanged = onKeywordChanged,
-                    onSearch = onSearch,
                     onPlaceSelected = onPlaceSelected,
                     onPlaceSearchBottomSheetDismiss = onPlaceSearchBottomSheetDismiss,
                     onSelectedPlaceCourseTimeClick = onSelectedPlaceCourseTimeClick,
@@ -608,7 +605,6 @@ fun EnrollScreenPreview() {
             onEnrollSuccessDialogButtonClick = {},
             onPlaceSearchBottomSheetDismiss = {},
             onKeywordChanged = { },
-            onSearch = { },
             onPlaceSelected = { }
         )
     }

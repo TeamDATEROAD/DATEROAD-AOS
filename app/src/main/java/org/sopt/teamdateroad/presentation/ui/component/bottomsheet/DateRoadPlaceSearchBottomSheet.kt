@@ -14,7 +14,6 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -54,7 +53,6 @@ fun DateRoadPlaceSearchBottomSheet(
     keyword: String,
     placeSearchResult: PlaceSearchResult,
     onKeywordChanged: (String) -> Unit,
-    onSearch: () -> Unit,
     onPlaceSelected: (PlaceInfo) -> Unit,
     onDismissRequest: () -> Unit = {}
 ) {
@@ -138,9 +136,6 @@ fun DateRoadPlaceSearchBottomSheet(
             keyboardOptions = KeyboardOptions(
                 keyboardType = KeyboardType.Text,
                 imeAction = ImeAction.Search
-            ),
-            keyboardActions = KeyboardActions(
-                onSearch = { onSearch() }
             )
         )
 
@@ -206,7 +201,6 @@ fun DateRoadPlaceSearchBottomSheetPreview() {
             keyword = text,
             placeSearchResult = PlaceSearchResult(List(10) { PlaceInfo("카페 나랑", "경기 의왕시 청계로 217") }),
             onKeywordChanged = { text = it },
-            onSearch = {},
             onPlaceSelected = {},
             onDismissRequest = { isBottomSheetOpen = !isBottomSheetOpen }
         )
