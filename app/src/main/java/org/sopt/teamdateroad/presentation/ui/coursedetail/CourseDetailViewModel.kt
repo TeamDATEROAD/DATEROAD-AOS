@@ -32,8 +32,8 @@ class CourseDetailViewModel @Inject constructor(
 
     override suspend fun handleEvent(event: CourseDetailContract.CourseDetailEvent) {
         when (event) {
-            is CourseDetailContract.CourseDetailEvent.OnDialogPointLack -> setState { copy(isPointLackDialogOpen = true) }
-            is CourseDetailContract.CourseDetailEvent.DismissDialogPointLack -> setState { copy(isPointLackDialogOpen = false) }
+            is CourseDetailContract.CourseDetailEvent.OnDialogPointLack -> setState { copy(isPointCollectBottomSheetOpen = true) }
+            is CourseDetailContract.CourseDetailEvent.DismissDialogPointLack -> setState { copy(isPointCollectBottomSheetOpen = false) }
             is CourseDetailContract.CourseDetailEvent.OnDialogLookedForFree -> setState { copy(isFreeReadDialogOpen = true) }
             is CourseDetailContract.CourseDetailEvent.DismissDialogLookedForFree -> setState { copy(isFreeReadDialogOpen = false) }
             is CourseDetailContract.CourseDetailEvent.OnDialogDeleteCourse -> setState { copy(isDeleteCourseDialogOpen = true) }
