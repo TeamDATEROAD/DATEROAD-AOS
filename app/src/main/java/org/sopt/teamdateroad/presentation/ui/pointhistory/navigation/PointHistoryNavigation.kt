@@ -16,13 +16,13 @@ fun NavController.navigationPointHistory() {
 fun NavGraphBuilder.pointHistoryGraph(
     padding: PaddingValues,
     popBackStack: () -> Unit,
-    navigateToEnroll: (EnrollType, String,Int?) -> Unit
+    navigateToEnroll: (EnrollType, String, Int?) -> Unit
 ) {
     composable(route = PointHistoryRoute.ROUTE) {
         PointHistoryRoute(
             padding = padding,
             popBackStack = popBackStack,
-            navigateToEnroll = navigateToEnroll,
+            navigateToEnroll = navigateToEnroll
         )
     }
 }

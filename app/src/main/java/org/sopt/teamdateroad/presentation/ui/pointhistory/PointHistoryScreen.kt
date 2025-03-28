@@ -49,7 +49,7 @@ fun PointHistoryRoute(
     padding: PaddingValues,
     viewModel: PointHistoryViewModel = hiltViewModel(),
     popBackStack: () -> Unit,
-    navigateToEnroll: (EnrollType, String, Int?) -> Unit,
+    navigateToEnroll: (EnrollType, String, Int?) -> Unit
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     val lifecycleOwner = LocalLifecycleOwner.current
@@ -95,7 +95,7 @@ fun PointHistoryRoute(
                         PointHistoryContract.PointHistorySideEffect.NavigateToEnroll(
                             enrollType = EnrollType.COURSE,
                             viewPath = POINT_HISTORY,
-                            id = null,
+                            id = null
                         )
                     )
                 }
@@ -114,7 +114,7 @@ fun PointHistoryScreen(
     onTopBarIconClicked: () -> Unit,
     onClickCollectPoint: () -> Unit,
     onDisMissCollectPoint: () -> Unit,
-    onSelectEnroll: () -> Unit,
+    onSelectEnroll: () -> Unit
 ) {
     Column(
         modifier = Modifier
@@ -184,7 +184,7 @@ fun PointHistoryScreen(
         title = stringResource(R.string.point_box_get_point_button_text),
         onClick = { dateRoadCollectPointType ->
             when (dateRoadCollectPointType) {
-                //TODO  : add ADS
+                // TODO  : add ADS
                 DateRoadCollectPointType.WATCH_ADS -> Unit
                 DateRoadCollectPointType.COURSE_REGISTRATION -> onSelectEnroll()
             }
@@ -218,7 +218,7 @@ fun PointHistoryPreview() {
             onTopBarIconClicked = {},
             onClickCollectPoint = {},
             onDisMissCollectPoint = {},
-            onSelectEnroll = {},
+            onSelectEnroll = {}
         )
     }
 }

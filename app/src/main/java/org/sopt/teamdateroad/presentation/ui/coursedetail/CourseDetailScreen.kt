@@ -150,7 +150,7 @@ fun CourseDetailRoute(
                 },
                 onDismissCollectPoint = {
                     viewModel.setEvent(CourseDetailContract.CourseDetailEvent.DismissDialogPointLack)
-                },
+                }
             )
         }
 
@@ -355,7 +355,7 @@ fun CourseDetailScreen(
                 title = stringResource(R.string.point_box_lack_point_button_text),
                 onClick = { dateRoadCollectPointType ->
                     when (dateRoadCollectPointType) {
-                        //TODO  : add ADS
+                        // TODO  : add ADS
                         DateRoadCollectPointType.WATCH_ADS -> Unit
                         DateRoadCollectPointType.COURSE_REGISTRATION -> onSelectEnroll()
                     }

@@ -110,7 +110,7 @@ fun MainNavHost(
             pointHistoryGraph(
                 padding = padding,
                 popBackStack = navigator::popBackStackIfNotHome,
-                navigateToEnroll = navigator::navigateToEnroll,
+                navigateToEnroll = navigator::navigateToEnroll
             )
 
             profileNavGraph(

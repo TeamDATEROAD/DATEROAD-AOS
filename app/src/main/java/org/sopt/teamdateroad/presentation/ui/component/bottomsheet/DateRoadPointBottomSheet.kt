@@ -31,7 +31,7 @@ import org.sopt.teamdateroad.ui.theme.DateRoadTheme
 @Composable
 fun DateRoadPointBottomSheet(
     isBottomSheetOpen: Boolean,
-    title : String,
+    title: String,
     onClick: (DateRoadCollectPointType) -> Unit,
     onDismissRequest: () -> Unit = {}
 ) {
@@ -82,7 +82,7 @@ fun DateRoadBottonSheetContent(
     dateLoadCollectPoint: DateRoadCollectPointType,
     onClick: (DateRoadCollectPointType) -> Unit
 ) {
-    val pointAmount = when(dateLoadCollectPoint){
+    val pointAmount = when (dateLoadCollectPoint) {
         DateRoadCollectPointType.WATCH_ADS -> PointCollect.ADS
         DateRoadCollectPointType.COURSE_REGISTRATION -> PointCollect.COURSE
     }
@@ -116,7 +116,7 @@ fun DateRoadBottonSheetContent(
             )
             Spacer(modifier = Modifier.height(4.dp))
             Text(
-                text = stringResource(dateLoadCollectPoint.contentRes,pointAmount),
+                text = stringResource(dateLoadCollectPoint.contentRes, pointAmount),
                 color = DateRoadTheme.colors.gray400,
                 style = DateRoadTheme.typography.bodySemi13
 
@@ -137,6 +137,6 @@ fun DateRoadPointBottomSheetPreView() {
     DateRoadPointBottomSheet(
         isBottomSheetOpen = true,
         onClick = {},
-        title = "",
+        title = ""
     )
 }
