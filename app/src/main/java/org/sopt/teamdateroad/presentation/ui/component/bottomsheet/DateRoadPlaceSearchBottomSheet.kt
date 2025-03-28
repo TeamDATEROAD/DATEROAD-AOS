@@ -1,6 +1,7 @@
 package org.sopt.teamdateroad.presentation.ui.component.bottomsheet
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -16,7 +17,6 @@ import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -30,6 +30,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.painterResource
@@ -38,6 +39,7 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.holix.android.bottomsheetdialog.compose.BottomSheetDialog
 import org.sopt.teamdateroad.R
 import org.sopt.teamdateroad.domain.model.PlaceInfo
 import org.sopt.teamdateroad.domain.model.PlaceSearchResult
@@ -46,7 +48,6 @@ import org.sopt.teamdateroad.presentation.util.modifier.noRippleClickable
 import org.sopt.teamdateroad.ui.theme.DATEROADTheme
 import org.sopt.teamdateroad.ui.theme.DateRoadTheme
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DateRoadPlaceSearchBottomSheet(
     isBottomSheetOpen: Boolean,
@@ -56,125 +57,131 @@ fun DateRoadPlaceSearchBottomSheet(
     onPlaceSelected: (PlaceInfo) -> Unit,
     onDismissRequest: () -> Unit = {}
 ) {
-    DefaultDateRoadBottomSheet(
-        modifier = Modifier
-            .fillMaxWidth()
-            .height(LocalConfiguration.current.screenHeightDp.dp * 0.8f),
-        isBottomSheetOpen = isBottomSheetOpen,
-        onDismissRequest = onDismissRequest
-    ) {
-        Spacer(modifier = Modifier.height(23.dp))
-
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(40.dp)
-                .padding(start = 25.dp, end = 12.dp),
-            verticalAlignment = Alignment.CenterVertically
+    if (isBottomSheetOpen) {
+        BottomSheetDialog(
+            onDismissRequest = onDismissRequest
         ) {
-            Text(
-                text = stringResource(R.string.enroll_place_search_bottom_sheet_title),
-                color = DateRoadTheme.colors.black,
-                style = DateRoadTheme.typography.bodyBold17
-            )
-
-            Spacer(modifier = Modifier.weight(1f))
-
-            Image(
+            Column(
                 modifier = Modifier
-                    .size(40.dp)
-                    .noRippleClickable(onClick = onDismissRequest)
-                    .padding(15.dp),
-                painter = painterResource(id = R.drawable.ic_bottom_sheet_close),
-                contentDescription = null
-            )
-        }
-
-        Spacer(modifier = Modifier.height(22.dp))
-
-        TextField(
-            value = keyword,
-            onValueChange = { keyword ->
-                onKeywordChanged(keyword)
-            },
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(54.dp)
-                .padding(start = 14.dp, end = 20.dp),
-            placeholder = {
-                Text(
-                    modifier = Modifier,
-                    text = stringResource(R.string.enroll_place_insert_bar_enter_place_placeholder),
-                    color = DateRoadTheme.colors.gray300,
-                    style = DateRoadTheme.typography.bodySemi15
-                )
-            },
-            trailingIcon = {
-                IconButton(
-                    modifier = Modifier.size(20.dp),
-                    onClick = {
-                        onKeywordChanged("")
-                    }
-                ) {
-                    Icon(
-                        painter = painterResource(id = R.drawable.btn_enroll_delete_picture),
-                        contentDescription = null,
-                        tint = Color.Unspecified
-                    )
-                }
-            },
-            colors = TextFieldDefaults.colors(
-                focusedContainerColor = DateRoadTheme.colors.gray100,
-                unfocusedContainerColor = DateRoadTheme.colors.gray100,
-                cursorColor = DateRoadTheme.colors.purple600,
-                focusedIndicatorColor = Color.Transparent,
-                unfocusedIndicatorColor = Color.Transparent,
-                disabledIndicatorColor = Color.Transparent
-            ),
-            shape = RoundedCornerShape(14.dp),
-            singleLine = true,
-            keyboardOptions = KeyboardOptions(
-                keyboardType = KeyboardType.Text,
-                imeAction = ImeAction.Search
-            )
-        )
-
-        Spacer(modifier = Modifier.height(10.dp))
-
-        if (placeSearchResult.placeInfos.isNotEmpty()) {
-            LazyColumn {
-                itemsIndexed(items = placeSearchResult.placeInfos, key = { index, placeInfo -> placeInfo.hashCode() + index }) { index, placeInfo ->
-                    EnrollPlaceSearchItem(keyword = keyword, placeInfo = placeInfo, onClick = { onPlaceSelected(placeInfo) })
-
-                    if (index != placeSearchResult.placeInfos.lastIndex) {
-                        HorizontalDivider(
-                            modifier = Modifier.fillMaxWidth(),
-                            color = DateRoadTheme.colors.gray100,
-                            thickness = 1.dp
-                        )
-                    }
-                }
-            }
-        } else {
-            Box(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(bottom = 70.dp)
+                    .fillMaxWidth()
+                    .height(LocalConfiguration.current.screenHeightDp.dp * 0.8f)
+                    .clip(RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp))
+                    .background(DateRoadTheme.colors.white)
             ) {
-                Column(modifier = Modifier.align(Alignment.Center)) {
+                Spacer(modifier = Modifier.height(23.dp))
+
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(40.dp)
+                        .padding(start = 25.dp, end = 12.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Text(
+                        text = stringResource(R.string.enroll_place_search_bottom_sheet_title),
+                        color = DateRoadTheme.colors.black,
+                        style = DateRoadTheme.typography.bodyBold17
+                    )
+
+                    Spacer(modifier = Modifier.weight(1f))
+
                     Image(
                         modifier = Modifier
-                            .width(167.dp)
-                            .height(191.dp),
-                        painter = painterResource(R.drawable.img_place_search_no_match),
+                            .size(40.dp)
+                            .noRippleClickable(onClick = onDismissRequest)
+                            .padding(15.dp),
+                        painter = painterResource(id = R.drawable.ic_bottom_sheet_close),
                         contentDescription = null
                     )
-                    Spacer(modifier = Modifier.height(40.dp))
-                    Text(
-                        text = stringResource(R.string.enroll_place_search_no_match),
-                        color = DateRoadTheme.colors.gray300,
-                        style = DateRoadTheme.typography.titleBold18
+                }
+
+                Spacer(modifier = Modifier.height(22.dp))
+
+                TextField(
+                    value = keyword,
+                    onValueChange = { keyword ->
+                        onKeywordChanged(keyword)
+                    },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(54.dp)
+                        .padding(start = 14.dp, end = 20.dp),
+                    placeholder = {
+                        Text(
+                            modifier = Modifier,
+                            text = stringResource(R.string.enroll_place_insert_bar_enter_place_placeholder),
+                            color = DateRoadTheme.colors.gray300,
+                            style = DateRoadTheme.typography.bodySemi15
+                        )
+                    },
+                    trailingIcon = {
+                        IconButton(
+                            modifier = Modifier.size(20.dp),
+                            onClick = {
+                                onKeywordChanged("")
+                            }
+                        ) {
+                            Icon(
+                                painter = painterResource(id = R.drawable.btn_enroll_delete_picture),
+                                contentDescription = null,
+                                tint = Color.Unspecified
+                            )
+                        }
+                    },
+                    colors = TextFieldDefaults.colors(
+                        focusedContainerColor = DateRoadTheme.colors.gray100,
+                        unfocusedContainerColor = DateRoadTheme.colors.gray100,
+                        cursorColor = DateRoadTheme.colors.purple600,
+                        focusedIndicatorColor = Color.Transparent,
+                        unfocusedIndicatorColor = Color.Transparent,
+                        disabledIndicatorColor = Color.Transparent
+                    ),
+                    shape = RoundedCornerShape(14.dp),
+                    singleLine = true,
+                    keyboardOptions = KeyboardOptions(
+                        keyboardType = KeyboardType.Text,
+                        imeAction = ImeAction.Search
                     )
+                )
+
+                Spacer(modifier = Modifier.height(10.dp))
+
+                if (placeSearchResult.placeInfos.isNotEmpty()) {
+                    LazyColumn {
+                        itemsIndexed(items = placeSearchResult.placeInfos, key = { index, placeInfo -> placeInfo.hashCode() + index }) { index, placeInfo ->
+                            EnrollPlaceSearchItem(keyword = keyword, placeInfo = placeInfo, onClick = { onPlaceSelected(placeInfo) })
+
+                            if (index != placeSearchResult.placeInfos.lastIndex) {
+                                HorizontalDivider(
+                                    modifier = Modifier.fillMaxWidth(),
+                                    color = DateRoadTheme.colors.gray100,
+                                    thickness = 1.dp
+                                )
+                            }
+                        }
+                    }
+                } else {
+                    Box(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(bottom = 70.dp)
+                    ) {
+                        Column(modifier = Modifier.align(Alignment.Center)) {
+                            Image(
+                                modifier = Modifier
+                                    .width(167.dp)
+                                    .height(191.dp),
+                                painter = painterResource(R.drawable.img_place_search_no_match),
+                                contentDescription = null
+                            )
+                            Spacer(modifier = Modifier.height(40.dp))
+                            Text(
+                                text = stringResource(R.string.enroll_place_search_no_match),
+                                color = DateRoadTheme.colors.gray300,
+                                style = DateRoadTheme.typography.titleBold18
+                            )
+                        }
+                    }
                 }
             }
         }

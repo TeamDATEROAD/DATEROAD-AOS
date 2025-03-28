@@ -9,7 +9,10 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import org.sopt.teamdateroad.domain.model.PlaceInfo
@@ -35,7 +38,7 @@ fun EnrollPlaceSearchItem(
     ) {
         Spacer(modifier = Modifier.height(11.dp))
         Text(
-            text = placeInfo.placeName,
+            text = getHighlightedPlaceName(keyword, placeInfo.placeName),
             color = DateRoadTheme.colors.black,
             style = DateRoadTheme.typography.bodySemi15,
             maxLines = 1,
@@ -51,6 +54,20 @@ fun EnrollPlaceSearchItem(
         )
 
         Spacer(modifier = Modifier.height(8.dp))
+    }
+}
+
+@Composable
+fun getHighlightedPlaceName(keyword: String, placeName: String) = buildAnnotatedString {
+    val keywordIndex = placeName.indexOf(keyword)
+    if (keywordIndex != -1) {
+        append(placeName.substring(0, keywordIndex))
+        withStyle(style = SpanStyle(color = DateRoadTheme.colors.purple600)) {
+            append(keyword)
+        }
+        append(placeName.substring(keywordIndex + keyword.length))
+    } else {
+        append(placeName)
     }
 }
 
