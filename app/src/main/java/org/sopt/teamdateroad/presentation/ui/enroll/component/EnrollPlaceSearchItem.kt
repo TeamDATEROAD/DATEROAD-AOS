@@ -59,16 +59,47 @@ fun EnrollPlaceSearchItem(
 
 @Composable
 fun getHighlightedPlaceName(keyword: String, placeName: String) = buildAnnotatedString {
-    val keywordIndex = placeName.indexOf(keyword)
-    if (keywordIndex != -1) {
-        append(placeName.substring(0, keywordIndex))
+    val keywordIndex = findKeywordIndex(keyword, placeName)
+
+    if (keywordIndex != null) {
+        append(placeName.substring(0, keywordIndex.first))
         withStyle(style = SpanStyle(color = DateRoadTheme.colors.purple600)) {
-            append(keyword)
+            append(placeName.substring(keywordIndex.first, keywordIndex.second + 1))
         }
-        append(placeName.substring(keywordIndex + keyword.length))
+        append(placeName.substring(keywordIndex.second + 1, placeName.length))
     } else {
         append(placeName)
     }
+}
+
+private fun findKeywordIndex(keyword: String, placeName: String): Pair<Int, Int>? {
+    val normalizedKeyword = keyword.replace(" ", "")
+    val normalizedPlaceName = placeName.replace(" ", "")
+
+    val startIndex = normalizedPlaceName.indexOf(normalizedKeyword)
+    if (startIndex == -1) return null
+
+    var actualStartIndex = 0
+    var nonSpaceCount = 0
+    for ((i, ch) in placeName.withIndex()) {
+        if (ch != ' ') nonSpaceCount++
+        if (nonSpaceCount == startIndex + 1) {
+            actualStartIndex = i
+            break
+        }
+    }
+
+    var actualEndIndex = actualStartIndex
+    var matchedCount = 0
+    for (i in actualStartIndex until placeName.length) {
+        if (placeName[i] != ' ') matchedCount++
+        if (matchedCount == normalizedKeyword.length) {
+            actualEndIndex = i
+            break
+        }
+    }
+
+    return actualStartIndex to actualEndIndex
 }
 
 @Preview(showBackground = true)
