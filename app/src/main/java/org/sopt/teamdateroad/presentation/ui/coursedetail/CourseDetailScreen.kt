@@ -352,6 +352,7 @@ fun CourseDetailScreen(
 
             DateRoadPointBottomSheet(
                 isBottomSheetOpen = courseDetailUiState.isPointCollectBottomSheetOpen,
+                title = stringResource(R.string.point_box_lack_point_button_text),
                 onClick = { dateRoadCollectPointType ->
                     when (dateRoadCollectPointType) {
                         //TODO  : add ADS

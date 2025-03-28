@@ -171,23 +171,22 @@ fun PointHistoryScreen(
             }
             items(pointHistory.size) { index ->
                 PointHistoryCard(point = pointHistory[index])
-                if (index < pointHistory.size - 1) {
-                    HorizontalDivider(
-                        color = DateRoadTheme.colors.gray100,
-                        thickness = 1.dp
-                    )
-                }
+                HorizontalDivider(
+                    color = DateRoadTheme.colors.gray100,
+                    thickness = 1.dp
+                )
             }
         }
     }
 
     DateRoadPointBottomSheet(
         isBottomSheetOpen = pointHistoryUiState.isPointCollectBottomSheetOpen,
+        title = stringResource(R.string.point_box_get_point_button_text),
         onClick = { dateRoadCollectPointType ->
-            when(dateRoadCollectPointType){
+            when (dateRoadCollectPointType) {
                 //TODO  : add ADS
                 DateRoadCollectPointType.WATCH_ADS -> Unit
-                DateRoadCollectPointType.COURSE_REGISTRATION ->onSelectEnroll()
+                DateRoadCollectPointType.COURSE_REGISTRATION -> onSelectEnroll()
             }
             onDisMissCollectPoint()
         },
