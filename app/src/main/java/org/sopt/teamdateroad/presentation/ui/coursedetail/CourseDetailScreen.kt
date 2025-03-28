@@ -146,10 +146,9 @@ fun CourseDetailRoute(
                 },
                 onReportWebViewClose = { viewModel.setEvent(CourseDetailContract.CourseDetailEvent.DismissReportWebView) },
                 onSelectEnroll = {
-                    viewModel.setEvent(CourseDetailContract.CourseDetailEvent.DismissDialogPointLack)
                     viewModel.setSideEffect(CourseDetailContract.CourseDetailSideEffect.NavigateToEnroll(enrollType = EnrollType.COURSE, viewPath = COURSE_DETAIL, id = null))
                 },
-                onDisMissCollectPoint = {
+                onDismissCollectPoint = {
                     viewModel.setEvent(CourseDetailContract.CourseDetailEvent.DismissDialogPointLack)
                 },
             )
@@ -183,7 +182,7 @@ fun CourseDetailScreen(
     courseDetailUiState: CourseDetailContract.CourseDetailUiState,
     onDialogPointLack: () -> Unit,
     onSelectEnroll: () -> Unit,
-    onDisMissCollectPoint: () -> Unit,
+    onDismissCollectPoint: () -> Unit,
     onDialogLookedForFree: () -> Unit,
     dismissDialogLookedForFree: () -> Unit,
     onDialogLookedByPoint: () -> Unit,
@@ -359,10 +358,10 @@ fun CourseDetailScreen(
                         DateRoadCollectPointType.WATCH_ADS -> Unit
                         DateRoadCollectPointType.COURSE_REGISTRATION -> onSelectEnroll()
                     }
-                    onDisMissCollectPoint()
+                    onDismissCollectPoint()
                 },
                 onDismissRequest = {
-                    onDisMissCollectPoint()
+                    onDismissCollectPoint()
                 }
             )
 
@@ -459,7 +458,7 @@ fun CourseDetailScreenPreview() {
             onDialogDeleteCourse = {},
             onDialogReportCourse = {},
             dismissDialogDeleteCourse = {},
-            onDisMissCollectPoint = {},
+            onDismissCollectPoint = {},
             onSelectEnroll = {},
             dismissDialogReportCourse = {}
         )
