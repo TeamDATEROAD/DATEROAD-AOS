@@ -32,14 +32,15 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.holix.android.bottomsheetdialog.compose.BottomSheetBehaviorProperties
 import com.holix.android.bottomsheetdialog.compose.BottomSheetDialog
+import com.holix.android.bottomsheetdialog.compose.BottomSheetDialogProperties
 import org.sopt.teamdateroad.R
 import org.sopt.teamdateroad.domain.model.PlaceInfo
 import org.sopt.teamdateroad.domain.model.PlaceSearchResult
@@ -59,12 +60,17 @@ fun DateRoadPlaceSearchBottomSheet(
 ) {
     if (isBottomSheetOpen) {
         BottomSheetDialog(
-            onDismissRequest = onDismissRequest
+            onDismissRequest = onDismissRequest,
+            properties = BottomSheetDialogProperties(
+                behaviorProperties = BottomSheetBehaviorProperties(
+                    state = BottomSheetBehaviorProperties.State.HalfExpanded,
+                    halfExpandedRatio = 0.8f,
+                    skipCollapsed = true
+                )
+            )
         ) {
             Column(
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .height(LocalConfiguration.current.screenHeightDp.dp * 0.8f)
                     .clip(RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp))
                     .background(DateRoadTheme.colors.white)
             ) {
@@ -147,7 +153,7 @@ fun DateRoadPlaceSearchBottomSheet(
                 Spacer(modifier = Modifier.height(10.dp))
 
                 if (placeSearchResult.placeInfos.isNotEmpty()) {
-                    LazyColumn {
+                    LazyColumn(modifier = Modifier.weight(1f)) {
                         itemsIndexed(items = placeSearchResult.placeInfos, key = { index, placeInfo -> placeInfo.hashCode() + index }) { index, placeInfo ->
                             EnrollPlaceSearchItem(keyword = keyword, placeInfo = placeInfo, onClick = { onPlaceSelected(placeInfo) })
 
