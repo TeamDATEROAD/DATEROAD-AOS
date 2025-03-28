@@ -65,7 +65,8 @@ fun DateRoadPlaceSearchBottomSheet(
                 behaviorProperties = BottomSheetBehaviorProperties(
                     state = BottomSheetBehaviorProperties.State.HalfExpanded,
                     halfExpandedRatio = 0.8f,
-                    skipCollapsed = true
+                    skipCollapsed = true,
+                    isDraggable = false
                 )
             )
         ) {
