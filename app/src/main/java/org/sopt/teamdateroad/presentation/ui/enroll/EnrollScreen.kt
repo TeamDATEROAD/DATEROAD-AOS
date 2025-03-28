@@ -602,7 +602,6 @@ fun EnrollScreenPreview() {
             onCostValueChange = {},
             onEnrollSuccessDialogButtonClick = {},
             onSelectThumbnail = {},
-            onEnrollSuccessDialogButtonClick = {},
             onPlaceSearchBottomSheetDismiss = {},
             onKeywordChanged = { },
             onPlaceSelected = { }
