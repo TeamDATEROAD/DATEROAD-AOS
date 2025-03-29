@@ -106,9 +106,7 @@ fun DateRoadPlaceSearchBottomSheet(
 
                 TextField(
                     value = keyword,
-                    onValueChange = { keyword ->
-                        onKeywordChanged(keyword)
-                    },
+                    onValueChange = onKeywordChanged,
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(54.dp)
