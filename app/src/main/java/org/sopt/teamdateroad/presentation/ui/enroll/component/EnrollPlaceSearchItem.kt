@@ -30,10 +30,10 @@ fun EnrollPlaceSearchItem(
         modifier = Modifier
             .fillMaxWidth()
             .height(75.dp)
-            .padding(horizontal = 25.dp)
             .noRippleClickable {
                 onClick(placeInfo)
-            },
+            }
+            .padding(horizontal = 25.dp),
         verticalArrangement = Arrangement.Center
     ) {
         Spacer(modifier = Modifier.height(11.dp))
@@ -106,6 +106,9 @@ private fun findKeywordIndex(keyword: String, placeName: String): Pair<Int, Int>
 @Composable
 fun EnrollPlacerSearchItemPreview() {
     DATEROADTheme {
-        EnrollPlaceSearchItem(keyword = "카페", placeInfo = PlaceInfo("의왕 카페 나랑", "경기 의왕시 청계로 217"), onClick = {})
+        EnrollPlaceSearchItem(
+            keyword = "카페",
+            placeInfo = PlaceInfo("의왕 카페 나랑", "경기 의왕시 청계로 217"),
+            onClick = {})
     }
 }
