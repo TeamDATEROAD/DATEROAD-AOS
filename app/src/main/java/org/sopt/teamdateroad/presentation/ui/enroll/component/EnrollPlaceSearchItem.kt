@@ -109,6 +109,7 @@ fun EnrollPlacerSearchItemPreview() {
         EnrollPlaceSearchItem(
             keyword = "카페",
             placeInfo = PlaceInfo("의왕 카페 나랑", "경기 의왕시 청계로 217"),
-            onClick = {})
+            onClick = {}
+        )
     }
 }
