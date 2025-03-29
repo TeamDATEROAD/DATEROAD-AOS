@@ -64,7 +64,7 @@ fun DateRoadPlaceSearchBottomSheet(
             properties = BottomSheetDialogProperties(
                 behaviorProperties = BottomSheetBehaviorProperties(
                     state = BottomSheetBehaviorProperties.State.HalfExpanded,
-                    halfExpandedRatio = 0.8f,
+                    halfExpandedRatio = BOTTOM_SHEET_OPEN_RATIO,
                     skipCollapsed = true,
                     isDraggable = false
                 )
@@ -155,8 +155,13 @@ fun DateRoadPlaceSearchBottomSheet(
 
                 if (placeSearchResult.placeInfos.isNotEmpty()) {
                     LazyColumn(modifier = Modifier.weight(1f)) {
-                        itemsIndexed(items = placeSearchResult.placeInfos, key = { index, placeInfo -> placeInfo.hashCode() + index }) { index, placeInfo ->
-                            EnrollPlaceSearchItem(keyword = keyword, placeInfo = placeInfo, onClick = { onPlaceSelected(placeInfo) })
+                        itemsIndexed(
+                            items = placeSearchResult.placeInfos,
+                            key = { index, placeInfo -> placeInfo.hashCode() + index }) { index, placeInfo ->
+                            EnrollPlaceSearchItem(
+                                keyword = keyword,
+                                placeInfo = placeInfo,
+                                onClick = { onPlaceSelected(placeInfo) })
 
                             if (index != placeSearchResult.placeInfos.lastIndex) {
                                 HorizontalDivider(
@@ -213,10 +218,17 @@ fun DateRoadPlaceSearchBottomSheetPreview() {
         DateRoadPlaceSearchBottomSheet(
             isBottomSheetOpen = isBottomSheetOpen,
             keyword = text,
-            placeSearchResult = PlaceSearchResult(List(10) { PlaceInfo("카페 나랑", "경기 의왕시 청계로 217") }),
+            placeSearchResult = PlaceSearchResult(List(10) {
+                PlaceInfo(
+                    "카페 나랑",
+                    "경기 의왕시 청계로 217"
+                )
+            }),
             onKeywordChanged = { text = it },
             onPlaceSelected = {},
             onDismissRequest = { isBottomSheetOpen = !isBottomSheetOpen }
         )
     }
 }
+
+private const val BOTTOM_SHEET_OPEN_RATIO = 0.8f
