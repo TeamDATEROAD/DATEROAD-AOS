@@ -34,6 +34,8 @@ import org.sopt.teamdateroad.presentation.type.DateTagType.Companion.getDateTagT
 import org.sopt.teamdateroad.presentation.type.EnrollType
 import org.sopt.teamdateroad.presentation.type.TwoButtonDialogWithDescriptionType
 import org.sopt.teamdateroad.presentation.ui.component.bottomsheet.DateRoadBasicBottomSheet
+import org.sopt.teamdateroad.presentation.ui.component.bottomsheet.DateRoadPointBottomSheet
+import org.sopt.teamdateroad.presentation.ui.component.bottomsheet.model.collect.DateRoadCollectPointType
 import org.sopt.teamdateroad.presentation.ui.component.dialog.DateRoadTwoButtonDialogWithDescription
 import org.sopt.teamdateroad.presentation.ui.component.pager.DateRoadImagePager
 import org.sopt.teamdateroad.presentation.ui.component.topbar.DateRoadScrollResponsiveTopBar
@@ -106,11 +108,6 @@ fun CourseDetailRoute(
             CourseDetailScreen(
                 courseDetailUiState = uiState,
                 onDialogPointLack = { viewModel.setEvent(CourseDetailContract.CourseDetailEvent.OnDialogPointLack) },
-                onDialogPointLackConfirm = {
-                    viewModel.setEvent(CourseDetailContract.CourseDetailEvent.DismissDialogPointLack)
-                    viewModel.setSideEffect(CourseDetailContract.CourseDetailSideEffect.NavigateToEnroll(enrollType = EnrollType.COURSE, viewPath = COURSE_DETAIL, id = null))
-                },
-                dismissDialogPointLack = { viewModel.setEvent(CourseDetailContract.CourseDetailEvent.DismissDialogPointLack) },
                 onDialogLookedForFree = { viewModel.setEvent(CourseDetailContract.CourseDetailEvent.OnDialogLookedForFree) },
                 dismissDialogLookedForFree = { viewModel.setEvent(CourseDetailContract.CourseDetailEvent.DismissDialogLookedForFree) },
                 onDialogLookedByPoint = { viewModel.setEvent(CourseDetailContract.CourseDetailEvent.OnDialogLookedByPoint) },
@@ -147,7 +144,13 @@ fun CourseDetailRoute(
                 onReportButtonClicked = {
                     viewModel.setEvent(CourseDetailContract.CourseDetailEvent.OnReportWebViewClicked)
                 },
-                onReportWebViewClose = { viewModel.setEvent(CourseDetailContract.CourseDetailEvent.DismissReportWebView) }
+                onReportWebViewClose = { viewModel.setEvent(CourseDetailContract.CourseDetailEvent.DismissReportWebView) },
+                onSelectEnroll = {
+                    viewModel.setSideEffect(CourseDetailContract.CourseDetailSideEffect.NavigateToEnroll(enrollType = EnrollType.COURSE, viewPath = COURSE_DETAIL, id = null))
+                },
+                onDismissCollectPoint = {
+                    viewModel.setEvent(CourseDetailContract.CourseDetailEvent.DismissDialogPointLack)
+                }
             )
         }
 
@@ -178,8 +181,8 @@ fun CourseDetailRoute(
 fun CourseDetailScreen(
     courseDetailUiState: CourseDetailContract.CourseDetailUiState,
     onDialogPointLack: () -> Unit,
-    onDialogPointLackConfirm: () -> Unit,
-    dismissDialogPointLack: () -> Unit,
+    onSelectEnroll: () -> Unit,
+    onDismissCollectPoint: () -> Unit,
     onDialogLookedForFree: () -> Unit,
     dismissDialogLookedForFree: () -> Unit,
     onDialogLookedByPoint: () -> Unit,
@@ -311,15 +314,6 @@ fun CourseDetailScreen(
                 )
             }
 
-            if (courseDetailUiState.isPointLackDialogOpen) {
-                DateRoadTwoButtonDialogWithDescription(
-                    twoButtonDialogWithDescriptionType = TwoButtonDialogWithDescriptionType.POINT_LACK,
-                    onDismissRequest = dismissDialogPointLack,
-                    onClickConfirm = onDialogPointLackConfirm,
-                    onClickDismiss = dismissDialogPointLack
-                )
-            }
-
             if (courseDetailUiState.isFreeReadDialogOpen) {
                 DateRoadTwoButtonDialogWithDescription(
                     twoButtonDialogWithDescriptionType = TwoButtonDialogWithDescriptionType.FREE_READ,
@@ -355,6 +349,22 @@ fun CourseDetailScreen(
                     onClickDismiss = { dismissDialogReportCourse() }
                 )
             }
+
+            DateRoadPointBottomSheet(
+                isBottomSheetOpen = courseDetailUiState.isPointCollectBottomSheetOpen,
+                title = stringResource(R.string.point_box_lack_point_button_text),
+                onClick = { dateRoadCollectPointType ->
+                    when (dateRoadCollectPointType) {
+                        // TODO  : add ADS
+                        DateRoadCollectPointType.WATCH_ADS -> Unit
+                        DateRoadCollectPointType.COURSE_REGISTRATION -> onSelectEnroll()
+                    }
+                    onDismissCollectPoint()
+                },
+                onDismissRequest = {
+                    onDismissCollectPoint()
+                }
+            )
 
             DateRoadBasicBottomSheet(
                 isBottomSheetOpen = courseDetailUiState.isDeleteCourseBottomSheetOpen,
@@ -431,8 +441,6 @@ fun CourseDetailScreenPreview() {
         CourseDetailScreen(
             courseDetailUiState = dummyCourseDetail,
             onDialogPointLack = {},
-            dismissDialogPointLack = {},
-            onDialogPointLackConfirm = {},
             onDialogLookedForFree = {},
             dismissDialogLookedForFree = {},
             onDialogLookedByPoint = {},
@@ -451,6 +459,8 @@ fun CourseDetailScreenPreview() {
             onDialogDeleteCourse = {},
             onDialogReportCourse = {},
             dismissDialogDeleteCourse = {},
+            onDismissCollectPoint = {},
+            onSelectEnroll = {},
             dismissDialogReportCourse = {}
         )
     }
