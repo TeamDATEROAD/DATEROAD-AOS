@@ -33,6 +33,7 @@ import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import org.sopt.teamdateroad.R
 import org.sopt.teamdateroad.domain.model.Place
+import org.sopt.teamdateroad.domain.model.PlaceInfo
 import org.sopt.teamdateroad.domain.type.RegionType
 import org.sopt.teamdateroad.presentation.type.DateRoadRegionBottomSheetType
 import org.sopt.teamdateroad.presentation.type.DateTagType
@@ -253,6 +254,10 @@ fun EnrollRoute(
         onDateTextFieldClick = { viewModel.setEvent(EnrollContract.EnrollEvent.OnDateTextFieldClick) },
         onTimeTextFieldClick = { viewModel.setEvent(EnrollContract.EnrollEvent.OnTimeTextFieldClick) },
         onRegionTextFieldClick = { viewModel.setEvent(EnrollContract.EnrollEvent.OnRegionTextFieldClick) },
+        onPlaceSearchButtonClick = { viewModel.setEvent(EnrollContract.EnrollEvent.OnPlaceSearchButtonClick) },
+        onKeywordChanged = { keyword -> viewModel.setEvent(EnrollContract.EnrollEvent.OnKeywordChanged(keyword = keyword)) },
+        onPlaceSelected = { placeInfo -> viewModel.setEvent(EnrollContract.EnrollEvent.OnPlaceSelected(placeInfo = placeInfo)) },
+        onPlaceSearchBottomSheetDismiss = { viewModel.setEvent(EnrollContract.EnrollEvent.OnPlaceSearchBottomSheetDismiss) },
         onSelectedPlaceCourseTimeClick = { viewModel.setEvent(EnrollContract.EnrollEvent.OnSelectedPlaceCourseTimeClick) },
         onDatePickerBottomSheetDismissRequest = { viewModel.setEvent(EnrollContract.EnrollEvent.OnDatePickerBottomSheetDismissRequest) },
         onTimePickerBottomSheetDismissRequest = { viewModel.setEvent(EnrollContract.EnrollEvent.OnTimePickerBottomSheetDismissRequest) },
@@ -284,7 +289,6 @@ fun EnrollRoute(
         onRegionBottomSheetButtonClick = { region: RegionType?, area: Any? -> viewModel.setEvent(EnrollContract.EnrollEvent.OnRegionBottomSheetButtonClick(region = region, area = area)) },
         onAddPlaceButtonClick = { place -> viewModel.setEvent(EnrollContract.EnrollEvent.OnAddPlaceButtonClick(place = place)) },
         onPlaceCardDragAndDrop = { places -> viewModel.setEvent(EnrollContract.EnrollEvent.OnPlaceCardDragAndDrop(places = places)) },
-        onPlaceTitleValueChange = { placeTitle -> viewModel.setEvent(EnrollContract.EnrollEvent.OnPlaceTitleValueChange(placeTitle = placeTitle)) },
         onDurationBottomSheetButtonClick = { placeDuration -> viewModel.setEvent(EnrollContract.EnrollEvent.OnDurationBottomSheetButtonClick(placeDuration = placeDuration)) },
         onPlaceEditButtonClick = { editable -> viewModel.setEvent(EnrollContract.EnrollEvent.OnEditableValueChange(editable = editable)) },
         onPlaceCardDeleteButtonClick = { index -> viewModel.setEvent(EnrollContract.EnrollEvent.OnPlaceCardDeleteButtonClick(index = index)) },
@@ -337,6 +341,10 @@ fun EnrollScreen(
     onDateTextFieldClick: () -> Unit,
     onTimeTextFieldClick: () -> Unit,
     onRegionTextFieldClick: () -> Unit,
+    onPlaceSearchButtonClick: () -> Unit,
+    onKeywordChanged: (String) -> Unit,
+    onPlaceSelected: (PlaceInfo) -> Unit,
+    onPlaceSearchBottomSheetDismiss: () -> Unit,
     onSelectedPlaceCourseTimeClick: () -> Unit,
     onDatePickerBottomSheetDismissRequest: () -> Unit,
     onTimePickerBottomSheetDismissRequest: () -> Unit,
@@ -353,7 +361,6 @@ fun EnrollScreen(
     onRegionBottomSheetButtonClick: (RegionType?, Any?) -> Unit,
     onAddPlaceButtonClick: (Place) -> Unit,
     onPlaceCardDragAndDrop: (List<Place>) -> Unit,
-    onPlaceTitleValueChange: (String) -> Unit,
     onDurationBottomSheetButtonClick: (String) -> Unit,
     onPlaceEditButtonClick: (Boolean) -> Unit,
     onPlaceCardDeleteButtonClick: (Int) -> Unit,
@@ -438,9 +445,12 @@ fun EnrollScreen(
 
                 EnrollScreenType.SECOND -> EnrollSecondScreen(
                     enrollUiState = enrollUiState,
+                    onPlaceSearchButtonClick = onPlaceSearchButtonClick,
+                    onKeywordChanged = onKeywordChanged,
+                    onPlaceSelected = onPlaceSelected,
+                    onPlaceSearchBottomSheetDismiss = onPlaceSearchBottomSheetDismiss,
                     onSelectedPlaceCourseTimeClick = onSelectedPlaceCourseTimeClick,
                     onAddPlaceButtonClick = onAddPlaceButtonClick,
-                    onPlaceTitleValueChange = onPlaceTitleValueChange,
                     onPlaceEditButtonClick = onPlaceEditButtonClick,
                     onPlaceCardDeleteButtonClick = onPlaceCardDeleteButtonClick,
                     onPlaceCardDragAndDrop = onPlaceCardDragAndDrop
@@ -568,6 +578,7 @@ fun EnrollScreenPreview() {
             onDateTextFieldClick = {},
             onTimeTextFieldClick = {},
             onRegionTextFieldClick = {},
+            onPlaceSearchButtonClick = {},
             onSelectedPlaceCourseTimeClick = {},
             onDatePickerBottomSheetDismissRequest = {},
             onTimePickerBottomSheetDismissRequest = {},
@@ -583,7 +594,6 @@ fun EnrollScreenPreview() {
             onRegionBottomSheetAreaChipClick = {},
             onRegionBottomSheetButtonClick = { _, _ -> },
             onAddPlaceButtonClick = {},
-            onPlaceTitleValueChange = {},
             onDurationBottomSheetButtonClick = {},
             onPlaceEditButtonClick = {},
             onPlaceCardDeleteButtonClick = {},
@@ -591,7 +601,10 @@ fun EnrollScreenPreview() {
             onDescriptionValueChange = {},
             onCostValueChange = {},
             onEnrollSuccessDialogButtonClick = {},
-            onSelectThumbnail = {}
+            onSelectThumbnail = {},
+            onPlaceSearchBottomSheetDismiss = {},
+            onKeywordChanged = { },
+            onPlaceSelected = { }
         )
     }
 }

@@ -50,6 +50,7 @@ timber = "5.0.1"
 kakao = "2.20.3"
 amplitude = "1.+"
 lottieCompose = "6.1.0"
+bottomSheet = "1.3.2"
 
 [libraries]
 # Test
@@ -110,6 +111,7 @@ kakao-navi = { group = "com.kakao.sdk", name = "v2-navi", version.ref = "kakao" 
 kakao-cert = { group = "com.kakao.sdk", name = "v2-cert", version.ref = "kakao" }
 amplitude = { group = "com.amplitude", name = "analytics-android", version.ref = "amplitude" }
 lottie-compose = { module = "com.airbnb.android:lottie-compose", version.ref = "lottieCompose" }
+bottom-sheet = { group = "com.holix.android", name = "bottomsheetdialog-compose", version.ref = "bottomSheet" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

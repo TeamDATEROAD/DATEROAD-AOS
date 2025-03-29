@@ -6,8 +6,10 @@ import javax.inject.Inject
 import kotlinx.coroutines.launch
 import org.sopt.teamdateroad.data.dataremote.util.Date.NEAREST_DATE_START_OUTPUT_FORMAT
 import org.sopt.teamdateroad.data.mapper.toEntity.toEnroll
+import org.sopt.teamdateroad.domain.model.PlaceSearchResult
 import org.sopt.teamdateroad.domain.type.RegionType
 import org.sopt.teamdateroad.domain.usecase.GetCourseDetailUseCase
+import org.sopt.teamdateroad.domain.usecase.GetPlaceSearchResultUseCase
 import org.sopt.teamdateroad.domain.usecase.GetTimelineDetailUseCase
 import org.sopt.teamdateroad.domain.usecase.PostCourseUseCase
 import org.sopt.teamdateroad.domain.usecase.PostTimelineUseCase
@@ -25,7 +27,8 @@ class EnrollViewModel @Inject constructor(
     private val getCourseDetailUseCase: GetCourseDetailUseCase,
     private val getTimelineDetailUseCase: GetTimelineDetailUseCase,
     private val postCourseUseCase: PostCourseUseCase,
-    private val postTimelineUseCase: PostTimelineUseCase
+    private val postTimelineUseCase: PostTimelineUseCase,
+    private val getPlaceSearchResultUseCase: GetPlaceSearchResultUseCase
 ) : BaseViewModel<EnrollContract.EnrollUiState, EnrollContract.EnrollSideEffect, EnrollContract.EnrollEvent>() {
     override fun createInitialState(): EnrollContract.EnrollUiState = EnrollContract.EnrollUiState()
 
@@ -74,6 +77,15 @@ class EnrollViewModel @Inject constructor(
             is EnrollContract.EnrollEvent.OnDateTextFieldClick -> setState { copy(isDatePickerBottomSheetOpen = true) }
             is EnrollContract.EnrollEvent.OnTimeTextFieldClick -> setState { copy(isTimePickerBottomSheetOpen = true) }
             is EnrollContract.EnrollEvent.OnRegionTextFieldClick -> setState { copy(isRegionBottomSheetOpen = true, onRegionBottomSheetRegionSelected = RegionType.SEOUL, onRegionBottomSheetAreaSelected = null) }
+            is EnrollContract.EnrollEvent.OnPlaceSearchButtonClick -> setState { copy(isPlaceSearchBottomSheetOpen = true) }
+            is EnrollContract.EnrollEvent.OnKeywordChanged -> {
+                setState {
+                    copy(keyword = event.keyword)
+                }
+                getPlaceSearchResult()
+            }
+
+            is EnrollContract.EnrollEvent.OnPlaceSearchBottomSheetDismiss -> setState { copy(isPlaceSearchBottomSheetOpen = false, keyword = "", placeSearchResult = PlaceSearchResult(emptyList())) }
             is EnrollContract.EnrollEvent.OnSelectedPlaceCourseTimeClick -> setState { copy(isDurationBottomSheetOpen = true) }
             is EnrollContract.EnrollEvent.OnDatePickerBottomSheetDismissRequest -> setState { copy(isDatePickerBottomSheetOpen = false) }
             is EnrollContract.EnrollEvent.OnTimePickerBottomSheetDismissRequest -> setState { copy(isTimePickerBottomSheetOpen = false) }
@@ -93,6 +105,9 @@ class EnrollViewModel @Inject constructor(
                 )
             }
             is EnrollContract.EnrollEvent.OnTitleValueChange -> setState { copy(enroll = currentState.enroll.copy(title = event.title)) }
+            is EnrollContract.EnrollEvent.OnPlaceSelected -> {
+                setState { copy(keyword = "", placeSearchResult = PlaceSearchResult(emptyList()), place = currentState.place.copy(title = event.placeInfo.placeName), placeInfos = currentState.placeInfos + event.placeInfo, isPlaceSearchBottomSheetOpen = false) }
+            }
 
             is EnrollContract.EnrollEvent.OnDatePickerBottomSheetButtonClick -> setState { copy(enroll = currentState.enroll.copy(date = event.date), isDatePickerBottomSheetOpen = false) }
 
@@ -173,6 +188,19 @@ class EnrollViewModel @Inject constructor(
             }.onFailure {
                 setEvent(EnrollContract.EnrollEvent.Enroll(loadState = LoadState.Error))
             }
+        }
+    }
+
+    private fun getPlaceSearchResult() {
+        viewModelScope.launch {
+            getPlaceSearchResultUseCase(keyword = currentState.keyword).fold(
+                onSuccess = { placeSearchResult ->
+                    setState { copy(placeSearchResult = placeSearchResult) }
+                },
+                onFailure = {
+                    setEvent(EnrollContract.EnrollEvent.Enroll(loadState = LoadState.Error))
+                }
+            )
         }
     }
 }
