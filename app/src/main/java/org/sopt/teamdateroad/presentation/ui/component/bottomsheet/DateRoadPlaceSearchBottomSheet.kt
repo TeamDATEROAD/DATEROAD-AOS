@@ -171,29 +171,34 @@ fun DateRoadPlaceSearchBottomSheet(
                         }
                     }
                 } else {
-                    Box(
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .padding(bottom = 70.dp)
-                    ) {
-                        Column(modifier = Modifier.align(Alignment.Center)) {
-                            Image(
-                                modifier = Modifier
-                                    .width(167.dp)
-                                    .height(191.dp),
-                                painter = painterResource(R.drawable.img_place_search_no_match),
-                                contentDescription = null
-                            )
-                            Spacer(modifier = Modifier.height(40.dp))
-                            Text(
-                                text = stringResource(R.string.enroll_place_search_no_match),
-                                color = DateRoadTheme.colors.gray300,
-                                style = DateRoadTheme.typography.titleBold18
-                            )
-                        }
-                    }
+                    EmptyPlaceSearchResult()
                 }
             }
+        }
+    }
+}
+
+@Composable
+private fun EmptyPlaceSearchResult() {
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(bottom = 70.dp)
+    ) {
+        Column(modifier = Modifier.align(Alignment.Center)) {
+            Image(
+                modifier = Modifier
+                    .width(167.dp)
+                    .height(191.dp),
+                painter = painterResource(R.drawable.img_place_search_no_match),
+                contentDescription = null
+            )
+            Spacer(modifier = Modifier.height(40.dp))
+            Text(
+                text = stringResource(R.string.enroll_place_search_no_match),
+                color = DateRoadTheme.colors.gray300,
+                style = DateRoadTheme.typography.titleBold18
+            )
         }
     }
 }
@@ -226,6 +231,14 @@ fun DateRoadPlaceSearchBottomSheetPreview() {
             onPlaceSelected = {},
             onDismissRequest = { isBottomSheetOpen = !isBottomSheetOpen }
         )
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun EmptyPlaceSearchResultPreview() {
+    DATEROADTheme {
+        EmptyPlaceSearchResult()
     }
 }
 
