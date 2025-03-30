@@ -254,6 +254,8 @@
     <string name="enroll_cost_title">총 비용을 입력해 주세요</string>
     <string name="enroll_cost_placeholder">데이트 예상 총 비용을 숫자로만 입력해 주세요</string>
     <string name="enroll_button_text_completion">완료</string>
+    <string name="enroll_place_search_bottom_sheet_title">장소 검색하기</string>
+    <string name="enroll_place_search_no_match">일치하는 장소가 없어요!</string>
     <string name="enroll_thumbnail_text">대표</string>
 
     <!-- Home -->

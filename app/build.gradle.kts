@@ -143,6 +143,9 @@ dependencies {
 
     // Lottie
     implementation(libs.lottie.compose)
+
+    // BottomSheet
+    implementation(libs.bottom.sheet)
 }
 
 ktlint {
