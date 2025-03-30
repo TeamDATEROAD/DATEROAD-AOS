@@ -37,10 +37,10 @@ import org.sopt.teamdateroad.R
 import org.sopt.teamdateroad.domain.model.Place
 import org.sopt.teamdateroad.domain.model.PlaceInfo
 import org.sopt.teamdateroad.presentation.type.PlaceCardType
+import org.sopt.teamdateroad.presentation.ui.component.bottomsheet.DateRoadPlaceSearchBottomSheet
 import org.sopt.teamdateroad.presentation.ui.component.button.DateRoadTextButton
 import org.sopt.teamdateroad.presentation.ui.component.card.DateRoadPlaceCard
 import org.sopt.teamdateroad.presentation.ui.enroll.component.EnrollPlaceInsertBar
-import org.sopt.teamdateroad.presentation.ui.enroll.component.PlaceSearchBottomSheet
 import org.sopt.teamdateroad.presentation.util.Time
 import org.sopt.teamdateroad.presentation.util.draganddrop.rememberDragAndDropListState
 import org.sopt.teamdateroad.presentation.util.mutablelist.move
@@ -51,8 +51,6 @@ import org.sopt.teamdateroad.ui.theme.DateRoadTheme
 @Composable
 fun EnrollSecondScreen(
     enrollUiState: EnrollContract.EnrollUiState = EnrollContract.EnrollUiState(),
-    searchKeyword: String,
-    searchPlaceInfos: List<PlaceInfo>,
     onPlaceSearchButtonClick: () -> Unit,
     onKeywordChanged: (String) -> Unit,
     onPlaceSelected: (PlaceInfo) -> Unit,
@@ -100,7 +98,7 @@ fun EnrollSecondScreen(
             onPlaceSearchButtonClick = onPlaceSearchButtonClick,
             onSelectedCourseTimeClick = onSelectedPlaceCourseTimeClick,
             onAddCourseButtonClick = {
-                onAddPlaceButtonClick(Place(title = enrollUiState.place.title, address = enrollUiState.place.address, duration = enrollUiState.place.duration + Time.TIME))
+                onAddPlaceButtonClick(Place(title = enrollUiState.place.title, duration = enrollUiState.place.duration + Time.TIME))
             }
         )
         Spacer(modifier = Modifier.height(22.dp))
@@ -164,8 +162,6 @@ fun EnrollSecondScreen(
             items(enrollUiState.enroll.places.size) { index ->
                 DateRoadPlaceCard(
                     modifier = Modifier
-                        .fillMaxWidth()
-                        .height(76.dp)
                         .zIndex(if (index == dragDropListState.currentIndexOfDraggedItem) 1f else 0f)
                         .graphicsLayer(
                             scaleX = animateFloatAsState(if (dragDropListState.currentIndexOfDraggedItem == index) 1.1f else 1.0f, label = "").value,
@@ -180,10 +176,10 @@ fun EnrollSecondScreen(
         Spacer(modifier = Modifier.height(16.dp))
     }
 
-    PlaceSearchBottomSheet(
+    DateRoadPlaceSearchBottomSheet(
         isBottomSheetOpen = enrollUiState.isPlaceSearchBottomSheetOpen,
-        searchKeyword = searchKeyword,
-        searchPlaceInfos = searchPlaceInfos,
+        keyword = enrollUiState.keyword,
+        placeSearchResult = enrollUiState.placeSearchResult,
         onKeywordChanged = onKeywordChanged,
         onPlaceSelected = onPlaceSelected,
         onDismissRequest = onPlaceSearchBottomSheetDismiss
@@ -195,8 +191,6 @@ fun EnrollSecondScreen(
 fun EnrollSecondScreenPreview() {
     DATEROADTheme {
         EnrollSecondScreen(
-            searchKeyword = "",
-            searchPlaceInfos = listOf(),
             onPlaceSearchButtonClick = {},
             onAddPlaceButtonClick = {},
             onSelectedPlaceCourseTimeClick = {},
