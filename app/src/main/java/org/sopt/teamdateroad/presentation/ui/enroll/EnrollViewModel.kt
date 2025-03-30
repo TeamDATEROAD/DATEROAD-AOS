@@ -104,9 +104,10 @@ class EnrollViewModel @Inject constructor(
                     thumbnailIndex = if (event.moveThumbnail) (thumbnailIndex - 1).coerceAtLeast(0) else thumbnailIndex
                 )
             }
+
             is EnrollContract.EnrollEvent.OnTitleValueChange -> setState { copy(enroll = currentState.enroll.copy(title = event.title)) }
             is EnrollContract.EnrollEvent.OnPlaceSelected -> {
-                setState { copy(keyword = "", placeSearchResult = PlaceSearchResult(emptyList()), place = currentState.place.copy(title = event.placeInfo.placeName), placeInfos = currentState.placeInfos + event.placeInfo, isPlaceSearchBottomSheetOpen = false) }
+                setState { copy(keyword = "", placeSearchResult = PlaceSearchResult(emptyList()), place = currentState.place.copy(title = event.placeInfo.placeName, address = event.placeInfo.addressName), placeInfos = currentState.placeInfos + event.placeInfo, isPlaceSearchBottomSheetOpen = false) }
             }
 
             is EnrollContract.EnrollEvent.OnDatePickerBottomSheetButtonClick -> setState { copy(enroll = currentState.enroll.copy(date = event.date), isDatePickerBottomSheetOpen = false) }

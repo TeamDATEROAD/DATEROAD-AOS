@@ -2,9 +2,11 @@ package org.sopt.teamdateroad.presentation.ui.component.card
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -35,55 +37,87 @@ fun DateRoadPlaceCard(
     place: Place,
     onIconClick: (() -> Unit)? = null
 ) {
-    val paddingValues = Modifier.padding(start = placeCardType.startPadding, end = placeCardType.endPadding)
+    val paddingValues = Modifier.padding(start = placeCardType.startPadding, end = 17.dp)
 
     Row(
         modifier = modifier
             .fillMaxWidth()
-            .clip(RoundedCornerShape(14.dp))
-            .background(DateRoadTheme.colors.gray100)
-            .then(paddingValues)
-            .padding(vertical = placeCardType.verticalPadding),
-        horizontalArrangement = Arrangement.Center,
-        verticalAlignment = Alignment.CenterVertically
+            .height(76.dp)
     ) {
-        if (placeCardType == PlaceCardType.COURSE_NORMAL) {
-            sequence?.let {
+        Column(
+            modifier = Modifier
+                .weight(1f)
+                .clip(RoundedCornerShape(14.dp))
+                .background(DateRoadTheme.colors.gray100)
+                .then(paddingValues)
+        ) {
+            Spacer(modifier = Modifier.padding(top = 17.dp))
+            Row(
+                horizontalArrangement = Arrangement.Center,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                if (placeCardType == PlaceCardType.COURSE_NORMAL) {
+                    sequence?.let {
+                        DateRoadTextTag(
+                            textContent = (sequence + 1).toString(),
+                            tagContentType = TagType.PLACE_CARD_NUMBER
+                        )
+                    }
+                    Spacer(modifier = Modifier.width(14.dp))
+                }
+                Text(
+                    text = place.title,
+                    modifier = Modifier.weight(1f),
+                    style = DateRoadTheme.typography.bodyBold15,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis
+                )
+                Spacer(modifier = Modifier.width(10.dp))
+
                 DateRoadTextTag(
-                    textContent = (sequence + 1).toString(),
-                    tagContentType = TagType.PLACE_CARD_NUMBER
+                    textContent = place.duration,
+                    tagContentType = TagType.PLACE_CARD_TIME
                 )
             }
-            Spacer(modifier = Modifier.width(14.dp))
-        }
-        Text(
-            text = place.title,
-            modifier = Modifier.weight(1f),
-            style = DateRoadTheme.typography.bodyBold15,
-            maxLines = 1,
-            overflow = TextOverflow.Ellipsis
-        )
-        Spacer(modifier = Modifier.width(10.dp))
 
-        DateRoadTextTag(
-            textContent = place.duration,
-            tagContentType = TagType.PLACE_CARD_TIME
-        )
-        placeCardType.iconRes?.let {
-            Icon(
-                painter = painterResource(id = it),
-                contentDescription = null,
-                modifier = Modifier
-                    .padding(
-                        start = placeCardType.iconStartPadding,
-                        top = placeCardType.iconTopPadding,
-                        end = placeCardType.iconEndPadding,
-                        bottom = placeCardType.iconBottomPadding
-                    )
-                    .noRippleClickable {
-                        onIconClick?.invoke()
-                    }
+            Spacer(modifier = Modifier.height(4.dp))
+
+            Text(
+                text = place.address,
+                color = DateRoadTheme.colors.gray300,
+                style = DateRoadTheme.typography.bodyMed13,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis
             )
+
+            Spacer(modifier = Modifier.height(13.dp))
+        }
+
+        placeCardType.iconRes?.let {
+            Spacer(modifier = Modifier.width(8.dp))
+            Box(
+                modifier = Modifier
+                    .width(44.dp)
+                    .fillMaxHeight()
+                    .clip(RoundedCornerShape(14.dp))
+                    .background(DateRoadTheme.colors.gray100)
+            ) {
+                Icon(
+                    painter = painterResource(id = it),
+                    contentDescription = null,
+                    modifier = Modifier
+                        .padding(
+                            start = placeCardType.iconStartPadding,
+                            top = placeCardType.iconTopPadding,
+                            end = placeCardType.iconEndPadding,
+                            bottom = placeCardType.iconBottomPadding
+                        )
+                        .align(Alignment.Center)
+                        .noRippleClickable {
+                            onIconClick?.invoke()
+                        }
+                )
+            }
         }
     }
 }
@@ -95,18 +129,18 @@ fun DateRoadPlaceCardPreview() {
         DateRoadPlaceCard(
             placeCardType = PlaceCardType.COURSE_NORMAL,
             sequence = 0,
-            place = Place(title = "성수미술관 성수점성수미술관 성수점성수미술관 성수점성수미술관 성수점성수미술관 성수점", duration = "2.5시간")
+            place = Place(title = "성수미술관 성수점성수미술관 성수점성수미술관 성수점성수미술관 성수점성수미술관 성수점", address = "서울 광진구 자양동 704-1", duration = "2.5시간")
         )
         Spacer(modifier = Modifier.height(8.dp))
         DateRoadPlaceCard(
             placeCardType = PlaceCardType.COURSE_EDIT,
-            place = Place(title = "성수미술관 성수점", duration = "1시간"),
+            place = Place(title = "성수미술관 성수점", address = "서울 광진구 자양동 704-1", duration = "1시간"),
             onIconClick = { }
         )
         Spacer(modifier = Modifier.height(8.dp))
         DateRoadPlaceCard(
             placeCardType = PlaceCardType.COURSE_DELETE,
-            place = Place(title = "성수미술관 성수점", duration = "0.5시간"),
+            place = Place(title = "성수미술관 성수점", address = "서울 광진구 자양동 704-1", duration = "0.5시간"),
             onIconClick = { }
         )
     }

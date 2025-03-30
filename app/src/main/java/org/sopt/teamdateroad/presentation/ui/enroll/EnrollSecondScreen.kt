@@ -98,7 +98,7 @@ fun EnrollSecondScreen(
             onPlaceSearchButtonClick = onPlaceSearchButtonClick,
             onSelectedCourseTimeClick = onSelectedPlaceCourseTimeClick,
             onAddCourseButtonClick = {
-                onAddPlaceButtonClick(Place(title = enrollUiState.place.title, duration = enrollUiState.place.duration + Time.TIME))
+                onAddPlaceButtonClick(Place(title = enrollUiState.place.title, address = enrollUiState.place.address, duration = enrollUiState.place.duration + Time.TIME))
             }
         )
         Spacer(modifier = Modifier.height(22.dp))
