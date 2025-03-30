@@ -64,11 +64,11 @@ fun DateRoadPointBottomSheet(
                 )
             }
             Spacer(modifier = Modifier.height(17.dp))
-            DateRoadBottonSheetContent(
+            DateRoadBottomSheetContent(
                 dateLoadCollectPoint = DateRoadCollectPointType.WATCH_ADS,
                 onClick = onClick
             )
-            DateRoadBottonSheetContent(
+            DateRoadBottomSheetContent(
                 dateLoadCollectPoint = DateRoadCollectPointType.COURSE_REGISTRATION,
                 onClick = onClick
             )
@@ -78,7 +78,7 @@ fun DateRoadPointBottomSheet(
 }
 
 @Composable
-fun DateRoadBottonSheetContent(
+fun DateRoadBottomSheetContent(
     dateLoadCollectPoint: DateRoadCollectPointType,
     onClick: (DateRoadCollectPointType) -> Unit
 ) {
