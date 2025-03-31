@@ -11,6 +11,7 @@ import org.sopt.teamdateroad.data.dataremote.util.ApiConstraints.DATE_ID
 import org.sopt.teamdateroad.data.dataremote.util.ApiConstraints.NEAREST
 import org.sopt.teamdateroad.data.dataremote.util.ApiConstraints.TIME
 import org.sopt.teamdateroad.data.dataremote.util.ApiConstraints.VERSION
+import org.sopt.teamdateroad.data.dataremote.util.ApiConstraints.VERSION2
 import retrofit2.http.Body
 import retrofit2.http.DELETE
 import retrofit2.http.GET
@@ -24,7 +25,7 @@ interface TimelineService {
         @Path(DATE_ID) timelineId: Int
     )
 
-    @GET("$API/$VERSION/$DATES/{$DATE_ID}")
+    @GET("$API/$VERSION2/$DATES/{$DATE_ID}")
     suspend fun getTimelineDetail(
         @Path(DATE_ID) timelineId: Int
     ): ResponseTimelineDetailDto
@@ -37,7 +38,7 @@ interface TimelineService {
     @GET("$API/$VERSION/$DATES/$NEAREST")
     suspend fun getNearestTimeline(): ResponseNearestTimelineDto
 
-    @POST("$API/$VERSION/$DATES")
+    @POST("$API/$VERSION2/$DATES")
     suspend fun postTimeline(
         @Body requestTimelineDto: RequestTimelineDto
     ): ResponseEnrollTimelineDto
