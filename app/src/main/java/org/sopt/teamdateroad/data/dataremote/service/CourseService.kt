@@ -18,6 +18,7 @@ import org.sopt.teamdateroad.data.dataremote.util.ApiConstraints.SORT
 import org.sopt.teamdateroad.data.dataremote.util.ApiConstraints.SORT_BY
 import org.sopt.teamdateroad.data.dataremote.util.ApiConstraints.TAGS
 import org.sopt.teamdateroad.data.dataremote.util.ApiConstraints.VERSION
+import org.sopt.teamdateroad.data.dataremote.util.ApiConstraints.VERSION2
 import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.Multipart
@@ -37,7 +38,7 @@ interface CourseService {
         @Path(COURSE_ID) courseId: Int
     )
 
-    @GET("$API/$VERSION/$COURSES/{$COURSE_ID}")
+    @GET("$API/$VERSION2/$COURSES/{$COURSE_ID}")
     suspend fun getCourseDetail(
         @Path(COURSE_ID) courseId: Int
     ): ResponseCourseDetailDto
@@ -55,7 +56,7 @@ interface CourseService {
     ): ResponseCoursesDto
 
     @Multipart
-    @POST("$API/$VERSION/$COURSES")
+    @POST("$API/$VERSION2/$COURSES")
     suspend fun postCourse(
         @Part images: List<MultipartBody.Part>,
         @Part(COURSE) course: RequestBody,

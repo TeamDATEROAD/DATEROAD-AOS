@@ -422,10 +422,12 @@ fun CourseDetailScreenPreview() {
                 places = listOf(
                     Place(
                         title = "Place 1",
+                        address = "Address 1",
                         duration = "1"
                     ),
                     Place(
                         title = "Place 2",
+                        address = "Address 2",
                         duration = "2"
                     )
                 ),
