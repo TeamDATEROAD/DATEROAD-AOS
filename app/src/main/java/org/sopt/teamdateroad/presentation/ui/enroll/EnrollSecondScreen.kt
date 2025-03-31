@@ -102,7 +102,7 @@ fun EnrollSecondScreen(
             onPlaceSearchButtonClick = onPlaceSearchButtonClick,
             onSelectedCourseTimeClick = onSelectedPlaceCourseTimeClick,
             onAddCourseButtonClick = {
-                onAddPlaceButtonClick(Place(title = enrollUiState.place.title, duration = enrollUiState.place.duration + Time.TIME))
+                onAddPlaceButtonClick(Place(title = enrollUiState.place.title, address = enrollUiState.place.address, duration = enrollUiState.place.duration + Time.TIME))
             }
         )
         Spacer(modifier = Modifier.height(22.dp))
@@ -166,6 +166,8 @@ fun EnrollSecondScreen(
             items(enrollUiState.enroll.places.size) { index ->
                 DateRoadPlaceCard(
                     modifier = Modifier
+                        .fillMaxWidth()
+                        .height(76.dp)
                         .zIndex(if (index == dragDropListState.currentIndexOfDraggedItem) 1f else 0f)
                         .graphicsLayer(
                             scaleX = animateFloatAsState(if (dragDropListState.currentIndexOfDraggedItem == index) 1.1f else 1.0f, label = "").value,

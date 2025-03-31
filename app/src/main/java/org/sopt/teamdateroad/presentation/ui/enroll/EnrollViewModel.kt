@@ -104,9 +104,10 @@ class EnrollViewModel @Inject constructor(
                     thumbnailIndex = if (event.moveThumbnail) (thumbnailIndex - 1).coerceAtLeast(0) else thumbnailIndex
                 )
             }
+
             is EnrollContract.EnrollEvent.OnTitleValueChange -> setState { copy(enroll = currentState.enroll.copy(title = event.title)) }
             is EnrollContract.EnrollEvent.OnPlaceSelected -> {
-                setState { copy(keyword = "", placeSearchResult = PlaceSearchResult(emptyList()), place = currentState.place.copy(title = event.placeInfo.placeName), placeInfos = currentState.placeInfos + event.placeInfo, isPlaceSearchBottomSheetOpen = false) }
+                setState { copy(keyword = "", placeSearchResult = PlaceSearchResult(emptyList()), place = currentState.place.copy(title = event.placeInfo.placeName, address = event.placeInfo.addressName), placeInfos = currentState.placeInfos + event.placeInfo, isPlaceSearchBottomSheetOpen = false) }
             }
 
             is EnrollContract.EnrollEvent.OnDatePickerBottomSheetButtonClick -> setState { copy(enroll = currentState.enroll.copy(date = event.date), isDatePickerBottomSheetOpen = false) }
@@ -150,8 +151,9 @@ class EnrollViewModel @Inject constructor(
             setEvent(EnrollContract.EnrollEvent.FetchCourseDetail(fetchEnrollState = LoadState.Loading, courseDetail = null))
             getCourseDetailUseCase(courseId = courseId).onSuccess { courseDetail ->
                 setEvent(EnrollContract.EnrollEvent.FetchCourseDetail(fetchEnrollState = LoadState.Success, courseDetail = courseDetail.copy(startAt = courseDetail.startAt.substringBefore(NEAREST_DATE_START_OUTPUT_FORMAT))))
+            }.onFailure {
+                setEvent(EnrollContract.EnrollEvent.FetchCourseDetail(fetchEnrollState = LoadState.Error, courseDetail = null))
             }
-            setEvent(EnrollContract.EnrollEvent.FetchCourseDetail(fetchEnrollState = LoadState.Error, courseDetail = null))
         }
     }
 
@@ -193,14 +195,11 @@ class EnrollViewModel @Inject constructor(
 
     private fun getPlaceSearchResult() {
         viewModelScope.launch {
-            getPlaceSearchResultUseCase(keyword = currentState.keyword).fold(
-                onSuccess = { placeSearchResult ->
-                    setState { copy(placeSearchResult = placeSearchResult) }
-                },
-                onFailure = {
-                    setEvent(EnrollContract.EnrollEvent.Enroll(loadState = LoadState.Error))
-                }
-            )
+            getPlaceSearchResultUseCase(keyword = currentState.keyword).onSuccess { placeSearchResult ->
+                setState { copy(placeSearchResult = placeSearchResult) }
+            }.onFailure {
+                setEvent(EnrollContract.EnrollEvent.Enroll(loadState = LoadState.Error))
+            }
         }
     }
 }
