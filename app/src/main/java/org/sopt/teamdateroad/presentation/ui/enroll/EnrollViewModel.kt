@@ -195,14 +195,11 @@ class EnrollViewModel @Inject constructor(
 
     private fun getPlaceSearchResult() {
         viewModelScope.launch {
-            getPlaceSearchResultUseCase(keyword = currentState.keyword).fold(
-                onSuccess = { placeSearchResult ->
-                    setState { copy(placeSearchResult = placeSearchResult) }
-                },
-                onFailure = {
-                    setEvent(EnrollContract.EnrollEvent.Enroll(loadState = LoadState.Error))
-                }
-            )
+            getPlaceSearchResultUseCase(keyword = currentState.keyword).onSuccess { placeSearchResult ->
+                setState { copy(placeSearchResult = placeSearchResult) }
+            }.onFailure {
+                setEvent(EnrollContract.EnrollEvent.Enroll(loadState = LoadState.Error))
+            }
         }
     }
 }
