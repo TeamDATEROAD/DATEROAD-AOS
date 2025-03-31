@@ -51,7 +51,7 @@ fun DateRoadPlaceCard(
                 .background(DateRoadTheme.colors.gray100)
                 .then(paddingValues)
         ) {
-            Spacer(modifier = Modifier.padding(top = 17.dp))
+            Spacer(modifier = Modifier.padding(top = 13.dp))
             Row(
                 horizontalArrangement = Arrangement.Center,
                 verticalAlignment = Alignment.CenterVertically
