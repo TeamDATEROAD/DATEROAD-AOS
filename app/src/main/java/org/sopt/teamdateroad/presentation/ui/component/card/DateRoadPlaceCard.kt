@@ -83,6 +83,7 @@ fun DateRoadPlaceCard(
             Spacer(modifier = Modifier.height(4.dp))
 
             Text(
+                modifier = Modifier.padding(start = if (placeCardType == PlaceCardType.COURSE_NORMAL) 38.dp else 0.dp),
                 text = place.address,
                 color = DateRoadTheme.colors.gray300,
                 style = DateRoadTheme.typography.bodyMed13,
