@@ -25,7 +25,7 @@ composeBom = "2024.09.02"
 navigation = "2.8.1"
 security = "1.1.0-alpha06"
 lifecycleRuntimeComposeAndroid = "2.8.6"
-pagingCommonAndroid = "3.3.2"
+paging = "3.3.6"
 
 # Google
 googleServices = "4.4.2"
@@ -76,7 +76,9 @@ androidx-material3 = { group = "androidx.compose.material3", name = "material3" 
 androidx-navigation = { group = "androidx.navigation", name = "navigation-compose", version.ref = "navigation" }
 androidx-security = { group = "androidx.security", name = "security-crypto-ktx", version.ref = "security" }
 androidx-lifecycle-runtime-compose-android = { group = "androidx.lifecycle", name = "lifecycle-runtime-compose-android", version.ref = "lifecycleRuntimeComposeAndroid" }
-androidx-paging-common-android = { group = "androidx.paging", name = "paging-common-android", version.ref = "pagingCommonAndroid" }
+androidx-paging-common-android = { group = "androidx.paging", name = "paging-common-android", version.ref = "paging" }
+androidx-paging-runtime = { group = "androidx.paging", name = "paging-runtime", version.ref = "paging" }
+
 
 # Google
 google-services = { group = "com.google.gms", name = "google-services", version.ref = "googleServices" }
@@ -175,6 +177,7 @@ kakao = [
 
 pager = [
     "androidx-paging-common-android",
+    "androidx-paging-runtime",
     "accompanist-pager",
     "accompanist-pager-indicators"
 ]
