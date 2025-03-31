@@ -6,6 +6,6 @@ import org.sopt.teamdateroad.domain.model.Place
 
 fun ResponsePlaceDto.toDomain() = Place(
     title = this.title,
-    address = this.address,
+    address = this.address ?: "서울 광진구 자양동 123-456",
     duration = this.duration.toDuration()
 )

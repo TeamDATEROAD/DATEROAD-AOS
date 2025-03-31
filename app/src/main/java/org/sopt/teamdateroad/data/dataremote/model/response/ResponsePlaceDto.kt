@@ -10,7 +10,7 @@ data class ResponsePlaceDto(
     @SerialName("title")
     val title: String,
     @SerialName("address")
-    val address: String,
+    val address: String?,
     @SerialName("duration")
     val duration: Float
 )
