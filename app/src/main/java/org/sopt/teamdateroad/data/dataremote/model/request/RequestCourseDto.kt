@@ -18,5 +18,7 @@ data class RequestCourseDto(
     @SerialName("description")
     val description: String,
     @SerialName("cost")
-    val cost: Int
+    val cost: Int,
+    @SerialName("thumbnailIndex")
+    val thumbnailIndex: Int
 )

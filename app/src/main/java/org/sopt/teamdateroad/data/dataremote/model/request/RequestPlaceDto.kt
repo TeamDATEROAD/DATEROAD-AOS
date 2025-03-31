@@ -9,6 +9,8 @@ data class RequestPlaceDto(
     val sequence: Int,
     @SerialName("title")
     val title: String,
+    @SerialName("address")
+    val address: String,
     @SerialName("duration")
     val duration: Float
 )

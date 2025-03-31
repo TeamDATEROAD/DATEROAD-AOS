@@ -12,5 +12,6 @@ data class Enroll(
     val city: Any? = null,
     val places: List<Place> = listOf(),
     val description: String = "",
-    val cost: String = ""
+    val cost: String = "",
+    val thumbnailIndex: Int = 0
 )
