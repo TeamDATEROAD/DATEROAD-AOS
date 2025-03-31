@@ -151,8 +151,9 @@ class EnrollViewModel @Inject constructor(
             setEvent(EnrollContract.EnrollEvent.FetchCourseDetail(fetchEnrollState = LoadState.Loading, courseDetail = null))
             getCourseDetailUseCase(courseId = courseId).onSuccess { courseDetail ->
                 setEvent(EnrollContract.EnrollEvent.FetchCourseDetail(fetchEnrollState = LoadState.Success, courseDetail = courseDetail.copy(startAt = courseDetail.startAt.substringBefore(NEAREST_DATE_START_OUTPUT_FORMAT))))
+            }.onFailure {
+                setEvent(EnrollContract.EnrollEvent.FetchCourseDetail(fetchEnrollState = LoadState.Error, courseDetail = null))
             }
-            setEvent(EnrollContract.EnrollEvent.FetchCourseDetail(fetchEnrollState = LoadState.Error, courseDetail = null))
         }
     }
 
