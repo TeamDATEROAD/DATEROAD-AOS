@@ -8,6 +8,7 @@ import org.sopt.teamdateroad.domain.model.UsePoint
 import org.sopt.teamdateroad.domain.usecase.DeleteCourseLikeUseCase
 import org.sopt.teamdateroad.domain.usecase.DeleteCourseUseCase
 import org.sopt.teamdateroad.domain.usecase.GetCourseDetailUseCase
+import org.sopt.teamdateroad.domain.usecase.PostAdsPointUseCase
 import org.sopt.teamdateroad.domain.usecase.PostCourseLikeUseCase
 import org.sopt.teamdateroad.domain.usecase.PostUsePointUseCase
 import org.sopt.teamdateroad.presentation.util.CourseDetailAmplitude.CLICK_COURSE_LIKES
@@ -26,7 +27,8 @@ class CourseDetailViewModel @Inject constructor(
     private val deleteCourseLikeUseCase: DeleteCourseLikeUseCase,
     private val getCourseDetailUseCase: GetCourseDetailUseCase,
     private val postCourseLikeUseCase: PostCourseLikeUseCase,
-    private val postUsePointUseCase: PostUsePointUseCase
+    private val postUsePointUseCase: PostUsePointUseCase,
+    private val postAdsPointUseCase: PostAdsPointUseCase,
 ) : BaseViewModel<CourseDetailContract.CourseDetailUiState, CourseDetailContract.CourseDetailSideEffect, CourseDetailContract.CourseDetailEvent>() {
     override fun createInitialState(): CourseDetailContract.CourseDetailUiState = CourseDetailContract.CourseDetailUiState()
 
@@ -121,6 +123,15 @@ class CourseDetailViewModel @Inject constructor(
                 setEvent(
                     CourseDetailContract.CourseDetailEvent.DeleteCourse(deleteLoadState = LoadState.Error)
                 )
+            }
+        }
+    }
+
+    fun postAdsPoint() {
+        setState { copy(loadState = LoadState.Loading) }
+        viewModelScope.launch {
+            postAdsPointUseCase().onSuccess {
+                setState { copy(loadState = LoadState.Success) }
             }
         }
     }

@@ -2,17 +2,19 @@ package org.sopt.teamdateroad.presentation.ui.pointhistory
 
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import javax.inject.Inject
 import kotlinx.coroutines.launch
 import org.sopt.teamdateroad.domain.usecase.GetPointHistoryUseCase
 import org.sopt.teamdateroad.domain.usecase.GetUserPointUseCase
+import org.sopt.teamdateroad.domain.usecase.PostAdsPointUseCase
 import org.sopt.teamdateroad.presentation.util.base.BaseViewModel
 import org.sopt.teamdateroad.presentation.util.view.LoadState
+import javax.inject.Inject
 
 @HiltViewModel
 class PointHistoryViewModel @Inject constructor(
     private val getPointHistoryUseCase: GetPointHistoryUseCase,
-    private val getUserPointUseCase: GetUserPointUseCase
+    private val getUserPointUseCase: GetUserPointUseCase,
+    private val postAdsPointUseCase: PostAdsPointUseCase,
 ) : BaseViewModel<PointHistoryContract.PointHistoryUiState, PointHistoryContract.PointHistorySideEffect, PointHistoryContract.PointHistoryEvent>() {
     override fun createInitialState(): PointHistoryContract.PointHistoryUiState =
         PointHistoryContract.PointHistoryUiState()
@@ -51,6 +53,17 @@ class PointHistoryViewModel @Inject constructor(
                 setEvent(PointHistoryContract.PointHistoryEvent.FetchUserPoint(loadState = LoadState.Success, userPoint = userPoint))
             }.onFailure {
                 setEvent(PointHistoryContract.PointHistoryEvent.FetchUserPoint(loadState = LoadState.Error, userPoint = currentState.userPoint))
+            }
+        }
+    }
+
+    fun postAdsPoint() {
+        viewModelScope.launch {
+            postAdsPointUseCase().onSuccess {
+                fetchPointHistory()
+                fetchUserPoint()
+            }.onFailure {
+                setState { copy(loadState = LoadState.Loading) }
             }
         }
     }
