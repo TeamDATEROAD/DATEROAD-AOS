@@ -1,6 +1,5 @@
 package org.sopt.teamdateroad.data.repositoryimpl
 
-import javax.inject.Inject
 import org.sopt.teamdateroad.data.dataremote.datasource.UserPointRemoteDataSource
 import org.sopt.teamdateroad.data.mapper.todata.toData
 import org.sopt.teamdateroad.data.mapper.todomain.toDomain
@@ -9,6 +8,7 @@ import org.sopt.teamdateroad.domain.model.PointUseResult
 import org.sopt.teamdateroad.domain.model.UsePoint
 import org.sopt.teamdateroad.domain.model.UserPoint
 import org.sopt.teamdateroad.domain.repository.UserPointRepository
+import javax.inject.Inject
 
 class UserPointRepositoryImpl @Inject constructor(
     private val userPointRemoteDataSource: UserPointRemoteDataSource
@@ -23,5 +23,9 @@ class UserPointRepositoryImpl @Inject constructor(
 
     override suspend fun postUsePoint(courseId: Int, usePoint: UsePoint): Result<PointUseResult> = runCatching {
         userPointRemoteDataSource.postUsePoint(courseId = courseId, requestUsePointDto = usePoint.toData()).toDomain()
+    }
+
+    override suspend fun postAdsPoint(): Result<Unit> = runCatching {
+        userPointRemoteDataSource.postAdsPoint()
     }
 }

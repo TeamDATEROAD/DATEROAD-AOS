@@ -29,4 +29,7 @@ interface UserPointService {
         @Path(COURSE_ID) courseId: Int,
         @Body requestUsePointDto: RequestUsePointDto
     ): ResponseUserUsePointDto
+
+    @POST("$API/$VERSION/$POINTS")
+    suspend fun postAdsPoint() : Unit
 }
