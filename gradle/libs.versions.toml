@@ -32,7 +32,7 @@ googleServices = "4.4.2"
 firebaseCrashlytics = "3.0.2"
 firebaseBom = "33.3.0"
 firebaseCrashlyticsBuildtools = "3.0.2"
-googleAds = "24.1.0"
+googleAds = "23.0.0"
 # Accompanist
 accompanistPager = "0.25.0"
 accompanistWebview = "0.24.13-rc"
