@@ -32,7 +32,7 @@ googleServices = "4.4.2"
 firebaseCrashlytics = "3.0.2"
 firebaseBom = "33.3.0"
 firebaseCrashlyticsBuildtools = "3.0.2"
-
+googleAds = "24.1.0"
 # Accompanist
 accompanistPager = "0.25.0"
 accompanistWebview = "0.24.13-rc"
@@ -84,7 +84,7 @@ google-firebase-crashlytics-gradle = { group = "com.google.firebase", name = "fi
 google-firebase-bom = { group = "com.google.firebase", name = "firebase-bom", version.ref = "firebaseBom" }
 google-firebase-crashlytics = { group = "com.google.firebase", name = "firebase-crashlytics-ktx" }
 firebase-crashlytics-buildtools = { group = "com.google.firebase", name = "firebase-crashlytics-buildtools", version.ref = "firebaseCrashlyticsBuildtools" }
-
+google-gms-ads = {group = "com.google.android.gms",name = "play-services-ads", version.ref = "googleAds"}
 # Accompanist
 accompanist-pager = { module = "com.google.accompanist:accompanist-pager", version.ref = "accompanistPager" }
 accompanist-pager-indicators = { module = "com.google.accompanist:accompanist-pager-indicators", version.ref = "accompanistPager" }
