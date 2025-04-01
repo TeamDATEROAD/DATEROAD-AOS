@@ -6,7 +6,7 @@ import org.sopt.teamdateroad.data.dataremote.model.response.ResponsePlaceSearchR
 import org.sopt.teamdateroad.data.dataremote.service.PlaceSearchService
 
 class PlaceSearchDataSourceImpl @Inject constructor(private val placeSearchService: PlaceSearchService) : PlaceSearchDataSource {
-    override suspend fun getPlaceSearchResult(keyword: String): Result<ResponsePlaceSearchResultDto> {
-        return runCatching { placeSearchService.getPlaceSearchResult(keyword) }
+    override suspend fun getPlaceSearchResult(keyword: String, page: Int, size: Int): Result<ResponsePlaceSearchResultDto> {
+        return runCatching { placeSearchService.getPlaceSearchResult(keyword, page, size) }
     }
 }

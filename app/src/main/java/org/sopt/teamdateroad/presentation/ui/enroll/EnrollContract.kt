@@ -59,7 +59,7 @@ class EnrollContract {
         val isPlaceSearchBottomSheetOpen: Boolean = false,
         val keyword: String = "",
         val place: Place = Place(),
-        val placeSearchResult: PlaceSearchResult = PlaceSearchResult(placeInfos = emptyList()),
+        val placeSearchResult: PlaceSearchResult = PlaceSearchResult(placeInfos = emptyList(), isEnd = true),
         val placeInfos: List<PlaceInfo> = emptyList(),
         val isPlaceEditable: Boolean = true,
         val isDurationBottomSheetOpen: Boolean = false,

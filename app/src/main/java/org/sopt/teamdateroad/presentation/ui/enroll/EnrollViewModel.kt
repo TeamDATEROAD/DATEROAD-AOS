@@ -1,6 +1,8 @@
 package org.sopt.teamdateroad.presentation.ui.enroll
 
 import androidx.lifecycle.viewModelScope
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.coroutines.launch
@@ -20,6 +22,8 @@ import org.sopt.teamdateroad.presentation.util.UserPropertyAmplitude.USER_COURSE
 import org.sopt.teamdateroad.presentation.util.UserPropertyAmplitude.USER_POINT
 import org.sopt.teamdateroad.presentation.util.amplitude.AmplitudeUtils
 import org.sopt.teamdateroad.presentation.util.base.BaseViewModel
+import org.sopt.teamdateroad.presentation.util.paging.PlaceSearchResultPagingSource
+import org.sopt.teamdateroad.presentation.util.paging.PlaceSearchResultPagingSource.Companion.PAGE_SIZE
 import org.sopt.teamdateroad.presentation.util.view.LoadState
 
 @HiltViewModel
@@ -85,7 +89,7 @@ class EnrollViewModel @Inject constructor(
                 getPlaceSearchResult()
             }
 
-            is EnrollContract.EnrollEvent.OnPlaceSearchBottomSheetDismiss -> setState { copy(isPlaceSearchBottomSheetOpen = false, keyword = "", placeSearchResult = PlaceSearchResult(emptyList())) }
+            is EnrollContract.EnrollEvent.OnPlaceSearchBottomSheetDismiss -> setState { copy(isPlaceSearchBottomSheetOpen = false, keyword = "", placeSearchResult = PlaceSearchResult(placeInfos = emptyList(), isEnd = true)) }
             is EnrollContract.EnrollEvent.OnSelectedPlaceCourseTimeClick -> setState { copy(isDurationBottomSheetOpen = true) }
             is EnrollContract.EnrollEvent.OnDatePickerBottomSheetDismissRequest -> setState { copy(isDatePickerBottomSheetOpen = false) }
             is EnrollContract.EnrollEvent.OnTimePickerBottomSheetDismissRequest -> setState { copy(isTimePickerBottomSheetOpen = false) }
@@ -107,7 +111,7 @@ class EnrollViewModel @Inject constructor(
 
             is EnrollContract.EnrollEvent.OnTitleValueChange -> setState { copy(enroll = currentState.enroll.copy(title = event.title)) }
             is EnrollContract.EnrollEvent.OnPlaceSelected -> {
-                setState { copy(keyword = "", placeSearchResult = PlaceSearchResult(emptyList()), place = currentState.place.copy(title = event.placeInfo.placeName, address = event.placeInfo.addressName), placeInfos = currentState.placeInfos + event.placeInfo, isPlaceSearchBottomSheetOpen = false) }
+                setState { copy(keyword = "", placeSearchResult = PlaceSearchResult(emptyList(), isEnd = true), place = currentState.place.copy(title = event.placeInfo.placeName, address = event.placeInfo.addressName), placeInfos = currentState.placeInfos + event.placeInfo, isPlaceSearchBottomSheetOpen = false) }
             }
 
             is EnrollContract.EnrollEvent.OnDatePickerBottomSheetButtonClick -> setState { copy(enroll = currentState.enroll.copy(date = event.date), isDatePickerBottomSheetOpen = false) }
@@ -195,11 +199,21 @@ class EnrollViewModel @Inject constructor(
 
     private fun getPlaceSearchResult() {
         viewModelScope.launch {
-            getPlaceSearchResultUseCase(keyword = currentState.keyword).onSuccess { placeSearchResult ->
-                setState { copy(placeSearchResult = placeSearchResult) }
-            }.onFailure {
-                setEvent(EnrollContract.EnrollEvent.Enroll(loadState = LoadState.Error))
-            }
+            Pager(
+                config = PagingConfig(pageSize = PAGE_SIZE),
+                pagingSourceFactory = {
+                    PlaceSearchResultPagingSource(
+                        keyword = currentState.keyword,
+                        getPlaceSearchResultUseCase = getPlaceSearchResultUseCase
+                    )
+                }
+            )
+
+//            getPlaceSearchResultUseCase(keyword = currentState.keyword).onSuccess { placeSearchResult ->
+//                setState { copy(placeSearchResult = placeSearchResult) }
+//            }.onFailure {
+//                setEvent(EnrollContract.EnrollEvent.Enroll(loadState = LoadState.Error))
+//            }
         }
     }
 }

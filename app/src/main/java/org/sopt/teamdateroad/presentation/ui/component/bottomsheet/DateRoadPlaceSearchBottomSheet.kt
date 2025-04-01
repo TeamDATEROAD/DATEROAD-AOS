@@ -229,7 +229,8 @@ fun DateRoadPlaceSearchBottomSheetPreview() {
                         "카페 나랑",
                         "경기 의왕시 청계로 217"
                     )
-                }
+                },
+                isEnd = true
             ),
             onKeywordChanged = { text = it },
             onPlaceSelected = {},

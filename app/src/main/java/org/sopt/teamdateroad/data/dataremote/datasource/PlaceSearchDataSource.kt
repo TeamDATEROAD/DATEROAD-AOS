@@ -4,6 +4,8 @@ import org.sopt.teamdateroad.data.dataremote.model.response.ResponsePlaceSearchR
 
 interface PlaceSearchDataSource {
     suspend fun getPlaceSearchResult(
-        keyword: String
+        keyword: String,
+        page: Int,
+        size: Int
     ): Result<ResponsePlaceSearchResultDto>
 }
