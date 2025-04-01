@@ -17,6 +17,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.onGloballyPositioned
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -26,6 +27,11 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.flowWithLifecycle
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.PagerState
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.LoadAdError
+import com.google.android.gms.ads.rewarded.RewardedAd
+import com.google.android.gms.ads.rewarded.RewardedAdLoadCallback
+import org.sopt.teamdateroad.BuildConfig
 import org.sopt.teamdateroad.R
 import org.sopt.teamdateroad.domain.model.CourseDetail
 import org.sopt.teamdateroad.domain.model.Place
@@ -70,6 +76,8 @@ fun CourseDetailRoute(
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     val lifecycleOwner = LocalLifecycleOwner.current
+    val context = LocalContext.current
+    val adRequest = remember { AdRequest.Builder().build() }
 
     LaunchedEffect(viewModel.sideEffect, lifecycleOwner) {
         viewModel.sideEffect.flowWithLifecycle(lifecycle = lifecycleOwner.lifecycle)
@@ -77,6 +85,22 @@ fun CourseDetailRoute(
                 when (courseDetailSideEffect) {
                     is CourseDetailContract.CourseDetailSideEffect.NavigateToEnroll -> navigateToEnroll(courseDetailSideEffect.enrollType, courseDetailSideEffect.viewPath, courseDetailSideEffect.id)
                     is CourseDetailContract.CourseDetailSideEffect.PopBackStack -> popBackStack()
+                    CourseDetailContract.CourseDetailSideEffect.NavigateToAds -> {
+                        RewardedAd.load(
+                            context,
+                            BuildConfig.GOOGLE_ADS_API_ID,
+                            adRequest,
+                            object : RewardedAdLoadCallback() {
+                                override fun onAdLoaded(ad: RewardedAd) {
+                                    viewModel.postAdsPoint()
+                                }
+
+                                override fun onAdFailedToLoad(error: LoadAdError) {
+                                    //TODO
+                                }
+                            }
+                        )
+                    }
                 }
             }
     }
@@ -150,6 +174,9 @@ fun CourseDetailRoute(
                 },
                 onDismissCollectPoint = {
                     viewModel.setEvent(CourseDetailContract.CourseDetailEvent.DismissDialogPointLack)
+                },
+                onSelectAds = {
+                    viewModel.setSideEffect(CourseDetailContract.CourseDetailSideEffect.NavigateToAds)
                 }
             )
         }
@@ -201,7 +228,8 @@ fun CourseDetailScreen(
     dismissReportCourseBottomSheet: () -> Unit,
     enrollSchedule: () -> Unit,
     onTopBarIconClicked: () -> Unit,
-    openCourseDetail: () -> Unit
+    openCourseDetail: () -> Unit,
+    onSelectAds: () -> Unit,
 ) {
     var imageHeight by remember { mutableIntStateOf(0) }
 
@@ -355,8 +383,7 @@ fun CourseDetailScreen(
                 title = stringResource(R.string.point_box_lack_point_button_text),
                 onClick = { dateRoadCollectPointType ->
                     when (dateRoadCollectPointType) {
-                        // TODO  : add ADS
-                        DateRoadCollectPointType.WATCH_ADS -> Unit
+                        DateRoadCollectPointType.WATCH_ADS -> onSelectAds()
                         DateRoadCollectPointType.COURSE_REGISTRATION -> onSelectEnroll()
                     }
                     onDismissCollectPoint()
@@ -463,7 +490,8 @@ fun CourseDetailScreenPreview() {
             dismissDialogDeleteCourse = {},
             onDismissCollectPoint = {},
             onSelectEnroll = {},
-            dismissDialogReportCourse = {}
+            dismissDialogReportCourse = {},
+            onSelectAds = {},
         )
     }
 }

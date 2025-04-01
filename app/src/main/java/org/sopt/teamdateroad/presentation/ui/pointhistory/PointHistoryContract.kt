@@ -20,6 +20,7 @@ class PointHistoryContract {
 
     sealed interface PointHistorySideEffect : UiSideEffect {
         data object PopBackStack : PointHistorySideEffect
+        data object NavigateToAds : PointHistorySideEffect
         data class NavigateToEnroll(val enrollType: EnrollType, val viewPath: String, val id: Int?) : PointHistorySideEffect
     }
 

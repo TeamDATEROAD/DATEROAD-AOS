@@ -30,6 +30,7 @@ class CourseDetailContract {
     sealed interface CourseDetailSideEffect : UiSideEffect {
         data class NavigateToEnroll(val enrollType: EnrollType, val viewPath: String, val id: Int?) : CourseDetailSideEffect
         data object PopBackStack : CourseDetailSideEffect
+        data object NavigateToAds : CourseDetailSideEffect
     }
 
     sealed class CourseDetailEvent : UiEvent {
