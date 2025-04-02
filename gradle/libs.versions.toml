@@ -78,6 +78,7 @@ androidx-security = { group = "androidx.security", name = "security-crypto-ktx",
 androidx-lifecycle-runtime-compose-android = { group = "androidx.lifecycle", name = "lifecycle-runtime-compose-android", version.ref = "lifecycleRuntimeComposeAndroid" }
 androidx-paging-common-android = { group = "androidx.paging", name = "paging-common-android", version.ref = "paging" }
 androidx-paging-runtime = { group = "androidx.paging", name = "paging-runtime", version.ref = "paging" }
+android-paging-compose = { group = "androidx.paging", name = "paging-compose", version.ref = "paging" }
 
 
 # Google
@@ -178,6 +179,7 @@ kakao = [
 pager = [
     "androidx-paging-common-android",
     "androidx-paging-runtime",
+    "android-paging-compose",
     "accompanist-pager",
     "accompanist-pager-indicators"
 ]

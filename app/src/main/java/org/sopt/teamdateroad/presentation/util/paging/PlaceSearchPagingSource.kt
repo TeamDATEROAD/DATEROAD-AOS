@@ -5,7 +5,7 @@ import androidx.paging.PagingState
 import org.sopt.teamdateroad.domain.model.PlaceInfo
 import org.sopt.teamdateroad.domain.usecase.GetPlaceSearchResultUseCase
 
-class PlaceSearchResultPagingSource(
+class PlaceSearchPagingSource(
     private val keyword: String,
     private val getPlaceSearchResultUseCase: GetPlaceSearchResultUseCase
 ) : PagingSource<Int, PlaceInfo>() {

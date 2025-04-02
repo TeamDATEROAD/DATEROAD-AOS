@@ -9,6 +9,7 @@ import org.sopt.teamdateroad.domain.repository.PlaceSearchRepository
 class PlaceSearchRepositoryImpl @Inject constructor(private val placeSearchDataSource: PlaceSearchDataSource) : PlaceSearchRepository {
     override suspend fun getPlaceSearchResult(keyword: String, page: Int, size: Int): Result<PlaceSearchResult> {
         return placeSearchDataSource.getPlaceSearchResult(keyword, page, size).map { responsePlaceSearchResultDto ->
+            println("page = $page")
             responsePlaceSearchResultDto.toDomain()
         }
     }
