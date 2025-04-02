@@ -17,5 +17,10 @@ enum class OneButtonDialogWithDescriptionType(
         titleRes = R.string.one_button_dialog_with_description_cannot_enroll_course_title,
         descriptionRes = R.string.one_button_dialog_with_description_cannot_enroll_course_description,
         buttonTextRes = R.string.dialog_checked
+    ),
+    FULL_ADS(
+        titleRes = R.string.one_button_dialog_with_description_full_ads_title,
+        descriptionRes = R.string.one_button_dialog_with_description_full_ads_description,
+        buttonTextRes = R.string.dialog_checked
     )
 }

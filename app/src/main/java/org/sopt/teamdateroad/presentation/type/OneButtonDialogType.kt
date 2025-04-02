@@ -10,5 +10,5 @@ enum class OneButtonDialogType(
     ENROLL_TIMELINE(
         titleRes = R.string.one_button_dialog_with_description_enroll_timeline_title,
         buttonTextRes = R.string.dialog_checked
-    )
+    ),
 }

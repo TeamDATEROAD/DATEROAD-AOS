@@ -13,9 +13,7 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
@@ -36,9 +34,11 @@ import org.sopt.teamdateroad.domain.model.PointHistory
 import org.sopt.teamdateroad.domain.model.UserPoint
 import org.sopt.teamdateroad.presentation.type.EmptyViewType
 import org.sopt.teamdateroad.presentation.type.EnrollType
+import org.sopt.teamdateroad.presentation.type.OneButtonDialogWithDescriptionType
 import org.sopt.teamdateroad.presentation.type.PointHistoryTabType
 import org.sopt.teamdateroad.presentation.ui.component.bottomsheet.DateRoadPointBottomSheet
 import org.sopt.teamdateroad.presentation.ui.component.bottomsheet.model.collect.DateRoadCollectPointType
+import org.sopt.teamdateroad.presentation.ui.component.dialog.DateRoadOneButtonDialogWithDescription
 import org.sopt.teamdateroad.presentation.ui.component.tabbar.DateRoadTabBar
 import org.sopt.teamdateroad.presentation.ui.component.tabbar.DateRoadTabTitle
 import org.sopt.teamdateroad.presentation.ui.component.topbar.DateRoadBasicTopBar
@@ -92,7 +92,11 @@ fun PointHistoryRoute(
                                 }
 
                                 override fun onAdFailedToLoad(error: LoadAdError) {
-                                    //TODO
+                                    when (error.code) {
+                                        AdRequest.ERROR_CODE_NO_FILL -> viewModel.setEvent(PointHistoryContract.PointHistoryEvent.FullAds)
+
+                                        else -> viewModel.setEvent(PointHistoryContract.PointHistoryEvent.FailLoadAdsPoint)
+                                    }
                                 }
                             }
                         )
@@ -129,6 +133,9 @@ fun PointHistoryRoute(
                 },
                 onSelectAds = {
                     viewModel.setSideEffect(PointHistoryContract.PointHistorySideEffect.NavigateToAds)
+                },
+                onDismissFullAdsDialog = {
+                    viewModel.setEvent(PointHistoryContract.PointHistoryEvent.DismissFullAdsDialog)
                 }
             )
         }
@@ -147,6 +154,7 @@ fun PointHistoryScreen(
     onDisMissCollectPoint: () -> Unit,
     onSelectEnroll: () -> Unit,
     onSelectAds: () -> Unit,
+    onDismissFullAdsDialog: () -> Unit,
 ) {
     Column(
         modifier = Modifier
@@ -211,6 +219,14 @@ fun PointHistoryScreen(
         }
     }
 
+    if (pointHistoryUiState.isFullAdsDialogOpen){
+        DateRoadOneButtonDialogWithDescription(
+            oneButtonDialogWithDescriptionType = OneButtonDialogWithDescriptionType.FULL_ADS,
+            onDismissRequest = onDismissFullAdsDialog,
+            onClickConfirm = onDismissFullAdsDialog,
+        )
+    }
+
     DateRoadPointBottomSheet(
         isBottomSheetOpen = pointHistoryUiState.isPointCollectBottomSheetOpen,
         title = stringResource(R.string.point_box_get_point_button_text),
@@ -250,7 +266,8 @@ fun PointHistoryPreview() {
             onClickCollectPoint = {},
             onDisMissCollectPoint = {},
             onSelectEnroll = {},
-            onSelectAds = {}
+            onSelectAds = {},
+            onDismissFullAdsDialog = {},
         )
     }
 }

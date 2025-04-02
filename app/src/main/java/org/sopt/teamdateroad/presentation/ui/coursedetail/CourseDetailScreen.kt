@@ -38,10 +38,12 @@ import org.sopt.teamdateroad.domain.model.Place
 import org.sopt.teamdateroad.presentation.type.CourseDetailUnopenedDetailType
 import org.sopt.teamdateroad.presentation.type.DateTagType.Companion.getDateTagTypeByName
 import org.sopt.teamdateroad.presentation.type.EnrollType
+import org.sopt.teamdateroad.presentation.type.OneButtonDialogWithDescriptionType
 import org.sopt.teamdateroad.presentation.type.TwoButtonDialogWithDescriptionType
 import org.sopt.teamdateroad.presentation.ui.component.bottomsheet.DateRoadBasicBottomSheet
 import org.sopt.teamdateroad.presentation.ui.component.bottomsheet.DateRoadPointBottomSheet
 import org.sopt.teamdateroad.presentation.ui.component.bottomsheet.model.collect.DateRoadCollectPointType
+import org.sopt.teamdateroad.presentation.ui.component.dialog.DateRoadOneButtonDialogWithDescription
 import org.sopt.teamdateroad.presentation.ui.component.dialog.DateRoadTwoButtonDialogWithDescription
 import org.sopt.teamdateroad.presentation.ui.component.pager.DateRoadImagePager
 import org.sopt.teamdateroad.presentation.ui.component.topbar.DateRoadScrollResponsiveTopBar
@@ -53,6 +55,7 @@ import org.sopt.teamdateroad.presentation.ui.coursedetail.component.CourseDetail
 import org.sopt.teamdateroad.presentation.ui.coursedetail.component.CourseDetailBottomBar
 import org.sopt.teamdateroad.presentation.ui.coursedetail.component.CourseDetailUnopenedDetail
 import org.sopt.teamdateroad.presentation.ui.coursedetail.component.courseDetailOpenedDetail
+import org.sopt.teamdateroad.presentation.ui.pointhistory.PointHistoryContract
 import org.sopt.teamdateroad.presentation.util.CourseDetail.POINT_LACK
 import org.sopt.teamdateroad.presentation.util.CourseDetailAmplitude.CLICK_COURSE_BACK
 import org.sopt.teamdateroad.presentation.util.CourseDetailAmplitude.CLICK_COURSE_PURCHASE
@@ -96,7 +99,10 @@ fun CourseDetailRoute(
                                 }
 
                                 override fun onAdFailedToLoad(error: LoadAdError) {
-                                    //TODO
+                                    when (error.code) {
+                                        AdRequest.ERROR_CODE_NO_FILL -> viewModel.setEvent(CourseDetailContract.CourseDetailEvent.FullAds)
+                                        else -> viewModel.setEvent(CourseDetailContract.CourseDetailEvent.FailLoadAdsPoint)
+                                    }
                                 }
                             }
                         )
@@ -177,6 +183,9 @@ fun CourseDetailRoute(
                 },
                 onSelectAds = {
                     viewModel.setSideEffect(CourseDetailContract.CourseDetailSideEffect.NavigateToAds)
+                },
+                onDismissFullAdsDialog = {
+                    viewModel.setEvent(CourseDetailContract.CourseDetailEvent.DismissFullAdsDialog)
                 }
             )
         }
@@ -230,6 +239,7 @@ fun CourseDetailScreen(
     onTopBarIconClicked: () -> Unit,
     openCourseDetail: () -> Unit,
     onSelectAds: () -> Unit,
+    onDismissFullAdsDialog : () -> Unit,
 ) {
     var imageHeight by remember { mutableIntStateOf(0) }
 
@@ -378,6 +388,14 @@ fun CourseDetailScreen(
                 )
             }
 
+            if (courseDetailUiState.isFullAdsDialogOpen){
+                DateRoadOneButtonDialogWithDescription(
+                    oneButtonDialogWithDescriptionType = OneButtonDialogWithDescriptionType.FULL_ADS,
+                    onDismissRequest = onDismissFullAdsDialog,
+                    onClickConfirm = onDismissFullAdsDialog,
+                )
+            }
+
             DateRoadPointBottomSheet(
                 isBottomSheetOpen = courseDetailUiState.isPointCollectBottomSheetOpen,
                 title = stringResource(R.string.point_box_lack_point_button_text),
@@ -492,6 +510,7 @@ fun CourseDetailScreenPreview() {
             onSelectEnroll = {},
             dismissDialogReportCourse = {},
             onSelectAds = {},
+            onDismissFullAdsDialog = {},
         )
     }
 }

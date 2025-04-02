@@ -26,6 +26,9 @@ class PointHistoryViewModel @Inject constructor(
             is PointHistoryContract.PointHistoryEvent.FetchUserPoint -> setState { copy(loadState = event.loadState, userPoint = event.userPoint) }
             PointHistoryContract.PointHistoryEvent.OnPointCollectBottomSheetClick -> setState { copy(isPointCollectBottomSheetOpen = true) }
             PointHistoryContract.PointHistoryEvent.OnPointCollectBottomSheetDismiss -> setState { copy(isPointCollectBottomSheetOpen = false) }
+            PointHistoryContract.PointHistoryEvent.FailLoadAdsPoint -> setState { copy(loadState = LoadState.Loading) }
+            PointHistoryContract.PointHistoryEvent.DismissFullAdsDialog -> setState { copy(isFullAdsDialogOpen = false) }
+            PointHistoryContract.PointHistoryEvent.FullAds -> setState { copy(isFullAdsDialogOpen = true) }
         }
     }
 
