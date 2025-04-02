@@ -1,8 +1,6 @@
 package org.sopt.teamdateroad.presentation.ui.enroll
 
 import androidx.paging.PagingData
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.emptyFlow
 import org.sopt.teamdateroad.domain.model.CourseDetail
 import org.sopt.teamdateroad.domain.model.Enroll
 import org.sopt.teamdateroad.domain.model.Place
@@ -61,7 +59,7 @@ class EnrollContract {
         val isPlaceSearchBottomSheetOpen: Boolean = false,
         val keyword: String = "",
         val place: Place = Place(),
-        val searchedPlaceInfos: Flow<PagingData<PlaceInfo>> = emptyFlow(),
+        val searchedPlaceInfos: PagingData<PlaceInfo> = PagingData.empty(),
         val selectedPlaceInfos: List<PlaceInfo> = emptyList(),
         val isPlaceEditable: Boolean = true,
         val isDurationBottomSheetOpen: Boolean = false,

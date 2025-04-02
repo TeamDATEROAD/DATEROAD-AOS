@@ -31,7 +31,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
-import androidx.paging.compose.collectAsLazyPagingItems
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import org.sopt.teamdateroad.R
@@ -182,7 +181,7 @@ fun EnrollSecondScreen(
     DateRoadPlaceSearchBottomSheet(
         isBottomSheetOpen = enrollUiState.isPlaceSearchBottomSheetOpen,
         keyword = enrollUiState.keyword,
-        searchedPlaceInfos = enrollUiState.searchedPlaceInfos.collectAsLazyPagingItems(),
+        placeInfos = enrollUiState.searchedPlaceInfos,
         onKeywordChanged = onKeywordChanged,
         onPlaceSelected = onPlaceSelected,
         onDismissRequest = onPlaceSearchBottomSheetDismiss

@@ -38,7 +38,6 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.paging.PagingData
-import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.holix.android.bottomsheetdialog.compose.BottomSheetBehaviorProperties
 import com.holix.android.bottomsheetdialog.compose.BottomSheetDialog
@@ -55,11 +54,13 @@ import org.sopt.teamdateroad.ui.theme.DateRoadTheme
 fun DateRoadPlaceSearchBottomSheet(
     isBottomSheetOpen: Boolean,
     keyword: String,
-    searchedPlaceInfos: LazyPagingItems<PlaceInfo>,
+    placeInfos: PagingData<PlaceInfo>,
     onKeywordChanged: (String) -> Unit,
     onPlaceSelected: (PlaceInfo) -> Unit,
     onDismissRequest: () -> Unit = {}
 ) {
+    val placeInfoItems = flowOf(placeInfos).collectAsLazyPagingItems()
+
     if (isBottomSheetOpen) {
         BottomSheetDialog(
             onDismissRequest = onDismissRequest,
@@ -153,12 +154,12 @@ fun DateRoadPlaceSearchBottomSheet(
 
                 Spacer(modifier = Modifier.height(10.dp))
 
-                if (searchedPlaceInfos.itemCount > 0) {
+                if (placeInfoItems.itemCount > 0) {
                     LazyColumn(modifier = Modifier.weight(1f)) {
                         items(
-                            searchedPlaceInfos.itemCount
+                            placeInfoItems.itemCount
                         ) { index ->
-                            val placeInfo = searchedPlaceInfos[index] ?: return@items
+                            val placeInfo = placeInfoItems[index] ?: return@items
 
                             EnrollPlaceSearchItem(
                                 keyword = keyword,
@@ -166,7 +167,7 @@ fun DateRoadPlaceSearchBottomSheet(
                                 onClick = { onPlaceSelected(placeInfo) }
                             )
 
-                            if (index != searchedPlaceInfos.itemCount - 1) {
+                            if (index != placeInfoItems.itemCount - 1) {
                                 HorizontalDivider(
                                     modifier = Modifier.fillMaxWidth(),
                                     color = DateRoadTheme.colors.gray100,
@@ -175,7 +176,7 @@ fun DateRoadPlaceSearchBottomSheet(
                             }
                         }
                     }
-                    Spacer(modifier = Modifier.height(10.dp))
+                    Spacer(modifier = Modifier.height(12.dp))
                 } else {
                     EmptyPlaceSearchResult()
                 }
@@ -216,13 +217,11 @@ fun DateRoadPlaceSearchBottomSheetPreview() {
         var isBottomSheetOpen by rememberSaveable { mutableStateOf(false) }
         var text by rememberSaveable { mutableStateOf("") }
 
-        val searchedPlaceInfos = flowOf(
-            PagingData.from(
-                List(10) {
-                    PlaceInfo("카페 나랑", "경기 의왕시 청계로 217")
-                }
-            )
-        ).collectAsLazyPagingItems()
+        val searchedPlaceInfos = PagingData.from(
+            List(10) {
+                PlaceInfo("카페 나랑", "경기 의왕시 청계로 217")
+            }
+        )
 
         Button(onClick = { isBottomSheetOpen = true }) {
             Text(
@@ -235,7 +234,7 @@ fun DateRoadPlaceSearchBottomSheetPreview() {
         DateRoadPlaceSearchBottomSheet(
             isBottomSheetOpen = isBottomSheetOpen,
             keyword = text,
-            searchedPlaceInfos = searchedPlaceInfos,
+            placeInfos = searchedPlaceInfos,
             onKeywordChanged = { text = it },
             onPlaceSelected = {},
             onDismissRequest = { isBottomSheetOpen = !isBottomSheetOpen }
