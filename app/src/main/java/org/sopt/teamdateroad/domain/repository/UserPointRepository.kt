@@ -12,5 +12,5 @@ interface UserPointRepository {
 
     suspend fun postUsePoint(courseId: Int, usePoint: UsePoint): Result<PointUseResult>
 
-    suspend fun postAdsPoint() : Result<Unit>
+    suspend fun postAdsPoint(): Result<Unit>
 }

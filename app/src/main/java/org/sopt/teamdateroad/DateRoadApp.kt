@@ -33,7 +33,7 @@ class DateRoadApp : Application() {
         KakaoSdk.init(this, KAKAO_NATIVE_APP_KEY)
     }
 
-    private fun setAds(){
+    private fun setAds() {
         MobileAds.initialize(this)
     }
 }

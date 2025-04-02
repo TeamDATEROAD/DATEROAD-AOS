@@ -12,5 +12,5 @@ interface UserPointRemoteDataSource {
 
     suspend fun postUsePoint(courseId: Int, requestUsePointDto: RequestUsePointDto): ResponseUserUsePointDto
 
-    suspend fun postAdsPoint() : Unit
+    suspend fun postAdsPoint(): Unit
 }

@@ -28,7 +28,7 @@ class CourseDetailViewModel @Inject constructor(
     private val getCourseDetailUseCase: GetCourseDetailUseCase,
     private val postCourseLikeUseCase: PostCourseLikeUseCase,
     private val postUsePointUseCase: PostUsePointUseCase,
-    private val postAdsPointUseCase: PostAdsPointUseCase,
+    private val postAdsPointUseCase: PostAdsPointUseCase
 ) : BaseViewModel<CourseDetailContract.CourseDetailUiState, CourseDetailContract.CourseDetailSideEffect, CourseDetailContract.CourseDetailEvent>() {
     override fun createInitialState(): CourseDetailContract.CourseDetailUiState = CourseDetailContract.CourseDetailUiState()
 
@@ -56,7 +56,7 @@ class CourseDetailViewModel @Inject constructor(
             is CourseDetailContract.CourseDetailEvent.PostUsePoint -> setState { copy(usePointLoadState = event.usePointLoadState, courseDetail = courseDetail.copy(isAccess = event.isAccess)) }
             is CourseDetailContract.CourseDetailEvent.OnReportWebViewClicked -> setState { copy(isWebViewOpened = true) }
             is CourseDetailContract.CourseDetailEvent.DismissReportWebView -> setState { copy(isWebViewOpened = false) }
-            CourseDetailContract.CourseDetailEvent.FailLoadAdsPoint ->  setState { copy(loadState = LoadState.Loading) }
+            CourseDetailContract.CourseDetailEvent.FailLoadAdsPoint -> setState { copy(loadState = LoadState.Loading) }
             CourseDetailContract.CourseDetailEvent.DismissFullAdsDialog -> setState { copy(isFullAdsDialogOpen = false) }
             CourseDetailContract.CourseDetailEvent.FullAds -> setState { copy(isFullAdsDialogOpen = true) }
         }

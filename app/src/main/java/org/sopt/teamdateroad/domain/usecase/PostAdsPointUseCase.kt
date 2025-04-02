@@ -1,8 +1,8 @@
 package org.sopt.teamdateroad.domain.usecase
 
-import org.sopt.teamdateroad.domain.repository.UserPointRepository
 import javax.inject.Inject
 import javax.inject.Singleton
+import org.sopt.teamdateroad.domain.repository.UserPointRepository
 
 @Singleton
 class PostAdsPointUseCase @Inject constructor(

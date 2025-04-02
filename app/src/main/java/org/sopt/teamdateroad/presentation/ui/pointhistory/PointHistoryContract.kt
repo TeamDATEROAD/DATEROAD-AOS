@@ -4,7 +4,6 @@ import org.sopt.teamdateroad.domain.model.PointHistory
 import org.sopt.teamdateroad.domain.model.UserPoint
 import org.sopt.teamdateroad.presentation.type.EnrollType
 import org.sopt.teamdateroad.presentation.type.PointHistoryTabType
-import org.sopt.teamdateroad.presentation.ui.coursedetail.CourseDetailContract.CourseDetailEvent
 import org.sopt.teamdateroad.presentation.util.base.UiEvent
 import org.sopt.teamdateroad.presentation.util.base.UiSideEffect
 import org.sopt.teamdateroad.presentation.util.base.UiState
@@ -17,7 +16,7 @@ class PointHistoryContract {
         val isPointCollectBottomSheetOpen: Boolean = false,
         val pointHistoryTabType: PointHistoryTabType = PointHistoryTabType.GAINED_HISTORY,
         val pointHistory: PointHistory = PointHistory(),
-        val isFullAdsDialogOpen: Boolean = false,
+        val isFullAdsDialogOpen: Boolean = false
     ) : UiState
 
     sealed interface PointHistorySideEffect : UiSideEffect {

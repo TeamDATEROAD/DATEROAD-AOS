@@ -31,5 +31,5 @@ interface UserPointService {
     ): ResponseUserUsePointDto
 
     @POST("$API/$VERSION/$POINTS")
-    suspend fun postAdsPoint() : Unit
+    suspend fun postAdsPoint(): Unit
 }

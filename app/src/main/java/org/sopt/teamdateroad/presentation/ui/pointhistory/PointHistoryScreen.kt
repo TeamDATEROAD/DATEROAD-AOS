@@ -154,7 +154,7 @@ fun PointHistoryScreen(
     onDisMissCollectPoint: () -> Unit,
     onSelectEnroll: () -> Unit,
     onSelectAds: () -> Unit,
-    onDismissFullAdsDialog: () -> Unit,
+    onDismissFullAdsDialog: () -> Unit
 ) {
     Column(
         modifier = Modifier
@@ -219,11 +219,11 @@ fun PointHistoryScreen(
         }
     }
 
-    if (pointHistoryUiState.isFullAdsDialogOpen){
+    if (pointHistoryUiState.isFullAdsDialogOpen) {
         DateRoadOneButtonDialogWithDescription(
             oneButtonDialogWithDescriptionType = OneButtonDialogWithDescriptionType.FULL_ADS,
             onDismissRequest = onDismissFullAdsDialog,
-            onClickConfirm = onDismissFullAdsDialog,
+            onClickConfirm = onDismissFullAdsDialog
         )
     }
 
@@ -267,7 +267,7 @@ fun PointHistoryPreview() {
             onDisMissCollectPoint = {},
             onSelectEnroll = {},
             onSelectAds = {},
-            onDismissFullAdsDialog = {},
+            onDismissFullAdsDialog = {}
         )
     }
 }

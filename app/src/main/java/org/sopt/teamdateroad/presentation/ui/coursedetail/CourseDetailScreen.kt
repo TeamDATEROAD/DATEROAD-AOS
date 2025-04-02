@@ -55,7 +55,6 @@ import org.sopt.teamdateroad.presentation.ui.coursedetail.component.CourseDetail
 import org.sopt.teamdateroad.presentation.ui.coursedetail.component.CourseDetailBottomBar
 import org.sopt.teamdateroad.presentation.ui.coursedetail.component.CourseDetailUnopenedDetail
 import org.sopt.teamdateroad.presentation.ui.coursedetail.component.courseDetailOpenedDetail
-import org.sopt.teamdateroad.presentation.ui.pointhistory.PointHistoryContract
 import org.sopt.teamdateroad.presentation.util.CourseDetail.POINT_LACK
 import org.sopt.teamdateroad.presentation.util.CourseDetailAmplitude.CLICK_COURSE_BACK
 import org.sopt.teamdateroad.presentation.util.CourseDetailAmplitude.CLICK_COURSE_PURCHASE
@@ -239,7 +238,7 @@ fun CourseDetailScreen(
     onTopBarIconClicked: () -> Unit,
     openCourseDetail: () -> Unit,
     onSelectAds: () -> Unit,
-    onDismissFullAdsDialog : () -> Unit,
+    onDismissFullAdsDialog: () -> Unit
 ) {
     var imageHeight by remember { mutableIntStateOf(0) }
 
@@ -388,11 +387,11 @@ fun CourseDetailScreen(
                 )
             }
 
-            if (courseDetailUiState.isFullAdsDialogOpen){
+            if (courseDetailUiState.isFullAdsDialogOpen) {
                 DateRoadOneButtonDialogWithDescription(
                     oneButtonDialogWithDescriptionType = OneButtonDialogWithDescriptionType.FULL_ADS,
                     onDismissRequest = onDismissFullAdsDialog,
-                    onClickConfirm = onDismissFullAdsDialog,
+                    onClickConfirm = onDismissFullAdsDialog
                 )
             }
 
@@ -510,7 +509,7 @@ fun CourseDetailScreenPreview() {
             onSelectEnroll = {},
             dismissDialogReportCourse = {},
             onSelectAds = {},
-            onDismissFullAdsDialog = {},
+            onDismissFullAdsDialog = {}
         )
     }
 }
