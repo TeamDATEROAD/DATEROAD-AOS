@@ -38,7 +38,8 @@ class PlaceSearchPagingSource(
 
     companion object {
         private const val INITIAL_PAGE = 1
-        const val PAGE_SIZE = 10
         private const val PAGE_OFFSET = 1
+        const val PAGE_SIZE = 10
+        const val MAX_SIZE = 50
     }
 }

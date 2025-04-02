@@ -26,6 +26,7 @@ import org.sopt.teamdateroad.presentation.util.UserPropertyAmplitude.USER_POINT
 import org.sopt.teamdateroad.presentation.util.amplitude.AmplitudeUtils
 import org.sopt.teamdateroad.presentation.util.base.BaseViewModel
 import org.sopt.teamdateroad.presentation.util.paging.PlaceSearchPagingSource
+import org.sopt.teamdateroad.presentation.util.paging.PlaceSearchPagingSource.Companion.MAX_SIZE
 import org.sopt.teamdateroad.presentation.util.paging.PlaceSearchPagingSource.Companion.PAGE_SIZE
 import org.sopt.teamdateroad.presentation.util.view.LoadState
 
@@ -203,7 +204,7 @@ class EnrollViewModel @Inject constructor(
     private fun getPlaceSearchResult() {
         viewModelScope.launch {
             Pager(
-                config = PagingConfig(pageSize = PAGE_SIZE),
+                config = PagingConfig(pageSize = PAGE_SIZE, maxSize = MAX_SIZE),
                 pagingSourceFactory = {
                     PlaceSearchPagingSource(
                         keyword = currentState.keyword,
