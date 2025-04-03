@@ -112,6 +112,8 @@
     <string name="one_button_dialog_with_description_soon_description">조금만 기다려주세요 :)</string>
     <string name="one_button_dialog_with_description_cannot_enroll_course_title">데이트를 더 이상 등록할 수 없어요!</string>
     <string name="one_button_dialog_with_description_cannot_enroll_course_description">데이트는 최대 5개까지만 등록 가능해요</string>
+    <string name="one_button_dialog_with_description_full_ads_title">광고는 하루 5회까지만 시청할 수 있어요</string>
+    <string name="one_button_dialog_with_description_full_ads_description">광고 시청 한도는 매일 자정에 초기화돼요</string>
 
     <!-- PointHistoryTabType -->
     <string name="point_history_tab_gained_history">획득 내역</string>
