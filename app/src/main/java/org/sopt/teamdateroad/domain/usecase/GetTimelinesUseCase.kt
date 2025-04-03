@@ -4,7 +4,9 @@ import javax.inject.Inject
 import org.sopt.teamdateroad.domain.model.Timeline
 import org.sopt.teamdateroad.domain.repository.TimelineRepository
 import org.sopt.teamdateroad.domain.type.TimelineTimeType
+import javax.inject.Singleton
 
+@Singleton
 class GetTimelinesUseCase @Inject constructor(
     private val timelineRepository: TimelineRepository
 ) {

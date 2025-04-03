@@ -5,7 +5,9 @@ import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
 import org.sopt.teamdateroad.domain.model.PlaceInfo
 import org.sopt.teamdateroad.domain.repository.PlaceSearchRepository
+import javax.inject.Singleton
 
+@Singleton
 class GetPlaceSearchResultUseCase @Inject constructor(
     private val placeSearchRepository: PlaceSearchRepository
 ) {
