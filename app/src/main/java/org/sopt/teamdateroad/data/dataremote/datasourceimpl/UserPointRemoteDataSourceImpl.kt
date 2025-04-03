@@ -16,4 +16,6 @@ class UserPointRemoteDataSourceImpl @Inject constructor(
     override suspend fun getPointHistory(): ResponsePointHistoryDto = userPointService.getPointHistory()
 
     override suspend fun postUsePoint(courseId: Int, requestUsePointDto: RequestUsePointDto): ResponseUserUsePointDto = userPointService.postUsePoint(courseId = courseId, requestUsePointDto = requestUsePointDto)
+
+    override suspend fun postAdsPoint() = userPointService.postAdsPoint()
 }
