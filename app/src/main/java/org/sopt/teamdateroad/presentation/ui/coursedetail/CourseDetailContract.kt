@@ -24,12 +24,14 @@ class CourseDetailContract {
         val usePointLoadState: LoadState = LoadState.Idle,
         val deleteLoadState: LoadState = LoadState.Idle,
         var isWebViewOpened: Boolean = false,
-        var hasPointReadDialogOpened: Boolean = false
+        var hasPointReadDialogOpened: Boolean = false,
+        val isFullAdsDialogOpen: Boolean = false
     ) : UiState
 
     sealed interface CourseDetailSideEffect : UiSideEffect {
         data class NavigateToEnroll(val enrollType: EnrollType, val viewPath: String, val id: Int?) : CourseDetailSideEffect
         data object PopBackStack : CourseDetailSideEffect
+        data object NavigateToAds : CourseDetailSideEffect
     }
 
     sealed class CourseDetailEvent : UiEvent {
@@ -55,5 +57,8 @@ class CourseDetailContract {
         data class DeleteCourse(val deleteLoadState: LoadState) : CourseDetailEvent()
         data object OnReportWebViewClicked : CourseDetailEvent()
         data object DismissReportWebView : CourseDetailEvent()
+        data object FailLoadAdsPoint : CourseDetailEvent()
+        data object FullAds : CourseDetailEvent()
+        data object DismissFullAdsDialog : CourseDetailEvent()
     }
 }

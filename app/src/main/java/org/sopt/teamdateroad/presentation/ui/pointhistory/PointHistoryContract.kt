@@ -15,11 +15,13 @@ class PointHistoryContract {
         val userPoint: UserPoint = UserPoint(),
         val isPointCollectBottomSheetOpen: Boolean = false,
         val pointHistoryTabType: PointHistoryTabType = PointHistoryTabType.GAINED_HISTORY,
-        val pointHistory: PointHistory = PointHistory()
+        val pointHistory: PointHistory = PointHistory(),
+        val isFullAdsDialogOpen: Boolean = false
     ) : UiState
 
     sealed interface PointHistorySideEffect : UiSideEffect {
         data object PopBackStack : PointHistorySideEffect
+        data object NavigateToAds : PointHistorySideEffect
         data class NavigateToEnroll(val enrollType: EnrollType, val viewPath: String, val id: Int?) : PointHistorySideEffect
     }
 
@@ -27,7 +29,10 @@ class PointHistoryContract {
         data class FetchPointHistory(val loadState: LoadState, val pointHistory: PointHistory) : PointHistoryEvent()
         data class FetchUserPoint(val loadState: LoadState, val userPoint: UserPoint) : PointHistoryEvent()
         data class OnTabBarClicked(val pointHistoryTabType: PointHistoryTabType) : PointHistoryEvent()
+        data object FailLoadAdsPoint : PointHistoryEvent()
         data object OnPointCollectBottomSheetClick : PointHistoryEvent()
         data object OnPointCollectBottomSheetDismiss : PointHistoryEvent()
+        data object FullAds : PointHistoryEvent()
+        data object DismissFullAdsDialog : PointHistoryEvent()
     }
 }
