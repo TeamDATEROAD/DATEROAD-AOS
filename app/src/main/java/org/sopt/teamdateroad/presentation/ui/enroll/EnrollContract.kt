@@ -1,6 +1,5 @@
 package org.sopt.teamdateroad.presentation.ui.enroll
 
-import androidx.paging.PagingData
 import org.sopt.teamdateroad.domain.model.CourseDetail
 import org.sopt.teamdateroad.domain.model.Enroll
 import org.sopt.teamdateroad.domain.model.Place
@@ -57,9 +56,7 @@ class EnrollContract {
         val onRegionBottomSheetRegionSelected: RegionType? = RegionType.SEOUL,
         val onRegionBottomSheetAreaSelected: Any? = null,
         val isPlaceSearchBottomSheetOpen: Boolean = false,
-        val keyword: String = "",
         val place: Place = Place(),
-        val searchedPlaceInfos: PagingData<PlaceInfo> = PagingData.empty(),
         val selectedPlaceInfos: List<PlaceInfo> = emptyList(),
         val isPlaceEditable: Boolean = true,
         val isDurationBottomSheetOpen: Boolean = false,

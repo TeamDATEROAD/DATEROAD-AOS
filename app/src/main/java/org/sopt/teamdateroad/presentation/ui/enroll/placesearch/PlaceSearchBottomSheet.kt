@@ -1,4 +1,4 @@
-package org.sopt.teamdateroad.presentation.ui.component.bottomsheet
+package org.sopt.teamdateroad.presentation.ui.enroll.placesearch
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -38,6 +38,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.paging.PagingData
+import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.holix.android.bottomsheetdialog.compose.BottomSheetBehaviorProperties
 import com.holix.android.bottomsheetdialog.compose.BottomSheetDialog
@@ -51,16 +52,14 @@ import org.sopt.teamdateroad.ui.theme.DATEROADTheme
 import org.sopt.teamdateroad.ui.theme.DateRoadTheme
 
 @Composable
-fun DateRoadPlaceSearchBottomSheet(
+fun PlaceSearchBottomSheet(
     isBottomSheetOpen: Boolean,
-    keyword: String,
-    placeInfos: PagingData<PlaceInfo>,
+    searchKeyword: String,
+    searchPlaceInfos: LazyPagingItems<PlaceInfo>,
     onKeywordChanged: (String) -> Unit,
     onPlaceSelected: (PlaceInfo) -> Unit,
-    onDismissRequest: () -> Unit = {}
+    onDismissRequest: () -> Unit
 ) {
-    val placeInfoItems = flowOf(placeInfos).collectAsLazyPagingItems()
-
     if (isBottomSheetOpen) {
         BottomSheetDialog(
             onDismissRequest = onDismissRequest,
@@ -108,7 +107,7 @@ fun DateRoadPlaceSearchBottomSheet(
                 Spacer(modifier = Modifier.height(22.dp))
 
                 TextField(
-                    value = keyword,
+                    value = searchKeyword,
                     onValueChange = onKeywordChanged,
                     modifier = Modifier
                         .fillMaxWidth()
@@ -154,20 +153,20 @@ fun DateRoadPlaceSearchBottomSheet(
 
                 Spacer(modifier = Modifier.height(10.dp))
 
-                if (placeInfoItems.itemCount > 0) {
+                if (searchPlaceInfos.itemCount > 0) {
                     LazyColumn(modifier = Modifier.weight(1f)) {
                         items(
-                            placeInfoItems.itemCount
+                            searchPlaceInfos.itemCount
                         ) { index ->
-                            val placeInfo = placeInfoItems[index] ?: return@items
+                            val placeInfo = searchPlaceInfos[index] ?: return@items
 
                             EnrollPlaceSearchItem(
-                                keyword = keyword,
+                                keyword = searchKeyword,
                                 placeInfo = placeInfo,
                                 onClick = { onPlaceSelected(placeInfo) }
                             )
 
-                            if (index != placeInfoItems.itemCount - 1) {
+                            if (index != searchPlaceInfos.itemCount - 1) {
                                 HorizontalDivider(
                                     modifier = Modifier.fillMaxWidth(),
                                     color = DateRoadTheme.colors.gray100,
@@ -212,16 +211,18 @@ private fun EmptyPlaceSearchResult() {
 
 @Preview
 @Composable
-fun DateRoadPlaceSearchBottomSheetPreview() {
+fun PlaceSearchBottomSheetPreview() {
     DATEROADTheme {
         var isBottomSheetOpen by rememberSaveable { mutableStateOf(false) }
-        var text by rememberSaveable { mutableStateOf("") }
+        var searchKeyword by rememberSaveable { mutableStateOf("") }
 
-        val searchedPlaceInfos = PagingData.from(
-            List(10) {
-                PlaceInfo("카페 나랑", "경기 의왕시 청계로 217")
-            }
-        )
+        val searchPlaceInfos = flowOf(
+            PagingData.from(
+                List(10) {
+                    PlaceInfo("카페 나랑", "경기 의왕시 청계로 217")
+                }
+            )
+        ).collectAsLazyPagingItems()
 
         Button(onClick = { isBottomSheetOpen = true }) {
             Text(
@@ -231,11 +232,11 @@ fun DateRoadPlaceSearchBottomSheetPreview() {
             )
         }
 
-        DateRoadPlaceSearchBottomSheet(
+        PlaceSearchBottomSheet(
             isBottomSheetOpen = isBottomSheetOpen,
-            keyword = text,
-            placeInfos = searchedPlaceInfos,
-            onKeywordChanged = { text = it },
+            searchKeyword = searchKeyword,
+            searchPlaceInfos = searchPlaceInfos,
+            onKeywordChanged = { searchKeyword = it },
             onPlaceSelected = {},
             onDismissRequest = { isBottomSheetOpen = !isBottomSheetOpen }
         )

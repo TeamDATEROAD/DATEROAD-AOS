@@ -8,9 +8,9 @@ import kotlinx.coroutines.flow.Flow
 import org.sopt.teamdateroad.data.dataremote.datasource.PlaceSearchDataSource
 import org.sopt.teamdateroad.data.dataremote.model.response.ResponsePlaceInfoDto
 import org.sopt.teamdateroad.data.dataremote.service.PlaceSearchService
-import org.sopt.teamdateroad.presentation.util.paging.PlaceSearchPagingSource
-import org.sopt.teamdateroad.presentation.util.paging.PlaceSearchPagingSource.Companion.MAX_SIZE
-import org.sopt.teamdateroad.presentation.util.paging.PlaceSearchPagingSource.Companion.PAGE_SIZE
+import org.sopt.teamdateroad.presentation.ui.enroll.placesearch.paging.PlaceSearchPagingSource
+import org.sopt.teamdateroad.presentation.ui.enroll.placesearch.paging.PlaceSearchPagingSource.Companion.MAX_SIZE
+import org.sopt.teamdateroad.presentation.ui.enroll.placesearch.paging.PlaceSearchPagingSource.Companion.PAGE_SIZE
 
 class PlaceSearchDataSourceImpl @Inject constructor(private val placeSearchService: PlaceSearchService) : PlaceSearchDataSource {
     override suspend fun getPlaceSearchResult(keyword: String): Result<Flow<PagingData<ResponsePlaceInfoDto>>> {

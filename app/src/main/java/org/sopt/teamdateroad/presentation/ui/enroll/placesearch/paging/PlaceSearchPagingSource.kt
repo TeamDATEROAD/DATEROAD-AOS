@@ -1,4 +1,4 @@
-package org.sopt.teamdateroad.presentation.util.paging
+package org.sopt.teamdateroad.presentation.ui.enroll.placesearch.paging
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState

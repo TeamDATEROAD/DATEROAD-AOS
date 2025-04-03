@@ -1,9 +1,9 @@
 package org.sopt.teamdateroad.domain.usecase
 
 import javax.inject.Inject
+import javax.inject.Singleton
 import org.sopt.teamdateroad.domain.model.NearestTimeline
 import org.sopt.teamdateroad.domain.repository.TimelineRepository
-import javax.inject.Singleton
 
 @Singleton
 class GetNearestTimelineUseCase @Inject constructor(

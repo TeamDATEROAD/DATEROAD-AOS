@@ -29,8 +29,12 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.flowWithLifecycle
+import androidx.paging.PagingData
+import androidx.paging.compose.LazyPagingItems
+import androidx.paging.compose.collectAsLazyPagingItems
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
+import kotlinx.coroutines.flow.flowOf
 import org.sopt.teamdateroad.R
 import org.sopt.teamdateroad.domain.model.Place
 import org.sopt.teamdateroad.domain.model.PlaceInfo
@@ -108,6 +112,9 @@ fun EnrollRoute(
     timelineId: Int?
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+    val searchKeyword by viewModel.searchKeyword.collectAsStateWithLifecycle("")
+    val searchPlaceInfos = viewModel.searchPlaceInfos.collectAsLazyPagingItems()
+
     val lifecycleOwner = LocalLifecycleOwner.current
 
     val getGalleryLauncher = rememberLauncherForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
@@ -206,6 +213,8 @@ fun EnrollRoute(
     EnrollScreen(
         padding = padding,
         enrollUiState = uiState,
+        searchKeyword = searchKeyword,
+        searchPlaceInfos = searchPlaceInfos,
         onTopBarBackButtonClick = {
             viewModel.setEvent(EnrollContract.EnrollEvent.OnTopBarBackButtonClick)
 
@@ -335,6 +344,8 @@ fun EnrollRoute(
 fun EnrollScreen(
     padding: PaddingValues,
     enrollUiState: EnrollContract.EnrollUiState = EnrollContract.EnrollUiState(),
+    searchKeyword: String,
+    searchPlaceInfos: LazyPagingItems<PlaceInfo>,
     onTopBarBackButtonClick: () -> Unit,
     onTopBarLoadButtonClick: () -> Unit,
     onEnrollButtonClick: () -> Unit,
@@ -445,6 +456,8 @@ fun EnrollScreen(
 
                 EnrollScreenType.SECOND -> EnrollSecondScreen(
                     enrollUiState = enrollUiState,
+                    searchKeyword = searchKeyword,
+                    searchPlaceInfos = searchPlaceInfos,
                     onPlaceSearchButtonClick = onPlaceSearchButtonClick,
                     onKeywordChanged = onKeywordChanged,
                     onPlaceSelected = onPlaceSelected,
@@ -572,6 +585,8 @@ fun EnrollScreenPreview() {
             enrollUiState = EnrollContract.EnrollUiState(
                 loadState = LoadState.Success
             ),
+            searchKeyword = "",
+            searchPlaceInfos = flowOf(PagingData.empty<PlaceInfo>()).collectAsLazyPagingItems(),
             onTopBarBackButtonClick = {},
             onTopBarLoadButtonClick = {},
             onEnrollButtonClick = {},
