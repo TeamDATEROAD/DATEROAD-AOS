@@ -135,6 +135,8 @@ class CourseDetailViewModel @Inject constructor(
         viewModelScope.launch {
             postAdsPointUseCase().onSuccess {
                 setState { copy(loadState = LoadState.Success) }
+            }.onFailure {
+                setState { copy(loadState = LoadState.Loading) }
             }
         }
     }
