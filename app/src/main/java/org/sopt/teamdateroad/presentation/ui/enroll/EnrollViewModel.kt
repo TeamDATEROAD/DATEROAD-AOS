@@ -5,13 +5,15 @@ import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.launch
 import org.sopt.teamdateroad.data.dataremote.util.Date.NEAREST_DATE_START_OUTPUT_FORMAT
 import org.sopt.teamdateroad.data.mapper.toEntity.toEnroll
@@ -44,21 +46,14 @@ class EnrollViewModel @Inject constructor(
     private val _searchKeyword: MutableStateFlow<String> = MutableStateFlow("")
     val searchKeyword: StateFlow<String> get() = _searchKeyword.asStateFlow()
 
-    private val query: Flow<String>
-        get() = _searchKeyword
-            .debounce(DEBOUNCE_TIME)
-            .distinctUntilChanged()
-
-    private val _searchPlaceInfos: MutableStateFlow<PagingData<PlaceInfo>> = MutableStateFlow(PagingData.empty())
-    val searchPlaceInfos: StateFlow<PagingData<PlaceInfo>> get() = _searchPlaceInfos.asStateFlow()
-
-    init {
-        viewModelScope.launch {
-            query.collect { query ->
-                getPlaceSearchResult(query)
-            }
+    @OptIn(FlowPreview::class, ExperimentalCoroutinesApi::class)
+    val searchPlaceInfos: Flow<PagingData<PlaceInfo>> = searchKeyword
+        .debounce(DEBOUNCE_TIME)
+        .distinctUntilChanged()
+        .flatMapLatest { query ->
+            getPlaceSearchResultUseCase(query)
         }
-    }
+        .cachedIn(viewModelScope)
 
     override suspend fun handleEvent(event: EnrollContract.EnrollEvent) {
         when (event) {
@@ -111,7 +106,6 @@ class EnrollViewModel @Inject constructor(
             is EnrollContract.EnrollEvent.OnPlaceSearchBottomSheetDismiss -> {
                 setState { copy(isPlaceSearchBottomSheetOpen = false) }
                 _searchKeyword.value = ""
-                _searchPlaceInfos.value = PagingData.empty()
             }
 
             is EnrollContract.EnrollEvent.OnSelectedPlaceCourseTimeClick -> setState { copy(isDurationBottomSheetOpen = true) }
@@ -137,7 +131,6 @@ class EnrollViewModel @Inject constructor(
             is EnrollContract.EnrollEvent.OnPlaceSelected -> {
                 setState { copy(place = currentState.place.copy(title = event.placeInfo.placeName, address = event.placeInfo.addressName), selectedPlaceInfos = currentState.selectedPlaceInfos + event.placeInfo, isPlaceSearchBottomSheetOpen = false) }
                 _searchKeyword.value = ""
-                _searchPlaceInfos.value = PagingData.empty()
             }
 
             is EnrollContract.EnrollEvent.OnDatePickerBottomSheetButtonClick -> setState { copy(enroll = currentState.enroll.copy(date = event.date), isDatePickerBottomSheetOpen = false) }
@@ -216,20 +209,6 @@ class EnrollViewModel @Inject constructor(
             postTimelineUseCase(enroll = currentState.enroll).onSuccess { result ->
                 setEvent(EnrollContract.EnrollEvent.Enroll(loadState = LoadState.Success))
                 AmplitudeUtils.updateIntUserProperty(propertyName = DATE_SCHEDULE_NUM, propertyValue = result.dateScheduleNum.toInt())
-            }.onFailure {
-                setEvent(EnrollContract.EnrollEvent.Enroll(loadState = LoadState.Error))
-            }
-        }
-    }
-
-    private fun getPlaceSearchResult(query: String) {
-        viewModelScope.launch {
-            getPlaceSearchResultUseCase(query = query).onSuccess { flow ->
-                flow
-                    .cachedIn(viewModelScope)
-                    .collectLatest { pagingData ->
-                        _searchPlaceInfos.value = pagingData
-                    }
             }.onFailure {
                 setEvent(EnrollContract.EnrollEvent.Enroll(loadState = LoadState.Error))
             }

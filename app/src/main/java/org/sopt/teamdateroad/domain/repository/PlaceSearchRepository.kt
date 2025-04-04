@@ -7,5 +7,5 @@ import org.sopt.teamdateroad.domain.model.PlaceInfo
 interface PlaceSearchRepository {
     suspend fun getPlaceSearchResult(
         keyword: String
-    ): Result<Flow<PagingData<PlaceInfo>>>
+    ): Flow<PagingData<PlaceInfo>>
 }

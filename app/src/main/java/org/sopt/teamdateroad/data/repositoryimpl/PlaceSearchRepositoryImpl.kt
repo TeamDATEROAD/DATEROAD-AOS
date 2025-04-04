@@ -11,12 +11,10 @@ import org.sopt.teamdateroad.domain.model.PlaceInfo
 import org.sopt.teamdateroad.domain.repository.PlaceSearchRepository
 
 class PlaceSearchRepositoryImpl @Inject constructor(private val placeSearchDataSource: PlaceSearchDataSource) : PlaceSearchRepository {
-    override suspend fun getPlaceSearchResult(keyword: String): Result<Flow<PagingData<PlaceInfo>>> {
-        return placeSearchDataSource.getPlaceSearchResult(keyword).map { flow ->
-            flow.map { pagingData ->
-                pagingData.map { responsePlaceInfoDto ->
-                    responsePlaceInfoDto.toDomain()
-                }
+    override suspend fun getPlaceSearchResult(keyword: String): Flow<PagingData<PlaceInfo>> {
+        return placeSearchDataSource.getPlaceSearchResult(keyword).map { pagingData ->
+            pagingData.map { responsePlaceInfoDto ->
+                responsePlaceInfoDto.toDomain()
             }
         }
     }

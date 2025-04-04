@@ -13,17 +13,15 @@ import org.sopt.teamdateroad.presentation.ui.enroll.placesearch.paging.PlaceSear
 import org.sopt.teamdateroad.presentation.ui.enroll.placesearch.paging.PlaceSearchPagingSource.Companion.PAGE_SIZE
 
 class PlaceSearchDataSourceImpl @Inject constructor(private val placeSearchService: PlaceSearchService) : PlaceSearchDataSource {
-    override suspend fun getPlaceSearchResult(keyword: String): Result<Flow<PagingData<ResponsePlaceInfoDto>>> {
-        return runCatching {
-            Pager(
-                config = PagingConfig(pageSize = PAGE_SIZE, maxSize = MAX_SIZE),
-                pagingSourceFactory = {
-                    PlaceSearchPagingSource(
-                        keyword = keyword,
-                        placeSearchService = placeSearchService
-                    )
-                }
-            ).flow
-        }
+    override suspend fun getPlaceSearchResult(keyword: String): Flow<PagingData<ResponsePlaceInfoDto>> {
+        return Pager(
+            config = PagingConfig(pageSize = PAGE_SIZE, maxSize = MAX_SIZE),
+            pagingSourceFactory = {
+                PlaceSearchPagingSource(
+                    keyword = keyword,
+                    placeSearchService = placeSearchService
+                )
+            }
+        ).flow
     }
 }

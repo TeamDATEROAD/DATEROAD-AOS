@@ -7,5 +7,5 @@ import org.sopt.teamdateroad.data.dataremote.model.response.ResponsePlaceInfoDto
 interface PlaceSearchDataSource {
     suspend fun getPlaceSearchResult(
         keyword: String
-    ): Result<Flow<PagingData<ResponsePlaceInfoDto>>>
+    ): Flow<PagingData<ResponsePlaceInfoDto>>
 }

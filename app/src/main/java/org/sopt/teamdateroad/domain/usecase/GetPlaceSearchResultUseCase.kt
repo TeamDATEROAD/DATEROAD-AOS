@@ -11,5 +11,5 @@ import org.sopt.teamdateroad.domain.repository.PlaceSearchRepository
 class GetPlaceSearchResultUseCase @Inject constructor(
     private val placeSearchRepository: PlaceSearchRepository
 ) {
-    suspend operator fun invoke(query: String): Result<Flow<PagingData<PlaceInfo>>> = placeSearchRepository.getPlaceSearchResult(query)
+    suspend operator fun invoke(keyword: String): Flow<PagingData<PlaceInfo>> = placeSearchRepository.getPlaceSearchResult(keyword)
 }
