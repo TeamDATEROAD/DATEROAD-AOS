@@ -48,7 +48,7 @@ class EnrollViewModel @Inject constructor(
 
     @OptIn(FlowPreview::class, ExperimentalCoroutinesApi::class)
     val searchPlaceInfos: Flow<PagingData<PlaceInfo>> = searchKeyword
-        .debounce(DEBOUNCE_TIME)
+        .debounce(DEBOUNCE_TIME_MILLS)
         .distinctUntilChanged()
         .flatMapLatest { query ->
             getPlaceSearchResultUseCase(query)
@@ -216,6 +216,6 @@ class EnrollViewModel @Inject constructor(
     }
 
     companion object {
-        private const val DEBOUNCE_TIME = 300L
+        private const val DEBOUNCE_TIME_MILLS = 300L
     }
 }
