@@ -44,7 +44,6 @@ import org.sopt.teamdateroad.presentation.type.PlaceCardType
 import org.sopt.teamdateroad.presentation.ui.component.button.DateRoadTextButton
 import org.sopt.teamdateroad.presentation.ui.component.card.DateRoadPlaceCard
 import org.sopt.teamdateroad.presentation.ui.enroll.component.EnrollPlaceInsertBar
-import org.sopt.teamdateroad.presentation.ui.enroll.placesearch.PlaceSearchBottomSheet
 import org.sopt.teamdateroad.presentation.util.Time
 import org.sopt.teamdateroad.presentation.util.draganddrop.rememberDragAndDropListState
 import org.sopt.teamdateroad.presentation.util.mutablelist.move

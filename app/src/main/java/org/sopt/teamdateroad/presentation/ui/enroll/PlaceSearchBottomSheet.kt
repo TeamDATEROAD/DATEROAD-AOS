@@ -1,4 +1,4 @@
-package org.sopt.teamdateroad.presentation.ui.enroll.placesearch
+package org.sopt.teamdateroad.presentation.ui.enroll
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -252,3 +252,5 @@ fun EmptyPlaceSearchResultPreview() {
 }
 
 private const val BOTTOM_SHEET_OPEN_RATIO = 0.8f
+const val PAGE_SIZE = 10
+const val MAX_SIZE = 50
