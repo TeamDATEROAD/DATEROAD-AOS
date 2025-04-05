@@ -8,6 +8,8 @@ import retrofit2.http.Query
 interface PlaceSearchService {
     @GET(LOCAL_SEARCH_KEYWORD_JSON)
     suspend fun getPlaceSearchResult(
-        @Query("query") keyword: String
+        @Query("query") keyword: String,
+        @Query("page") page: Int,
+        @Query("size") size: Int
     ): ResponsePlaceSearchResultDto
 }
