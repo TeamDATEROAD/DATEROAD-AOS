@@ -5,6 +5,9 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class ResponsePlaceSearchResultDto(
+    @SerializedName("meta")
+    val meta: ResponseMetaDto,
+
     @SerializedName("documents")
     val placeInfos: List<ResponsePlaceInfoDto>
 )

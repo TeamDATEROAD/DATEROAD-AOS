@@ -31,13 +31,16 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
+import androidx.paging.PagingData
+import androidx.paging.compose.LazyPagingItems
+import androidx.paging.compose.collectAsLazyPagingItems
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.launch
 import org.sopt.teamdateroad.R
 import org.sopt.teamdateroad.domain.model.Place
 import org.sopt.teamdateroad.domain.model.PlaceInfo
 import org.sopt.teamdateroad.presentation.type.PlaceCardType
-import org.sopt.teamdateroad.presentation.ui.component.bottomsheet.DateRoadPlaceSearchBottomSheet
 import org.sopt.teamdateroad.presentation.ui.component.button.DateRoadTextButton
 import org.sopt.teamdateroad.presentation.ui.component.card.DateRoadPlaceCard
 import org.sopt.teamdateroad.presentation.ui.enroll.component.EnrollPlaceInsertBar
@@ -51,6 +54,8 @@ import org.sopt.teamdateroad.ui.theme.DateRoadTheme
 @Composable
 fun EnrollSecondScreen(
     enrollUiState: EnrollContract.EnrollUiState = EnrollContract.EnrollUiState(),
+    searchKeyword: String,
+    searchPlaceInfos: LazyPagingItems<PlaceInfo>,
     onPlaceSearchButtonClick: () -> Unit,
     onKeywordChanged: (String) -> Unit,
     onPlaceSelected: (PlaceInfo) -> Unit,
@@ -178,10 +183,10 @@ fun EnrollSecondScreen(
         Spacer(modifier = Modifier.height(16.dp))
     }
 
-    DateRoadPlaceSearchBottomSheet(
+    PlaceSearchBottomSheet(
         isBottomSheetOpen = enrollUiState.isPlaceSearchBottomSheetOpen,
-        keyword = enrollUiState.keyword,
-        placeSearchResult = enrollUiState.placeSearchResult,
+        searchKeyword = searchKeyword,
+        searchPlaceInfos = searchPlaceInfos,
         onKeywordChanged = onKeywordChanged,
         onPlaceSelected = onPlaceSelected,
         onDismissRequest = onPlaceSearchBottomSheetDismiss
@@ -193,6 +198,8 @@ fun EnrollSecondScreen(
 fun EnrollSecondScreenPreview() {
     DATEROADTheme {
         EnrollSecondScreen(
+            searchKeyword = "",
+            searchPlaceInfos = flowOf(PagingData.empty<PlaceInfo>()).collectAsLazyPagingItems(),
             onPlaceSearchButtonClick = {},
             onAddPlaceButtonClick = {},
             onSelectedPlaceCourseTimeClick = {},
