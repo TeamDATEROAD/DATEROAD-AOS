@@ -1,9 +1,11 @@
 package org.sopt.teamdateroad.domain.repository
 
-import org.sopt.teamdateroad.domain.model.PlaceSearchResult
+import androidx.paging.PagingData
+import kotlinx.coroutines.flow.Flow
+import org.sopt.teamdateroad.domain.model.PlaceInfo
 
 interface PlaceSearchRepository {
     suspend fun getPlaceSearchResult(
         keyword: String
-    ): Result<PlaceSearchResult>
+    ): Flow<PagingData<PlaceInfo>>
 }

@@ -1,12 +1,23 @@
 package org.sopt.teamdateroad.presentation.ui.enroll
 
 import androidx.lifecycle.viewModelScope
+import androidx.paging.PagingData
+import androidx.paging.cachedIn
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.FlowPreview
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.debounce
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.launch
 import org.sopt.teamdateroad.data.dataremote.util.Date.NEAREST_DATE_START_OUTPUT_FORMAT
 import org.sopt.teamdateroad.data.mapper.toEntity.toEnroll
-import org.sopt.teamdateroad.domain.model.PlaceSearchResult
+import org.sopt.teamdateroad.domain.model.PlaceInfo
 import org.sopt.teamdateroad.domain.type.RegionType
 import org.sopt.teamdateroad.domain.usecase.GetCourseDetailUseCase
 import org.sopt.teamdateroad.domain.usecase.GetPlaceSearchResultUseCase
@@ -31,6 +42,18 @@ class EnrollViewModel @Inject constructor(
     private val getPlaceSearchResultUseCase: GetPlaceSearchResultUseCase
 ) : BaseViewModel<EnrollContract.EnrollUiState, EnrollContract.EnrollSideEffect, EnrollContract.EnrollEvent>() {
     override fun createInitialState(): EnrollContract.EnrollUiState = EnrollContract.EnrollUiState()
+
+    private val _searchKeyword: MutableStateFlow<String> = MutableStateFlow("")
+    val searchKeyword: StateFlow<String> get() = _searchKeyword.asStateFlow()
+
+    @OptIn(FlowPreview::class, ExperimentalCoroutinesApi::class)
+    val searchPlaceInfos: Flow<PagingData<PlaceInfo>> = searchKeyword
+        .debounce(DEBOUNCE_TIME_MILLS)
+        .distinctUntilChanged()
+        .flatMapLatest { query ->
+            getPlaceSearchResultUseCase(query)
+        }
+        .cachedIn(viewModelScope)
 
     override suspend fun handleEvent(event: EnrollContract.EnrollEvent) {
         when (event) {
@@ -78,14 +101,13 @@ class EnrollViewModel @Inject constructor(
             is EnrollContract.EnrollEvent.OnTimeTextFieldClick -> setState { copy(isTimePickerBottomSheetOpen = true) }
             is EnrollContract.EnrollEvent.OnRegionTextFieldClick -> setState { copy(isRegionBottomSheetOpen = true, onRegionBottomSheetRegionSelected = RegionType.SEOUL, onRegionBottomSheetAreaSelected = null) }
             is EnrollContract.EnrollEvent.OnPlaceSearchButtonClick -> setState { copy(isPlaceSearchBottomSheetOpen = true) }
-            is EnrollContract.EnrollEvent.OnKeywordChanged -> {
-                setState {
-                    copy(keyword = event.keyword)
-                }
-                getPlaceSearchResult()
+            is EnrollContract.EnrollEvent.OnKeywordChanged -> _searchKeyword.value = event.keyword
+
+            is EnrollContract.EnrollEvent.OnPlaceSearchBottomSheetDismiss -> {
+                setState { copy(isPlaceSearchBottomSheetOpen = false) }
+                _searchKeyword.value = ""
             }
 
-            is EnrollContract.EnrollEvent.OnPlaceSearchBottomSheetDismiss -> setState { copy(isPlaceSearchBottomSheetOpen = false, keyword = "", placeSearchResult = PlaceSearchResult(emptyList())) }
             is EnrollContract.EnrollEvent.OnSelectedPlaceCourseTimeClick -> setState { copy(isDurationBottomSheetOpen = true) }
             is EnrollContract.EnrollEvent.OnDatePickerBottomSheetDismissRequest -> setState { copy(isDatePickerBottomSheetOpen = false) }
             is EnrollContract.EnrollEvent.OnTimePickerBottomSheetDismissRequest -> setState { copy(isTimePickerBottomSheetOpen = false) }
@@ -107,11 +129,11 @@ class EnrollViewModel @Inject constructor(
 
             is EnrollContract.EnrollEvent.OnTitleValueChange -> setState { copy(enroll = currentState.enroll.copy(title = event.title)) }
             is EnrollContract.EnrollEvent.OnPlaceSelected -> {
-                setState { copy(keyword = "", placeSearchResult = PlaceSearchResult(emptyList()), place = currentState.place.copy(title = event.placeInfo.placeName, address = event.placeInfo.addressName), placeInfos = currentState.placeInfos + event.placeInfo, isPlaceSearchBottomSheetOpen = false) }
+                setState { copy(place = currentState.place.copy(title = event.placeInfo.placeName, address = event.placeInfo.addressName), selectedPlaceInfos = currentState.selectedPlaceInfos + event.placeInfo, isPlaceSearchBottomSheetOpen = false) }
+                _searchKeyword.value = ""
             }
 
             is EnrollContract.EnrollEvent.OnDatePickerBottomSheetButtonClick -> setState { copy(enroll = currentState.enroll.copy(date = event.date), isDatePickerBottomSheetOpen = false) }
-
             is EnrollContract.EnrollEvent.OnTimePickerBottomSheetButtonClick -> setState { copy(enroll = currentState.enroll.copy(startAt = event.startAt), isTimePickerBottomSheetOpen = false) }
             is EnrollContract.EnrollEvent.OnDateChipClicked -> setState {
                 copy(
@@ -193,13 +215,7 @@ class EnrollViewModel @Inject constructor(
         }
     }
 
-    private fun getPlaceSearchResult() {
-        viewModelScope.launch {
-            getPlaceSearchResultUseCase(keyword = currentState.keyword).onSuccess { placeSearchResult ->
-                setState { copy(placeSearchResult = placeSearchResult) }
-            }.onFailure {
-                setEvent(EnrollContract.EnrollEvent.Enroll(loadState = LoadState.Error))
-            }
-        }
+    companion object {
+        private const val DEBOUNCE_TIME_MILLS = 300L
     }
 }
