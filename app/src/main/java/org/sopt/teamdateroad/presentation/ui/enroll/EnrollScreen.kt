@@ -29,12 +29,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.flowWithLifecycle
-import androidx.paging.PagingData
-import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
-import java.time.LocalDate
-import java.time.format.DateTimeFormatter
-import kotlinx.coroutines.flow.flowOf
 import org.sopt.teamdateroad.R
 import org.sopt.teamdateroad.domain.model.Place
 import org.sopt.teamdateroad.domain.model.PlaceInfo
@@ -100,6 +95,8 @@ import org.sopt.teamdateroad.presentation.util.amplitude.AmplitudeUtils
 import org.sopt.teamdateroad.presentation.util.view.LoadState
 import org.sopt.teamdateroad.ui.theme.DATEROADTheme
 import org.sopt.teamdateroad.ui.theme.DateRoadTheme
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 
 @Composable
 fun EnrollRoute(
@@ -214,7 +211,7 @@ fun EnrollRoute(
         padding = padding,
         enrollUiState = uiState,
         searchKeyword = searchKeyword,
-        searchPlaceInfos = searchPlaceInfos,
+        searchPlaceInfos = searchPlaceInfos.itemSnapshotList.items,
         onTopBarBackButtonClick = {
             viewModel.setEvent(EnrollContract.EnrollEvent.OnTopBarBackButtonClick)
 
@@ -345,7 +342,7 @@ fun EnrollScreen(
     padding: PaddingValues,
     enrollUiState: EnrollContract.EnrollUiState = EnrollContract.EnrollUiState(),
     searchKeyword: String,
-    searchPlaceInfos: LazyPagingItems<PlaceInfo>,
+    searchPlaceInfos: List<PlaceInfo>,
     onTopBarBackButtonClick: () -> Unit,
     onTopBarLoadButtonClick: () -> Unit,
     onEnrollButtonClick: () -> Unit,
@@ -586,7 +583,7 @@ fun EnrollScreenPreview() {
                 loadState = LoadState.Success
             ),
             searchKeyword = "",
-            searchPlaceInfos = flowOf(PagingData.empty<PlaceInfo>()).collectAsLazyPagingItems(),
+            searchPlaceInfos = listOf<PlaceInfo>(),
             onTopBarBackButtonClick = {},
             onTopBarLoadButtonClick = {},
             onEnrollButtonClick = {},
