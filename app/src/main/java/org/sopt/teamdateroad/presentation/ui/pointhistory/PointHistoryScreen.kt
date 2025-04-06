@@ -48,7 +48,9 @@ import org.sopt.teamdateroad.presentation.ui.component.view.DateRoadIdleView
 import org.sopt.teamdateroad.presentation.ui.component.view.DateRoadLoadingView
 import org.sopt.teamdateroad.presentation.ui.pointhistory.component.PointHistoryCard
 import org.sopt.teamdateroad.presentation.ui.pointhistory.component.PointHistoryPointBox
+import org.sopt.teamdateroad.presentation.util.AdsAmplitude
 import org.sopt.teamdateroad.presentation.util.ViewPath.POINT_HISTORY
+import org.sopt.teamdateroad.presentation.util.amplitude.AmplitudeUtils
 import org.sopt.teamdateroad.presentation.util.view.LoadState
 import org.sopt.teamdateroad.ui.theme.DATEROADTheme
 import org.sopt.teamdateroad.ui.theme.DateRoadTheme
@@ -68,6 +70,7 @@ fun PointHistoryRoute(
     LaunchedEffect(Unit) {
         viewModel.fetchPointHistory()
         viewModel.fetchUserPoint()
+        AmplitudeUtils.trackEvent(eventName = AdsAmplitude.VIEW_POINT)
     }
 
     LaunchedEffect(viewModel.sideEffect, lifecycleOwner) {
@@ -120,9 +123,16 @@ fun PointHistoryRoute(
                     )
                 },
                 onTopBarIconClicked = { viewModel.setSideEffect(PointHistoryContract.PointHistorySideEffect.PopBackStack) },
-                onClickCollectPoint = { viewModel.setEvent(PointHistoryContract.PointHistoryEvent.OnPointCollectBottomSheetClick) },
-                onDisMissCollectPoint = { viewModel.setEvent(PointHistoryContract.PointHistoryEvent.OnPointCollectBottomSheetDismiss) },
+                onClickCollectPoint = {
+                    viewModel.setEvent(PointHistoryContract.PointHistoryEvent.OnPointCollectBottomSheetClick)
+                },
+                onDisMissCollectPoint = {
+                    AmplitudeUtils.trackEvent(eventName = AdsAmplitude.CLICK_COLLECT_POINT_CLOSE)
+                    viewModel.setEvent(PointHistoryContract.PointHistoryEvent.OnPointCollectBottomSheetDismiss)
+                },
                 onSelectEnroll = {
+                    AmplitudeUtils.trackEvent(eventName = AdsAmplitude.CLICK_COURSE)
+                    viewModel.setEvent(PointHistoryContract.PointHistoryEvent.OnPointCollectBottomSheetDismiss)
                     viewModel.setSideEffect(
                         PointHistoryContract.PointHistorySideEffect.NavigateToEnroll(
                             enrollType = EnrollType.COURSE,
@@ -132,6 +142,8 @@ fun PointHistoryRoute(
                     )
                 },
                 onSelectAds = {
+                    AmplitudeUtils.trackEvent(eventName = AdsAmplitude.CLICK_AD)
+                    viewModel.setEvent(PointHistoryContract.PointHistoryEvent.OnPointCollectBottomSheetDismiss)
                     viewModel.setSideEffect(PointHistoryContract.PointHistorySideEffect.NavigateToAds)
                 },
                 onDismissFullAdsDialog = {
@@ -235,11 +247,8 @@ fun PointHistoryScreen(
                 DateRoadCollectPointType.WATCH_ADS -> onSelectAds()
                 DateRoadCollectPointType.COURSE_REGISTRATION -> onSelectEnroll()
             }
-            onDisMissCollectPoint()
         },
-        onDismissRequest = {
-            onDisMissCollectPoint()
-        }
+        onDismissRequest = onDisMissCollectPoint
     )
 }
 
