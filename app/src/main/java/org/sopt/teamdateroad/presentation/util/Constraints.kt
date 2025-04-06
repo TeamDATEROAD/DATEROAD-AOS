@@ -18,8 +18,8 @@ object CourseDetailAmplitude {
 object DatePicker {
     const val DATE_PATTERN = "yyyy.MM.dd"
     const val YEAR_START = 2000
-    const val YEAR_END = 2024
-    const val YEAR_START_INDEX = 24
+    const val YEAR_END = 2026
+    const val YEAR_START_INDEX = 25
     const val MONTH_START = 1
     const val MONTH_END = 12
     const val DAY_START = 1
