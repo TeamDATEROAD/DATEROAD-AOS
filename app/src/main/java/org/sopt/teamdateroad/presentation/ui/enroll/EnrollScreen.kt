@@ -30,6 +30,8 @@ import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.flowWithLifecycle
 import androidx.paging.compose.collectAsLazyPagingItems
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 import org.sopt.teamdateroad.R
 import org.sopt.teamdateroad.domain.model.Place
 import org.sopt.teamdateroad.domain.model.PlaceInfo
@@ -95,8 +97,6 @@ import org.sopt.teamdateroad.presentation.util.amplitude.AmplitudeUtils
 import org.sopt.teamdateroad.presentation.util.view.LoadState
 import org.sopt.teamdateroad.ui.theme.DATEROADTheme
 import org.sopt.teamdateroad.ui.theme.DateRoadTheme
-import java.time.LocalDate
-import java.time.format.DateTimeFormatter
 
 @Composable
 fun EnrollRoute(

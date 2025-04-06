@@ -213,7 +213,6 @@ fun PlaceSearchBottomSheetPreview() {
                 PlaceInfo("카페 나랑", "경기 의왕시 청계로 217")
             }
 
-
         Button(onClick = { isBottomSheetOpen = true }) {
             Text(
                 text = "DateRoadPlaceSearchBottomSheet",
