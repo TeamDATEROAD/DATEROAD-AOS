@@ -25,21 +25,21 @@ composeBom = "2024.09.02"
 navigation = "2.8.1"
 security = "1.1.0-alpha06"
 lifecycleRuntimeComposeAndroid = "2.8.6"
-pagingCommonAndroid = "3.3.2"
+paging = "3.3.6"
 
 # Google
 googleServices = "4.4.2"
 firebaseCrashlytics = "3.0.2"
 firebaseBom = "33.3.0"
 firebaseCrashlyticsBuildtools = "3.0.2"
-
+googleAds = "23.0.0"
 # Accompanist
 accompanistPager = "0.25.0"
 accompanistWebview = "0.24.13-rc"
 
 # Third Party
 okhttp = "4.11.0"
-retrofit = "2.9.0"
+retrofit = "2.11.0"
 retrofitKotlinSerializationConverter = "1.0.0"
 kotlinxSerializationJson = "1.6.3"
 daggerHilt = "2.51"
@@ -47,10 +47,10 @@ hiltNavigationCompose = "1.2.0"
 ktlint = "11.5.1"
 coil = "2.6.0"
 timber = "5.0.1"
-sentry = "4.1.1"
 kakao = "2.20.3"
 amplitude = "1.+"
 lottieCompose = "6.1.0"
+bottomSheet = "1.3.2"
 
 [libraries]
 # Test
@@ -76,7 +76,10 @@ androidx-material3 = { group = "androidx.compose.material3", name = "material3" 
 androidx-navigation = { group = "androidx.navigation", name = "navigation-compose", version.ref = "navigation" }
 androidx-security = { group = "androidx.security", name = "security-crypto-ktx", version.ref = "security" }
 androidx-lifecycle-runtime-compose-android = { group = "androidx.lifecycle", name = "lifecycle-runtime-compose-android", version.ref = "lifecycleRuntimeComposeAndroid" }
-androidx-paging-common-android = { group = "androidx.paging", name = "paging-common-android", version.ref = "pagingCommonAndroid" }
+androidx-paging-common-android = { group = "androidx.paging", name = "paging-common-android", version.ref = "paging" }
+androidx-paging-runtime = { group = "androidx.paging", name = "paging-runtime", version.ref = "paging" }
+android-paging-compose = { group = "androidx.paging", name = "paging-compose", version.ref = "paging" }
+
 
 # Google
 google-services = { group = "com.google.gms", name = "google-services", version.ref = "googleServices" }
@@ -84,7 +87,7 @@ google-firebase-crashlytics-gradle = { group = "com.google.firebase", name = "fi
 google-firebase-bom = { group = "com.google.firebase", name = "firebase-bom", version.ref = "firebaseBom" }
 google-firebase-crashlytics = { group = "com.google.firebase", name = "firebase-crashlytics-ktx" }
 firebase-crashlytics-buildtools = { group = "com.google.firebase", name = "firebase-crashlytics-buildtools", version.ref = "firebaseCrashlyticsBuildtools" }
-
+google-gms-ads = {group = "com.google.android.gms",name = "play-services-ads", version.ref = "googleAds"}
 # Accompanist
 accompanist-pager = { module = "com.google.accompanist:accompanist-pager", version.ref = "accompanistPager" }
 accompanist-pager-indicators = { module = "com.google.accompanist:accompanist-pager-indicators", version.ref = "accompanistPager" }
@@ -111,6 +114,7 @@ kakao-navi = { group = "com.kakao.sdk", name = "v2-navi", version.ref = "kakao" 
 kakao-cert = { group = "com.kakao.sdk", name = "v2-cert", version.ref = "kakao" }
 amplitude = { group = "com.amplitude", name = "analytics-android", version.ref = "amplitude" }
 lottie-compose = { module = "com.airbnb.android:lottie-compose", version.ref = "lottieCompose" }
+bottom-sheet = { group = "com.holix.android", name = "bottomsheetdialog-compose", version.ref = "bottomSheet" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
@@ -121,7 +125,6 @@ google-services = { id = "com.google.gms.google-services", version.ref = "google
 google-firebase-crashlytics = { id = "com.google.firebase.crashlytics", version.ref = "firebaseCrashlytics" }
 dagger-hilt = { id = "com.google.dagger.hilt.android", version.ref = "daggerHilt" }
 ktlint = { id = "org.jlleitschuh.gradle.ktlint", version.ref = "ktlint" }
-sentry = { id = "io.sentry.android.gradle", version.ref = "sentry" }
 
 [bundles]
 androidx = [
@@ -175,6 +178,8 @@ kakao = [
 
 pager = [
     "androidx-paging-common-android",
+    "androidx-paging-runtime",
+    "android-paging-compose",
     "accompanist-pager",
     "accompanist-pager-indicators"
 ]

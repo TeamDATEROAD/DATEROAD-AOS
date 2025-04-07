@@ -22,5 +22,6 @@ fun Enroll.toCourseData(): RequestCourseDto = RequestCourseDto(
     country = country?.title.orEmpty(),
     city = this.city.toAreaTitle(),
     description = this.description,
-    cost = this.cost.toInt()
+    cost = this.cost.toInt(),
+    thumbnailIndex = this.thumbnailIndex
 )

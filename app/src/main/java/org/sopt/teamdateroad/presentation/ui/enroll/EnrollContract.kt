@@ -3,6 +3,7 @@ package org.sopt.teamdateroad.presentation.ui.enroll
 import org.sopt.teamdateroad.domain.model.CourseDetail
 import org.sopt.teamdateroad.domain.model.Enroll
 import org.sopt.teamdateroad.domain.model.Place
+import org.sopt.teamdateroad.domain.model.PlaceInfo
 import org.sopt.teamdateroad.domain.model.TimelineDetail
 import org.sopt.teamdateroad.domain.type.RegionType
 import org.sopt.teamdateroad.presentation.type.EnrollScreenType
@@ -34,6 +35,7 @@ class EnrollContract {
         val fetchEnrollState: LoadState = LoadState.Idle,
         val enrollType: EnrollType = EnrollType.COURSE,
         val page: EnrollScreenType = EnrollScreenType.FIRST,
+        val thumbnailIndex: Int = 0,
         val enroll: Enroll = Enroll(),
         val isEnrollButtonEnabled: Boolean = false,
         val titleValidateState: TextFieldValidateResult = TextFieldValidateResult.Basic,
@@ -53,7 +55,9 @@ class EnrollContract {
         val isRegionBottomSheetOpen: Boolean = false,
         val onRegionBottomSheetRegionSelected: RegionType? = RegionType.SEOUL,
         val onRegionBottomSheetAreaSelected: Any? = null,
+        val isPlaceSearchBottomSheetOpen: Boolean = false,
         val place: Place = Place(),
+        val selectedPlaceInfos: List<PlaceInfo> = emptyList(),
         val isPlaceEditable: Boolean = true,
         val isDurationBottomSheetOpen: Boolean = false,
         val durationPicker: List<Picker> = listOf(Picker(items = (DURATION_START..DURATION_END).map { (it * 0.5).toString() })),
@@ -76,12 +80,17 @@ class EnrollContract {
         data object OnDurationBottomSheetDismissRequest : EnrollEvent()
         data object OnTimeTextFieldClick : EnrollEvent()
         data object OnRegionTextFieldClick : EnrollEvent()
+        data object OnPlaceSearchButtonClick : EnrollEvent()
+        data class OnKeywordChanged(val keyword: String) : EnrollEvent()
+        data class OnPlaceSelected(val placeInfo: PlaceInfo) : EnrollEvent()
+        data object OnPlaceSearchBottomSheetDismiss : EnrollEvent()
         data class FetchEnrollCourseType(val enrollType: EnrollType) : EnrollEvent()
         data class FetchCourseDetail(val fetchEnrollState: LoadState, val courseDetail: CourseDetail?) : EnrollEvent()
         data class FetchTimelineDetail(val fetchEnrollState: LoadState, val timelineDetail: TimelineDetail?) : EnrollEvent()
         data class SetEnrollButtonEnabled(val isEnrollButtonEnabled: Boolean) : EnrollEvent()
         data class SetImage(val images: List<String>) : EnrollEvent()
-        data class OnImageDeleteButtonClick(val index: Int) : EnrollEvent()
+        data class OnSelectThumbnail(val index: Int) : EnrollEvent()
+        data class OnImageDeleteButtonClick(val index: Int, val moveThumbnail: Boolean) : EnrollEvent()
         data class OnTitleValueChange(val title: String) : EnrollEvent()
         data class OnDatePickerBottomSheetButtonClick(val date: String) : EnrollEvent()
         data class OnTimePickerBottomSheetButtonClick(val startAt: String) : EnrollEvent()

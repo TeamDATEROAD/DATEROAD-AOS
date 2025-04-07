@@ -10,26 +10,26 @@
 
 ## 💟 *****Contributors*****
 
-| <img alt="image" src="https://github.com/woowacourse-study/2024-GaegSa5-study/assets/85734140/80896a2a-d417-498b-81cc-9e2c239f37ee" width="100" height="100">  | <img alt="image" src="https://github.com/chaehyuns/GaegSa5/assets/80222352/aea5197f-8651-45a4-8bec-1e28baeae41c" width="100" height="100"> |  
+| <img alt="image" src="https://github.com/woowacourse-study/2024-GaegSa5-study/assets/85734140/80896a2a-d417-498b-81cc-9e2c239f37ee" width="150" height="150">  | <img alt="image" src="https://github.com/chaehyuns/GaegSa5/assets/80222352/aea5197f-8651-45a4-8bec-1e28baeae41c" width="150" height="150"> |  
 |---------------------------------------------------------------------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | 김진우([@jinuemong](https://github.com/jinuemong))                                                                                                                | 박예찬([@dpcks0509](https://github.com/dpcks0509))  | 
 
 ## 👩🏻‍💻 ***𝙏𝙚𝙘𝙝 𝙎𝙩𝙖𝙘𝙠***
 
-| Title                   | Content                                                                       |
-|-------------------------|-------------------------------------------------------------------------------|
-| Architecture            | Clean Architecture, MVI, Single Activity Architecture                         |
-| Design Pattern          | Repository Pattern, Delegation Pattern                                        |
-| UI                      | Jetpack Compose                                                               |
-| Jetpack Components      | encryptedsharedpreferences, Lifecycle, ViewModel, Navigation                  |
-| Dependency Injection    | Hilt                                                                          |
-| Network                 | Retrofit, OkHttp, MultiPart                                                   |
-| Asynchronous Processing | Coroutine                                                                     |
-| Third Party Library     | Coil, Firebase, Timber, kotlinSerialization, sentry, Amplitude, Lottie, Kakao |
-| Strategy                | Git Flow                                                                      |
-| CI                      | GitHub Action(KtLint, Complie Check)                                          |
-| CD                      | GitHub Action                                                                 |
-| Other Tool              | Slack, Notion, Figma, Postman, Discord                                        |
+| Title                   | Content                                                                     |
+|-------------------------|-----------------------------------------------------------------------------|
+| Architecture            | Clean Architecture, MVI, Single Activity Architecture                       |
+| Design Pattern          | Repository Pattern, Delegation Pattern                                      |
+| UI                      | Jetpack Compose                                                             |
+| Jetpack Components      | encryptedsharedpreferences, Lifecycle, ViewModel, Navigation                |
+| Dependency Injection    | Hilt                                                                        |
+| Network                 | Retrofit, OkHttp, MultiPart                                                 |
+| Asynchronous Processing | Coroutine                                                                   |
+| Third Party Library     | Coil, Firebase, Timber, kotlinSerialization, Amplitude, Lottie, Kakao |
+| Strategy                | Git Flow                                                                    |
+| CI                      | GitHub Action(KtLint, Complie Check)                                        |
+| CD                      | GitHub Action                                                               |
+| Other Tool              | Slack, Notion, Figma, Postman, Discord                                      |
 
 <br>
 

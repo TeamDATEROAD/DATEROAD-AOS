@@ -35,10 +35,12 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import org.sopt.teamdateroad.R
 import org.sopt.teamdateroad.domain.model.Place
+import org.sopt.teamdateroad.domain.model.PlaceInfo
 import org.sopt.teamdateroad.presentation.type.PlaceCardType
 import org.sopt.teamdateroad.presentation.ui.component.button.DateRoadTextButton
 import org.sopt.teamdateroad.presentation.ui.component.card.DateRoadPlaceCard
 import org.sopt.teamdateroad.presentation.ui.enroll.component.EnrollPlaceInsertBar
+import org.sopt.teamdateroad.presentation.ui.enroll.component.PlaceSearchBottomSheet
 import org.sopt.teamdateroad.presentation.util.Time
 import org.sopt.teamdateroad.presentation.util.draganddrop.rememberDragAndDropListState
 import org.sopt.teamdateroad.presentation.util.mutablelist.move
@@ -49,9 +51,14 @@ import org.sopt.teamdateroad.ui.theme.DateRoadTheme
 @Composable
 fun EnrollSecondScreen(
     enrollUiState: EnrollContract.EnrollUiState = EnrollContract.EnrollUiState(),
+    searchKeyword: String,
+    searchPlaceInfos: List<PlaceInfo>,
+    onPlaceSearchButtonClick: () -> Unit,
+    onKeywordChanged: (String) -> Unit,
+    onPlaceSelected: (PlaceInfo) -> Unit,
+    onPlaceSearchBottomSheetDismiss: () -> Unit,
     onSelectedPlaceCourseTimeClick: () -> Unit,
     onAddPlaceButtonClick: (Place) -> Unit,
-    onPlaceTitleValueChange: (String) -> Unit,
     onPlaceEditButtonClick: (Boolean) -> Unit,
     onPlaceCardDeleteButtonClick: (Int) -> Unit,
     onPlaceCardDragAndDrop: (List<Place>) -> Unit
@@ -84,13 +91,16 @@ fun EnrollSecondScreen(
         )
         Spacer(modifier = Modifier.height(13.dp))
         EnrollPlaceInsertBar(
-            modifier = Modifier.padding(horizontal = 16.dp),
-            title = enrollUiState.place.title,
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(44.dp)
+                .padding(horizontal = 16.dp),
+            placeName = enrollUiState.place.title,
             duration = enrollUiState.place.duration,
-            onTitleChange = onPlaceTitleValueChange,
+            onPlaceSearchButtonClick = onPlaceSearchButtonClick,
             onSelectedCourseTimeClick = onSelectedPlaceCourseTimeClick,
             onAddCourseButtonClick = {
-                onAddPlaceButtonClick(Place(title = enrollUiState.place.title, duration = enrollUiState.place.duration + Time.TIME))
+                onAddPlaceButtonClick(Place(title = enrollUiState.place.title, address = enrollUiState.place.address, duration = enrollUiState.place.duration + Time.TIME))
             }
         )
         Spacer(modifier = Modifier.height(22.dp))
@@ -154,6 +164,8 @@ fun EnrollSecondScreen(
             items(enrollUiState.enroll.places.size) { index ->
                 DateRoadPlaceCard(
                     modifier = Modifier
+                        .fillMaxWidth()
+                        .height(76.dp)
                         .zIndex(if (index == dragDropListState.currentIndexOfDraggedItem) 1f else 0f)
                         .graphicsLayer(
                             scaleX = animateFloatAsState(if (dragDropListState.currentIndexOfDraggedItem == index) 1.1f else 1.0f, label = "").value,
@@ -167,19 +179,33 @@ fun EnrollSecondScreen(
         }
         Spacer(modifier = Modifier.height(16.dp))
     }
+
+    PlaceSearchBottomSheet(
+        isBottomSheetOpen = enrollUiState.isPlaceSearchBottomSheetOpen,
+        searchKeyword = searchKeyword,
+        searchPlaceInfos = searchPlaceInfos,
+        onKeywordChanged = onKeywordChanged,
+        onPlaceSelected = onPlaceSelected,
+        onDismissRequest = onPlaceSearchBottomSheetDismiss
+    )
 }
 
-@Preview
+@Preview(showBackground = true)
 @Composable
 fun EnrollSecondScreenPreview() {
     DATEROADTheme {
         EnrollSecondScreen(
+            searchKeyword = "",
+            searchPlaceInfos = listOf(),
+            onPlaceSearchButtonClick = {},
             onAddPlaceButtonClick = {},
             onSelectedPlaceCourseTimeClick = {},
-            onPlaceTitleValueChange = {},
             onPlaceEditButtonClick = {},
             onPlaceCardDeleteButtonClick = {},
-            onPlaceCardDragAndDrop = {}
+            onPlaceSearchBottomSheetDismiss = {},
+            onKeywordChanged = {},
+            onPlaceCardDragAndDrop = {},
+            onPlaceSelected = {}
         )
     }
 }

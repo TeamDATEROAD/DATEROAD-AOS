@@ -22,6 +22,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -29,10 +30,12 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.flowWithLifecycle
+import androidx.paging.compose.collectAsLazyPagingItems
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import org.sopt.teamdateroad.R
 import org.sopt.teamdateroad.domain.model.Place
+import org.sopt.teamdateroad.domain.model.PlaceInfo
 import org.sopt.teamdateroad.domain.type.RegionType
 import org.sopt.teamdateroad.presentation.type.DateRoadRegionBottomSheetType
 import org.sopt.teamdateroad.presentation.type.DateTagType
@@ -107,7 +110,11 @@ fun EnrollRoute(
     timelineId: Int?
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+    val searchKeyword by viewModel.searchKeyword.collectAsStateWithLifecycle("")
+    val searchPlaceInfos = viewModel.searchPlaceInfos.collectAsLazyPagingItems()
+
     val lifecycleOwner = LocalLifecycleOwner.current
+    val keyboardController = LocalSoftwareKeyboardController.current
 
     val getGalleryLauncher = rememberLauncherForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
         if (uri != null) viewModel.setEvent(EnrollContract.EnrollEvent.SetImage(images = listOf(uri.toString())))
@@ -205,6 +212,8 @@ fun EnrollRoute(
     EnrollScreen(
         padding = padding,
         enrollUiState = uiState,
+        searchKeyword = searchKeyword,
+        searchPlaceInfos = searchPlaceInfos.itemSnapshotList.items,
         onTopBarBackButtonClick = {
             viewModel.setEvent(EnrollContract.EnrollEvent.OnTopBarBackButtonClick)
 
@@ -250,9 +259,22 @@ fun EnrollRoute(
             AmplitudeUtils.trackEvent(eventName = CLICK_BRING_COURSE)
         },
         onEnrollButtonClick = { viewModel.setEvent(EnrollContract.EnrollEvent.OnEnrollButtonClick) },
-        onDateTextFieldClick = { viewModel.setEvent(EnrollContract.EnrollEvent.OnDateTextFieldClick) },
-        onTimeTextFieldClick = { viewModel.setEvent(EnrollContract.EnrollEvent.OnTimeTextFieldClick) },
-        onRegionTextFieldClick = { viewModel.setEvent(EnrollContract.EnrollEvent.OnRegionTextFieldClick) },
+        onDateTextFieldClick = {
+            keyboardController?.hide()
+            viewModel.setEvent(EnrollContract.EnrollEvent.OnDateTextFieldClick)
+        },
+        onTimeTextFieldClick = {
+            keyboardController?.hide()
+            viewModel.setEvent(EnrollContract.EnrollEvent.OnTimeTextFieldClick)
+        },
+        onRegionTextFieldClick = {
+            keyboardController?.hide()
+            viewModel.setEvent(EnrollContract.EnrollEvent.OnRegionTextFieldClick)
+        },
+        onPlaceSearchButtonClick = { viewModel.setEvent(EnrollContract.EnrollEvent.OnPlaceSearchButtonClick) },
+        onKeywordChanged = { keyword -> viewModel.setEvent(EnrollContract.EnrollEvent.OnKeywordChanged(keyword = keyword)) },
+        onPlaceSelected = { placeInfo -> viewModel.setEvent(EnrollContract.EnrollEvent.OnPlaceSelected(placeInfo = placeInfo)) },
+        onPlaceSearchBottomSheetDismiss = { viewModel.setEvent(EnrollContract.EnrollEvent.OnPlaceSearchBottomSheetDismiss) },
         onSelectedPlaceCourseTimeClick = { viewModel.setEvent(EnrollContract.EnrollEvent.OnSelectedPlaceCourseTimeClick) },
         onDatePickerBottomSheetDismissRequest = { viewModel.setEvent(EnrollContract.EnrollEvent.OnDatePickerBottomSheetDismissRequest) },
         onTimePickerBottomSheetDismissRequest = { viewModel.setEvent(EnrollContract.EnrollEvent.OnTimePickerBottomSheetDismissRequest) },
@@ -267,7 +289,14 @@ fun EnrollRoute(
                 )
             }
         },
-        onImageDeleteButtonClick = { index -> viewModel.setEvent(EnrollContract.EnrollEvent.OnImageDeleteButtonClick(index = index)) },
+        onImageDeleteButtonClick = { index ->
+            viewModel.setEvent(
+                EnrollContract.EnrollEvent.OnImageDeleteButtonClick(
+                    index = index,
+                    moveThumbnail = index <= uiState.thumbnailIndex
+                )
+            )
+        },
         onTitleValueChange = { title -> viewModel.setEvent(EnrollContract.EnrollEvent.OnTitleValueChange(title = title)) },
         onDatePickerBottomSheetButtonClick = { date -> viewModel.setEvent(EnrollContract.EnrollEvent.OnDatePickerBottomSheetButtonClick(date = date)) },
         onTimePickerBottomSheetButtonClick = { startAt -> viewModel.setEvent(EnrollContract.EnrollEvent.OnTimePickerBottomSheetButtonClick(startAt = startAt)) },
@@ -277,15 +306,13 @@ fun EnrollRoute(
         onRegionBottomSheetButtonClick = { region: RegionType?, area: Any? -> viewModel.setEvent(EnrollContract.EnrollEvent.OnRegionBottomSheetButtonClick(region = region, area = area)) },
         onAddPlaceButtonClick = { place -> viewModel.setEvent(EnrollContract.EnrollEvent.OnAddPlaceButtonClick(place = place)) },
         onPlaceCardDragAndDrop = { places -> viewModel.setEvent(EnrollContract.EnrollEvent.OnPlaceCardDragAndDrop(places = places)) },
-        onPlaceTitleValueChange = { placeTitle -> viewModel.setEvent(EnrollContract.EnrollEvent.OnPlaceTitleValueChange(placeTitle = placeTitle)) },
         onDurationBottomSheetButtonClick = { placeDuration -> viewModel.setEvent(EnrollContract.EnrollEvent.OnDurationBottomSheetButtonClick(placeDuration = placeDuration)) },
         onPlaceEditButtonClick = { editable -> viewModel.setEvent(EnrollContract.EnrollEvent.OnEditableValueChange(editable = editable)) },
         onPlaceCardDeleteButtonClick = { index -> viewModel.setEvent(EnrollContract.EnrollEvent.OnPlaceCardDeleteButtonClick(index = index)) },
         onDescriptionValueChange = { description -> viewModel.setEvent(EnrollContract.EnrollEvent.OnDescriptionValueChange(description = description)) },
         onCostValueChange = { cost -> viewModel.setEvent(EnrollContract.EnrollEvent.OnCostValueChange(cost = cost)) },
-        onEnrollSuccessDialogButtonClick = {
-            viewModel.setSideEffect(EnrollContract.EnrollSideEffect.PopBackStack)
-        }
+        onEnrollSuccessDialogButtonClick = { viewModel.setSideEffect(EnrollContract.EnrollSideEffect.PopBackStack) },
+        onSelectThumbnail = { viewModel.setEvent(EnrollContract.EnrollEvent.OnSelectThumbnail(index = it)) }
     )
 
     when (uiState.loadState) {
@@ -325,12 +352,18 @@ fun EnrollRoute(
 fun EnrollScreen(
     padding: PaddingValues,
     enrollUiState: EnrollContract.EnrollUiState = EnrollContract.EnrollUiState(),
+    searchKeyword: String,
+    searchPlaceInfos: List<PlaceInfo>,
     onTopBarBackButtonClick: () -> Unit,
     onTopBarLoadButtonClick: () -> Unit,
     onEnrollButtonClick: () -> Unit,
     onDateTextFieldClick: () -> Unit,
     onTimeTextFieldClick: () -> Unit,
     onRegionTextFieldClick: () -> Unit,
+    onPlaceSearchButtonClick: () -> Unit,
+    onKeywordChanged: (String) -> Unit,
+    onPlaceSelected: (PlaceInfo) -> Unit,
+    onPlaceSearchBottomSheetDismiss: () -> Unit,
     onSelectedPlaceCourseTimeClick: () -> Unit,
     onDatePickerBottomSheetDismissRequest: () -> Unit,
     onTimePickerBottomSheetDismissRequest: () -> Unit,
@@ -347,13 +380,13 @@ fun EnrollScreen(
     onRegionBottomSheetButtonClick: (RegionType?, Any?) -> Unit,
     onAddPlaceButtonClick: (Place) -> Unit,
     onPlaceCardDragAndDrop: (List<Place>) -> Unit,
-    onPlaceTitleValueChange: (String) -> Unit,
     onDurationBottomSheetButtonClick: (String) -> Unit,
     onPlaceEditButtonClick: (Boolean) -> Unit,
     onPlaceCardDeleteButtonClick: (Int) -> Unit,
     onDescriptionValueChange: (String) -> Unit,
     onCostValueChange: (String) -> Unit,
-    onEnrollSuccessDialogButtonClick: () -> Unit
+    onEnrollSuccessDialogButtonClick: () -> Unit,
+    onSelectThumbnail: (Int) -> Unit
 ) {
     val focusManager = LocalFocusManager.current
 
@@ -378,10 +411,12 @@ fun EnrollScreen(
                 )
                 Spacer(modifier = Modifier.height(8.dp))
                 EnrollPhotos(
-                    isDeletable = enrollUiState.page == EnrollScreenType.FIRST,
+                    isEditable = enrollUiState.page == EnrollScreenType.FIRST,
                     images = enrollUiState.enroll.images,
+                    thumbnailIndex = enrollUiState.thumbnailIndex,
                     onPhotoButtonClick = onPhotoButtonClick,
-                    onDeleteButtonClick = onImageDeleteButtonClick
+                    onDeleteButtonClick = onImageDeleteButtonClick,
+                    onSelectThumbnail = onSelectThumbnail
                 )
             }
 
@@ -429,9 +464,14 @@ fun EnrollScreen(
 
                 EnrollScreenType.SECOND -> EnrollSecondScreen(
                     enrollUiState = enrollUiState,
+                    searchKeyword = searchKeyword,
+                    searchPlaceInfos = searchPlaceInfos,
+                    onPlaceSearchButtonClick = onPlaceSearchButtonClick,
+                    onKeywordChanged = onKeywordChanged,
+                    onPlaceSelected = onPlaceSelected,
+                    onPlaceSearchBottomSheetDismiss = onPlaceSearchBottomSheetDismiss,
                     onSelectedPlaceCourseTimeClick = onSelectedPlaceCourseTimeClick,
                     onAddPlaceButtonClick = onAddPlaceButtonClick,
-                    onPlaceTitleValueChange = onPlaceTitleValueChange,
                     onPlaceEditButtonClick = onPlaceEditButtonClick,
                     onPlaceCardDeleteButtonClick = onPlaceCardDeleteButtonClick,
                     onPlaceCardDragAndDrop = onPlaceCardDragAndDrop
@@ -553,12 +593,15 @@ fun EnrollScreenPreview() {
             enrollUiState = EnrollContract.EnrollUiState(
                 loadState = LoadState.Success
             ),
+            searchKeyword = "",
+            searchPlaceInfos = listOf<PlaceInfo>(),
             onTopBarBackButtonClick = {},
             onTopBarLoadButtonClick = {},
             onEnrollButtonClick = {},
             onDateTextFieldClick = {},
             onTimeTextFieldClick = {},
             onRegionTextFieldClick = {},
+            onPlaceSearchButtonClick = {},
             onSelectedPlaceCourseTimeClick = {},
             onDatePickerBottomSheetDismissRequest = {},
             onTimePickerBottomSheetDismissRequest = {},
@@ -574,14 +617,17 @@ fun EnrollScreenPreview() {
             onRegionBottomSheetAreaChipClick = {},
             onRegionBottomSheetButtonClick = { _, _ -> },
             onAddPlaceButtonClick = {},
-            onPlaceTitleValueChange = {},
             onDurationBottomSheetButtonClick = {},
             onPlaceEditButtonClick = {},
             onPlaceCardDeleteButtonClick = {},
             onPlaceCardDragAndDrop = {},
             onDescriptionValueChange = {},
             onCostValueChange = {},
-            onEnrollSuccessDialogButtonClick = {}
+            onEnrollSuccessDialogButtonClick = {},
+            onSelectThumbnail = {},
+            onPlaceSearchBottomSheetDismiss = {},
+            onKeywordChanged = { },
+            onPlaceSelected = { }
         )
     }
 }

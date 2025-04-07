@@ -8,6 +8,7 @@ import org.sopt.teamdateroad.domain.model.UsePoint
 import org.sopt.teamdateroad.domain.usecase.DeleteCourseLikeUseCase
 import org.sopt.teamdateroad.domain.usecase.DeleteCourseUseCase
 import org.sopt.teamdateroad.domain.usecase.GetCourseDetailUseCase
+import org.sopt.teamdateroad.domain.usecase.PostAdsPointUseCase
 import org.sopt.teamdateroad.domain.usecase.PostCourseLikeUseCase
 import org.sopt.teamdateroad.domain.usecase.PostUsePointUseCase
 import org.sopt.teamdateroad.presentation.util.CourseDetailAmplitude.CLICK_COURSE_LIKES
@@ -26,14 +27,15 @@ class CourseDetailViewModel @Inject constructor(
     private val deleteCourseLikeUseCase: DeleteCourseLikeUseCase,
     private val getCourseDetailUseCase: GetCourseDetailUseCase,
     private val postCourseLikeUseCase: PostCourseLikeUseCase,
-    private val postUsePointUseCase: PostUsePointUseCase
+    private val postUsePointUseCase: PostUsePointUseCase,
+    private val postAdsPointUseCase: PostAdsPointUseCase
 ) : BaseViewModel<CourseDetailContract.CourseDetailUiState, CourseDetailContract.CourseDetailSideEffect, CourseDetailContract.CourseDetailEvent>() {
     override fun createInitialState(): CourseDetailContract.CourseDetailUiState = CourseDetailContract.CourseDetailUiState()
 
     override suspend fun handleEvent(event: CourseDetailContract.CourseDetailEvent) {
         when (event) {
-            is CourseDetailContract.CourseDetailEvent.OnDialogPointLack -> setState { copy(isPointLackDialogOpen = true) }
-            is CourseDetailContract.CourseDetailEvent.DismissDialogPointLack -> setState { copy(isPointLackDialogOpen = false) }
+            is CourseDetailContract.CourseDetailEvent.OnDialogPointLack -> setState { copy(isPointCollectBottomSheetOpen = true) }
+            is CourseDetailContract.CourseDetailEvent.DismissDialogPointLack -> setState { copy(isPointCollectBottomSheetOpen = false) }
             is CourseDetailContract.CourseDetailEvent.OnDialogLookedForFree -> setState { copy(isFreeReadDialogOpen = true) }
             is CourseDetailContract.CourseDetailEvent.DismissDialogLookedForFree -> setState { copy(isFreeReadDialogOpen = false) }
             is CourseDetailContract.CourseDetailEvent.OnDialogDeleteCourse -> setState { copy(isDeleteCourseDialogOpen = true) }
@@ -54,6 +56,9 @@ class CourseDetailViewModel @Inject constructor(
             is CourseDetailContract.CourseDetailEvent.PostUsePoint -> setState { copy(usePointLoadState = event.usePointLoadState, courseDetail = courseDetail.copy(isAccess = event.isAccess)) }
             is CourseDetailContract.CourseDetailEvent.OnReportWebViewClicked -> setState { copy(isWebViewOpened = true) }
             is CourseDetailContract.CourseDetailEvent.DismissReportWebView -> setState { copy(isWebViewOpened = false) }
+            CourseDetailContract.CourseDetailEvent.FailLoadAdsPoint -> setState { copy(loadState = LoadState.Loading) }
+            CourseDetailContract.CourseDetailEvent.DismissFullAdsDialog -> setState { copy(isFullAdsDialogOpen = false) }
+            CourseDetailContract.CourseDetailEvent.FullAds -> setState { copy(isFullAdsDialogOpen = true) }
         }
     }
 
@@ -121,6 +126,17 @@ class CourseDetailViewModel @Inject constructor(
                 setEvent(
                     CourseDetailContract.CourseDetailEvent.DeleteCourse(deleteLoadState = LoadState.Error)
                 )
+            }
+        }
+    }
+
+    fun postAdsPoint() {
+        setState { copy(loadState = LoadState.Loading) }
+        viewModelScope.launch {
+            postAdsPointUseCase().onSuccess {
+                setState { copy(loadState = LoadState.Success) }
+            }.onFailure {
+                setState { copy(loadState = LoadState.Loading) }
             }
         }
     }

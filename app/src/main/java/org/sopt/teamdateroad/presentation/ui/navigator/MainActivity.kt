@@ -27,6 +27,7 @@ class MainActivity : ComponentActivity() {
                     delay(SPLASH_SCREEN_DELAY)
                     showSplash = false
                 }
+
                 if (showSplash) {
                     SplashScreen()
                 } else {

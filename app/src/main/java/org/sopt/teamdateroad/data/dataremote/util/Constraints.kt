@@ -1,5 +1,7 @@
 package org.sopt.teamdateroad.data.dataremote.util
 
+import org.sopt.teamdateroad.data.dataremote.util.ApiConstraints.VERSION2
+
 object ApiConstraints {
     const val PROFILE_FORM_DATA_IMAGE = "image"
     const val COURSE_FORM_DATA_IMAGE = "images"
@@ -7,6 +9,7 @@ object ApiConstraints {
     const val HTTPS = "https://"
     const val API = "api"
     const val VERSION = "v1"
+    const val VERSION2 = "v2"
     const val COURSES = "courses"
     const val DATE_ACCESS = "date-access"
     const val USERS = "users"
@@ -74,4 +77,8 @@ object Point {
 
 object TotalCostZero {
     const val ZERO_COST = "무지출"
+}
+
+object PlaceSearch {
+    const val LOCAL_SEARCH_KEYWORD_JSON = "$VERSION2/local/search/keyword.json"
 }

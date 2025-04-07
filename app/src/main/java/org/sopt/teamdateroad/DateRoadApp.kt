@@ -2,6 +2,7 @@ package org.sopt.teamdateroad
 
 import android.app.Application
 import androidx.appcompat.app.AppCompatDelegate
+import com.google.android.gms.ads.MobileAds
 import com.kakao.sdk.common.KakaoSdk
 import dagger.hilt.android.HiltAndroidApp
 import org.sopt.teamdateroad.BuildConfig.KAKAO_NATIVE_APP_KEY
@@ -16,6 +17,7 @@ class DateRoadApp : Application() {
         setTimber()
         setDarkMode()
         setKakao()
+        setAds()
         initAmplitude(applicationContext)
     }
 
@@ -29,5 +31,9 @@ class DateRoadApp : Application() {
 
     private fun setKakao() {
         KakaoSdk.init(this, KAKAO_NATIVE_APP_KEY)
+    }
+
+    private fun setAds() {
+        MobileAds.initialize(this)
     }
 }

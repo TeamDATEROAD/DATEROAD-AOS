@@ -18,8 +18,8 @@ object CourseDetailAmplitude {
 object DatePicker {
     const val DATE_PATTERN = "yyyy.MM.dd"
     const val YEAR_START = 2000
-    const val YEAR_END = 2024
-    const val YEAR_START_INDEX = 24
+    const val YEAR_END = 2026
+    const val YEAR_START_INDEX = 25
     const val MONTH_START = 1
     const val MONTH_END = 12
     const val DAY_START = 1
@@ -36,6 +36,13 @@ object Default {
 object DurationPicker {
     const val DURATION_START = 1
     const val DURATION_END = 12
+}
+
+object AdsAmplitude {
+    const val VIEW_POINT = "view_point"
+    const val CLICK_AD = "click_ad"
+    const val CLICK_COURSE = "click_course"
+    const val CLICK_COLLECT_POINT_CLOSE = "click_collect_point_close"
 }
 
 object EnrollAmplitude {
@@ -197,6 +204,7 @@ object ViewPath {
     const val MY_COURSE_READ = "내가 열람한 코스"
     const val COURSE_DETAIL = "코스 상세"
     const val LOOK = "코스 둘러보기"
+    const val POINT_HISTORY = "포인트 내역"
 }
 
 object WebViewUrl {

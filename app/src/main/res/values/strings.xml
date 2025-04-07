@@ -112,6 +112,8 @@
     <string name="one_button_dialog_with_description_soon_description">조금만 기다려주세요 :)</string>
     <string name="one_button_dialog_with_description_cannot_enroll_course_title">데이트를 더 이상 등록할 수 없어요!</string>
     <string name="one_button_dialog_with_description_cannot_enroll_course_description">데이트는 최대 5개까지만 등록 가능해요</string>
+    <string name="one_button_dialog_with_description_full_ads_title">광고는 하루 5회까지만 시청할 수 있어요</string>
+    <string name="one_button_dialog_with_description_full_ads_description">광고 시청 한도는 매일 자정에 초기화돼요</string>
 
     <!-- PointHistoryTabType -->
     <string name="point_history_tab_gained_history">획득 내역</string>
@@ -191,6 +193,8 @@
     <!-- PointBox -->
     <string name="point_box_nickname"> %1$s\님의 포인트</string>
     <string name="point_box_point"> %1$d P</string>
+    <string name="point_box_get_point_button_text">포인트 모으러 가기</string>
+    <string name="point_box_lack_point_button_text">포인트가 부족해요!</string>
     <string name="my_page_point_card_text">포인트 내역 보기</string>
 
     <!-- RegionBottomSheet -->
@@ -250,6 +254,9 @@
     <string name="enroll_cost_title">총 비용을 입력해 주세요</string>
     <string name="enroll_cost_placeholder">데이트 예상 총 비용을 숫자로만 입력해 주세요</string>
     <string name="enroll_button_text_completion">완료</string>
+    <string name="enroll_place_search_bottom_sheet_title">장소 검색하기</string>
+    <string name="enroll_place_search_no_match">일치하는 장소가 없어요!</string>
+    <string name="enroll_thumbnail_text">대표</string>
 
     <!-- Home -->
     <string name="home_hot_date_course_title">%s님, 오늘은\n이런 데이트 코스 어떠세요?</string>
@@ -283,6 +290,12 @@
     <string name="point_guide_fourth_title">모인 포인트는 데이트 장소를\n예약할 때 현금처럼 사용 가능해요</string>
     <string name="point_guide_fourth_description">추후 만들어질 기능을 기대해주세요</string>
 
+    <!--CollectPoint -->
+    <string name="collect_point_ads_title">광고 시청하기</string>
+    <string name="collect_point_ads_content">짧은 광고 보고 바로 %dP 획득하기</string>
+    <string name="collect_point_registration_title">코스 등록하기</string>
+    <string name="collect_point_registration_content">나만의 코스 등록하고 %dP 획득하기</string>
+    
     <!-- Profile -->
     <string name="profile_enroll_top_bar_title">내 프로필</string>
     <string name="profile_edit_top_bar_title">프로필 변경</string>

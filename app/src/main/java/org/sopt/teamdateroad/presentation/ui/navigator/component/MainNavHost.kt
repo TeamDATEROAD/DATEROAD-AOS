@@ -42,7 +42,6 @@ fun MainNavHost(
         NavHost(
             navController = navigator.navHostController,
             startDestination = navigator.startDestination
-//            startDestination = navigator.startDestination
         ) {
             advertisementGraph(
                 popBackStack = navigator::popBackStackIfNotHome
@@ -109,7 +108,8 @@ fun MainNavHost(
 
             pointHistoryGraph(
                 padding = padding,
-                popBackStack = navigator::popBackStackIfNotHome
+                popBackStack = navigator::popBackStackIfNotHome,
+                navigateToEnroll = navigator::navigateToEnroll
             )
 
             profileNavGraph(

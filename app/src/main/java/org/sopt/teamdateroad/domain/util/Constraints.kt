@@ -75,3 +75,8 @@ object Seoul {
     const val NOWON_DOBONG_GANGBUK = "노원/도봉/강북"
     const val GWANAK_DONGJAK_GEUMCHEON = "관악/동작/금천"
 }
+
+object PointCollect {
+    const val ADS = 50
+    const val COURSE = 100
+}

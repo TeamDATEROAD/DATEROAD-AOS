@@ -7,5 +7,6 @@ import org.sopt.teamdateroad.domain.model.Place
 fun Place.toData(sequence: Int): RequestPlaceDto = RequestPlaceDto(
     sequence = sequence,
     title = this.title,
+    address = this.address,
     duration = duration.substringBefore(DURATION).toFloat()
 )

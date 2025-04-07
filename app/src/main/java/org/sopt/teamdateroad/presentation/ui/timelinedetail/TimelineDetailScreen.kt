@@ -384,10 +384,12 @@ fun TimelineDetailScreenPreview() {
                     places = listOf(
                         Place(
                             title = "도당고등학교 2-7 데이트",
+                            address = "서울특별시 강남구 도산대로 104",
                             duration = "1.5"
                         ),
                         Place(
                             title = "2번 데이트",
+                            address = "서울특별시 강남구 도산대로 104",
                             duration = "2.5"
                         )
                     ),

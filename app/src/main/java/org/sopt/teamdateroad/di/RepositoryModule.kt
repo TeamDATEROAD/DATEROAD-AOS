@@ -9,6 +9,7 @@ import org.sopt.teamdateroad.data.repositoryimpl.AdvertisementRepositoryImpl
 import org.sopt.teamdateroad.data.repositoryimpl.AuthRepositoryImpl
 import org.sopt.teamdateroad.data.repositoryimpl.CourseRepositoryImpl
 import org.sopt.teamdateroad.data.repositoryimpl.MyCourseRepositoryImpl
+import org.sopt.teamdateroad.data.repositoryimpl.PlaceSearchRepositoryImpl
 import org.sopt.teamdateroad.data.repositoryimpl.ProfileRepositoryImpl
 import org.sopt.teamdateroad.data.repositoryimpl.TimelineRepositoryImpl
 import org.sopt.teamdateroad.data.repositoryimpl.UserInfoRepositoryImpl
@@ -17,6 +18,7 @@ import org.sopt.teamdateroad.domain.repository.AdvertisementRepository
 import org.sopt.teamdateroad.domain.repository.AuthRepository
 import org.sopt.teamdateroad.domain.repository.CourseRepository
 import org.sopt.teamdateroad.domain.repository.MyCourseRepository
+import org.sopt.teamdateroad.domain.repository.PlaceSearchRepository
 import org.sopt.teamdateroad.domain.repository.ProfileRepository
 import org.sopt.teamdateroad.domain.repository.TimelineRepository
 import org.sopt.teamdateroad.domain.repository.UserInfoRepository
@@ -56,4 +58,8 @@ abstract class RepositoryModule {
     @Binds
     @Singleton
     abstract fun bindsUserPointRepository(userPointRepositoryImpl: UserPointRepositoryImpl): UserPointRepository
+
+    @Binds
+    @Singleton
+    abstract fun bindsPlaceSearchRepository(placeSearchRepositoryImpl: PlaceSearchRepositoryImpl): PlaceSearchRepository
 }
