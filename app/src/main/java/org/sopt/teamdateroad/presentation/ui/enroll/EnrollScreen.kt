@@ -22,6 +22,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -113,6 +114,7 @@ fun EnrollRoute(
     val searchPlaceInfos = viewModel.searchPlaceInfos.collectAsLazyPagingItems()
 
     val lifecycleOwner = LocalLifecycleOwner.current
+    val keyboardController = LocalSoftwareKeyboardController.current
 
     val getGalleryLauncher = rememberLauncherForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
         if (uri != null) viewModel.setEvent(EnrollContract.EnrollEvent.SetImage(images = listOf(uri.toString())))
@@ -257,9 +259,18 @@ fun EnrollRoute(
             AmplitudeUtils.trackEvent(eventName = CLICK_BRING_COURSE)
         },
         onEnrollButtonClick = { viewModel.setEvent(EnrollContract.EnrollEvent.OnEnrollButtonClick) },
-        onDateTextFieldClick = { viewModel.setEvent(EnrollContract.EnrollEvent.OnDateTextFieldClick) },
-        onTimeTextFieldClick = { viewModel.setEvent(EnrollContract.EnrollEvent.OnTimeTextFieldClick) },
-        onRegionTextFieldClick = { viewModel.setEvent(EnrollContract.EnrollEvent.OnRegionTextFieldClick) },
+        onDateTextFieldClick = {
+            keyboardController?.hide()
+            viewModel.setEvent(EnrollContract.EnrollEvent.OnDateTextFieldClick)
+        },
+        onTimeTextFieldClick = {
+            keyboardController?.hide()
+            viewModel.setEvent(EnrollContract.EnrollEvent.OnTimeTextFieldClick)
+        },
+        onRegionTextFieldClick = {
+            keyboardController?.hide()
+            viewModel.setEvent(EnrollContract.EnrollEvent.OnRegionTextFieldClick)
+        },
         onPlaceSearchButtonClick = { viewModel.setEvent(EnrollContract.EnrollEvent.OnPlaceSearchButtonClick) },
         onKeywordChanged = { keyword -> viewModel.setEvent(EnrollContract.EnrollEvent.OnKeywordChanged(keyword = keyword)) },
         onPlaceSelected = { placeInfo -> viewModel.setEvent(EnrollContract.EnrollEvent.OnPlaceSelected(placeInfo = placeInfo)) },
