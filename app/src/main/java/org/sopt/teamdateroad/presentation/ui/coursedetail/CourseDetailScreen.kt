@@ -55,6 +55,7 @@ import org.sopt.teamdateroad.presentation.ui.coursedetail.component.CourseDetail
 import org.sopt.teamdateroad.presentation.ui.coursedetail.component.CourseDetailBottomBar
 import org.sopt.teamdateroad.presentation.ui.coursedetail.component.CourseDetailUnopenedDetail
 import org.sopt.teamdateroad.presentation.ui.coursedetail.component.courseDetailOpenedDetail
+import org.sopt.teamdateroad.presentation.util.AdsAmplitude
 import org.sopt.teamdateroad.presentation.util.CourseDetail.POINT_LACK
 import org.sopt.teamdateroad.presentation.util.CourseDetailAmplitude.CLICK_COURSE_BACK
 import org.sopt.teamdateroad.presentation.util.CourseDetailAmplitude.CLICK_COURSE_PURCHASE
@@ -174,13 +175,18 @@ fun CourseDetailRoute(
                     viewModel.setEvent(CourseDetailContract.CourseDetailEvent.OnReportWebViewClicked)
                 },
                 onReportWebViewClose = { viewModel.setEvent(CourseDetailContract.CourseDetailEvent.DismissReportWebView) },
-                onSelectEnroll = {
-                    viewModel.setSideEffect(CourseDetailContract.CourseDetailSideEffect.NavigateToEnroll(enrollType = EnrollType.COURSE, viewPath = COURSE_DETAIL, id = null))
-                },
                 onDismissCollectPoint = {
+                    AmplitudeUtils.trackEvent(eventName = AdsAmplitude.CLICK_COLLECT_POINT_CLOSE)
                     viewModel.setEvent(CourseDetailContract.CourseDetailEvent.DismissDialogPointLack)
                 },
+                onSelectEnroll = {
+                    AmplitudeUtils.trackEvent(eventName = AdsAmplitude.CLICK_COURSE)
+                    viewModel.setEvent(CourseDetailContract.CourseDetailEvent.DismissDialogPointLack)
+                    viewModel.setSideEffect(CourseDetailContract.CourseDetailSideEffect.NavigateToEnroll(enrollType = EnrollType.COURSE, viewPath = COURSE_DETAIL, id = null))
+                },
                 onSelectAds = {
+                    AmplitudeUtils.trackEvent(eventName = AdsAmplitude.CLICK_AD)
+                    viewModel.setEvent(CourseDetailContract.CourseDetailEvent.DismissDialogPointLack)
                     viewModel.setSideEffect(CourseDetailContract.CourseDetailSideEffect.NavigateToAds)
                 },
                 onDismissFullAdsDialog = {
@@ -403,11 +409,8 @@ fun CourseDetailScreen(
                         DateRoadCollectPointType.WATCH_ADS -> onSelectAds()
                         DateRoadCollectPointType.COURSE_REGISTRATION -> onSelectEnroll()
                     }
-                    onDismissCollectPoint()
                 },
-                onDismissRequest = {
-                    onDismissCollectPoint()
-                }
+                onDismissRequest = onDismissCollectPoint
             )
 
             DateRoadBasicBottomSheet(
