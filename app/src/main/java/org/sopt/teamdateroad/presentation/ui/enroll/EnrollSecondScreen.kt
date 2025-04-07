@@ -31,11 +31,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
-import androidx.paging.PagingData
-import androidx.paging.compose.LazyPagingItems
-import androidx.paging.compose.collectAsLazyPagingItems
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.launch
 import org.sopt.teamdateroad.R
 import org.sopt.teamdateroad.domain.model.Place
@@ -44,6 +40,7 @@ import org.sopt.teamdateroad.presentation.type.PlaceCardType
 import org.sopt.teamdateroad.presentation.ui.component.button.DateRoadTextButton
 import org.sopt.teamdateroad.presentation.ui.component.card.DateRoadPlaceCard
 import org.sopt.teamdateroad.presentation.ui.enroll.component.EnrollPlaceInsertBar
+import org.sopt.teamdateroad.presentation.ui.enroll.component.PlaceSearchBottomSheet
 import org.sopt.teamdateroad.presentation.util.Time
 import org.sopt.teamdateroad.presentation.util.draganddrop.rememberDragAndDropListState
 import org.sopt.teamdateroad.presentation.util.mutablelist.move
@@ -55,7 +52,7 @@ import org.sopt.teamdateroad.ui.theme.DateRoadTheme
 fun EnrollSecondScreen(
     enrollUiState: EnrollContract.EnrollUiState = EnrollContract.EnrollUiState(),
     searchKeyword: String,
-    searchPlaceInfos: LazyPagingItems<PlaceInfo>,
+    searchPlaceInfos: List<PlaceInfo>,
     onPlaceSearchButtonClick: () -> Unit,
     onKeywordChanged: (String) -> Unit,
     onPlaceSelected: (PlaceInfo) -> Unit,
@@ -199,7 +196,7 @@ fun EnrollSecondScreenPreview() {
     DATEROADTheme {
         EnrollSecondScreen(
             searchKeyword = "",
-            searchPlaceInfos = flowOf(PagingData.empty<PlaceInfo>()).collectAsLazyPagingItems(),
+            searchPlaceInfos = listOf(),
             onPlaceSearchButtonClick = {},
             onAddPlaceButtonClick = {},
             onSelectedPlaceCourseTimeClick = {},
