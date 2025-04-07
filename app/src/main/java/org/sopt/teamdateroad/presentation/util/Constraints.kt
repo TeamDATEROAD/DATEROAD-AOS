@@ -38,6 +38,13 @@ object DurationPicker {
     const val DURATION_END = 12
 }
 
+object AdsAmplitude {
+    const val VIEW_POINT = "view_point"
+    const val CLICK_AD = "click_ad"
+    const val CLICK_COURSE = "click_course"
+    const val CLICK_COLLECT_POINT_CLOSE = "click_collect_point_close"
+}
+
 object EnrollAmplitude {
     const val VIEW_ADD_SCHEDULE = "view_add_schedule"
     const val CLICK_SCHEDULE1_BACK = "click_schedule1_back"
