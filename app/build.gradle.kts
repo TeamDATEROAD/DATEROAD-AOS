@@ -16,6 +16,8 @@ val properties = Properties().apply {
 }
 
 android {
+    val keystoreFile = file("date_road.keystore")
+
     namespace = "org.sopt.teamdateroad"
     compileSdk = libs.versions.compileSdk.get().toInt()
 
@@ -37,6 +39,16 @@ android {
         manifestPlaceholders["KAKAO_NATIVE_APP_KEY_MANIFEST"] = properties["kakao.native.app.key.manifest"] as String
         manifestPlaceholders["GOOGLE_ADS_API_ID_MANIFEST"] = properties["google.ads.api.id.manifest"] as String
     }
+    signingConfigs {
+        if (keystoreFile.exists()) {
+            create("release") {
+                storeFile = keystoreFile
+                storePassword = System.getenv("STORE_PASSWORD")
+                keyAlias = System.getenv("KEY_ALIAS")
+                keyPassword = System.getenv("KEY_PASSWORD")
+            }
+        }
+    }
 
     buildTypes {
         debug {
@@ -47,6 +59,9 @@ android {
         }
 
         release {
+            if (keystoreFile.exists()) {
+                signingConfig = signingConfigs.getByName("release")
+            }
             isMinifyEnabled = true
             isShrinkResources = true
             buildConfigField("String", "BASE_URL", properties["prod.base.url"].toString())
@@ -58,6 +73,7 @@ android {
             )
         }
     }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
