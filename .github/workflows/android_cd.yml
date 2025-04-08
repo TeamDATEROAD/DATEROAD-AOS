@@ -28,7 +28,7 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-gradle-
 
-      - name: set up JDK 17
+      - name: Set up JDK 17
         uses: actions/setup-java@v4
         with:
           java-version: 17
@@ -43,7 +43,7 @@ jobs:
       - name: Decode google-services.json
         env:
           FIREBASE_SECRET: ${{ secrets.FIREBASE_SECRET }}
-        run: echo $FIREBASE_SECRET > app/google-services.json
+        run: echo "$FIREBASE_SECRET" > app/google-services.json
 
       - name: Access local properties
         env:
@@ -54,22 +54,39 @@ jobs:
           GOOGLE_ADS_API_ID: ${{ secrets.GOOGLE_ADS_API_ID }}
           GOOGLE_ADS_API_ID_MANIFEST: ${{ secrets.GOOGLE_ADS_API_ID }}
         run: |
-          echo "dev.base.url=\"$BASE_URL\"" >> local.properties
+          echo "dev.base.url=\"$HFM_BASE_URL\"" >> local.properties
           echo "kakao.native.app.key.manifest=\"$KAKAO_NATIVE_APP_KEY_MANIFEST\"" >> local.properties
           echo "kakao.native.app.key=\"$KAKAO_NATIVE_APP_KEY\"" >> local.properties
           echo "amplitude.dev.api.key=\"$AMPLITUDE_API_KEY\"" >> local.properties
-          echo "google.ads.api.id=\"GOOGLE_ADS_API_ID\"" >> local.properties
-          echo "google.ads.api.id.manifest=\"GOOGLE_ADS_API_ID_MANIFEST\"" >> local.properties
+          echo "google.ads.api.id=\"$GOOGLE_ADS_API_ID\"" >> local.properties
+          echo "google.ads.api.id.manifest=\"$GOOGLE_ADS_API_ID_MANIFEST\"" >> local.properties
 
-      - name: Build Release APK
+      - name: Decode Keystore
+        run: echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 -d > dateroad.keystore
+
+      - name: Export signing environment
         run: |
-          ./gradlew :app:assembleRelease
+          echo "STORE_PASSWORD=${{ secrets.KEYSTORE_PASSWORD }}" >> $GITHUB_ENV
+          echo "KEY_ALIAS=${{ secrets.KEY_ALIAS }}" >> $GITHUB_ENV
+          echo "KEY_PASSWORD=${{ secrets.KEY_PASSWORD }}" >> $GITHUB_ENV
 
-      - name: Upload Release APK
+      - name: Build Signed Release APK
+        run: ./gradlew :app:assembleRelease
+
+      - name: Upload Signed APK
         uses: actions/upload-artifact@v4
         with:
-          name: release
-          path: ./app/build/outputs/apk/release/app-release-unsigned.apk
+          name: release-apk
+          path: ./app/build/outputs/apk/release/app-release.apk
+
+      - name: Build Signed Release AAB
+        run: ./gradlew :app:bundleRelease
+
+      - name: Upload Signed AAB
+        uses: actions/upload-artifact@v4
+        with:
+          name: release-aab
+          path: ./app/build/outputs/bundle/release/app-release.aab
 
       - name: Discord Notify - Success
         if: ${{ success() }}
@@ -81,7 +98,8 @@ jobs:
           username: DATEROAD-ANDROID 🍫
           content: |
             Release Test가 완료되었습니다!
-            [❇️ APK를 다운로드해 보세요! ❇️](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }})
+            [❇️ APK 다운로드](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }})
+            [📦 AAB 다운로드](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }})
 
       - name: Discord Notify - Failure
         if: ${{ failure() }}
