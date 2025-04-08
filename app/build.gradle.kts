@@ -16,6 +16,8 @@ val properties = Properties().apply {
 }
 
 android {
+    val keystoreFile = file("date_road.keystore")
+
     namespace = "org.sopt.teamdateroad"
     compileSdk = libs.versions.compileSdk.get().toInt()
 
@@ -38,7 +40,6 @@ android {
         manifestPlaceholders["GOOGLE_ADS_API_ID_MANIFEST"] = properties["google.ads.api.id.manifest"] as String
     }
     signingConfigs {
-        val keystoreFile = file("date_road.keystore")
         if (keystoreFile.exists()) {
             create("release") {
                 storeFile = keystoreFile
@@ -58,7 +59,9 @@ android {
         }
 
         release {
-            signingConfig = signingConfigs.getByName("release")
+            if (keystoreFile.exists()) {
+                signingConfig = signingConfigs.getByName("release")
+            }
             isMinifyEnabled = true
             isShrinkResources = true
             buildConfigField("String", "BASE_URL", properties["prod.base.url"].toString())
