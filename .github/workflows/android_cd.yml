@@ -62,7 +62,7 @@ jobs:
           echo "google.ads.api.id.manifest=\"$GOOGLE_ADS_API_ID_MANIFEST\"" >> local.properties
 
       - name: Decode Keystore
-        run: echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 -d > app/dateroad.keystore
+        run: echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 -d > app/date_road.keystore
 
       - name: Export signing environment
         run: |
