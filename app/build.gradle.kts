@@ -38,11 +38,14 @@ android {
         manifestPlaceholders["GOOGLE_ADS_API_ID_MANIFEST"] = properties["google.ads.api.id.manifest"] as String
     }
     signingConfigs {
-        create("release") {
-            storeFile = file("date_road.keystore")
-            storePassword = System.getenv("STORE_PASSWORD")
-            keyAlias = System.getenv("KEY_ALIAS")
-            keyPassword = System.getenv("KEY_PASSWORD")
+        val keystoreFile = file("date_road.keystore")
+        if (keystoreFile.exists()) {
+            create("release") {
+                storeFile = keystoreFile
+                storePassword = System.getenv("STORE_PASSWORD")
+                keyAlias = System.getenv("KEY_ALIAS")
+                keyPassword = System.getenv("KEY_PASSWORD")
+            }
         }
     }
 
