@@ -50,7 +50,9 @@ class EnrollContract {
         val timePickers: List<Picker> = listOf(
             Picker(items = listOf(TimePicker.AM, TimePicker.PM)),
             Picker(items = (HOUR_START..HOUR_END).map { it.toString() }),
-            Picker(items = (MINUTE_START..MINUTE_END).map { it.toString().padStart(2, '0') })
+            Picker(
+                items = (MINUTE_START..MINUTE_END step 5).map { it.toString().padStart(2, '0') }
+            )
         ),
         val isRegionBottomSheetOpen: Boolean = false,
         val onRegionBottomSheetRegionSelected: RegionType? = RegionType.SEOUL,
