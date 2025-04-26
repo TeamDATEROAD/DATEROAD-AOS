@@ -1,11 +1,14 @@
 package org.sopt.teamdateroad.presentation.ui.home.component
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -24,23 +27,26 @@ fun DateRoadHomeTopBar(
     profileImage: String? = null,
     onClick: () -> Unit = {}
 ) {
-    Row(
+    Box(
         modifier = Modifier
             .fillMaxWidth()
+            .height(54.dp)
             .background(Color.Transparent)
-            .padding(horizontal = 22.dp, vertical = 10.dp),
-        verticalAlignment = Alignment.CenterVertically
+            .padding(start = 11.dp,end = 16.dp),
     ) {
         Icon(
             painter = painterResource(id = R.drawable.ic_dateroad_logo),
             contentDescription = null,
-            tint = DateRoadTheme.colors.white
+            tint = DateRoadTheme.colors.white,
+            modifier = Modifier
+                .align(Alignment.CenterStart)
+                .size(54.dp)
         )
-        Spacer(modifier = Modifier.weight(1f))
         DateRoadPointTag(
             text = title,
             profileImage = profileImage,
-            onClick = onClick
+            onClick = onClick,
+            modifier = Modifier.align(Alignment.CenterEnd)
         )
     }
 }
