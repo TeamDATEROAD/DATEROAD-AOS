@@ -17,6 +17,7 @@ import org.sopt.teamdateroad.R
 import org.sopt.teamdateroad.presentation.ui.component.textfield.DateRoadBasicTextField
 import org.sopt.teamdateroad.presentation.ui.component.textfield.DateRoadTextArea
 import org.sopt.teamdateroad.presentation.util.view.LoadState
+import org.sopt.teamdateroad.presentation.util.view.NumberCommaTransformation
 import org.sopt.teamdateroad.ui.theme.DATEROADTheme
 
 @Composable
@@ -45,7 +46,8 @@ fun EnrollThirdScreen(
             onValueChange = { newValue ->
                 if (newValue.all { it.isDigit() }) onCostValueChange(newValue)
             },
-            keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Number)
+            keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Number),
+            visualTransformation = NumberCommaTransformation(),
         )
         Spacer(modifier = Modifier.height(6.dp))
     }
