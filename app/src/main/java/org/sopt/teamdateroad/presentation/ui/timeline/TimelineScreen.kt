@@ -157,12 +157,13 @@ fun TimelineScreen(
                 ) { page ->
                     val date = uiState.timelines[page]
                     val timelineType = TimelineType.getTimelineTypeByIndex(page)
+                    val paddingEnd = if (uiState.timelines.lastIndex == page) 0.dp else 16.dp
                     TimelineCard(
                         timeline = date,
                         timelineType = timelineType,
                         onClick = { navigateToTimelineDetail(timelineType, date.timelineId) },
                         modifier = Modifier
-                            .padding(end = 16.dp)
+                            .padding(end = paddingEnd)
                     )
                 }
 
