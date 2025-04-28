@@ -2,7 +2,7 @@ package org.sopt.teamdateroad.presentation.ui.enroll.component
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -73,13 +73,13 @@ fun PlaceSearchBottomSheet(
                     .clip(RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp))
                     .background(DateRoadTheme.colors.white)
             ) {
-                Spacer(modifier = Modifier.height(23.dp))
+                Spacer(modifier = Modifier.height(15.dp))
 
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(40.dp)
-                        .padding(start = 25.dp, end = 12.dp),
+                        .padding(start = 16.dp, end = 6.dp),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Text(
@@ -100,7 +100,7 @@ fun PlaceSearchBottomSheet(
                     )
                 }
 
-                Spacer(modifier = Modifier.height(22.dp))
+                Spacer(modifier = Modifier.height(16.dp))
 
                 TextField(
                     value = searchKeyword,
@@ -108,7 +108,7 @@ fun PlaceSearchBottomSheet(
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(54.dp)
-                        .padding(start = 14.dp, end = 20.dp),
+                        .padding(horizontal = 14.dp),
                     placeholder = {
                         Text(
                             modifier = Modifier,
@@ -147,10 +147,11 @@ fun PlaceSearchBottomSheet(
                     )
                 )
 
-                Spacer(modifier = Modifier.height(10.dp))
-
                 if (searchPlaceInfos.isNotEmpty()) {
                     LazyColumn(modifier = Modifier.weight(1f)) {
+                        item {
+                            Spacer(modifier = Modifier.height(10.dp))
+                        }
                         itemsIndexed(searchPlaceInfos) { index: Int, placeInfo: PlaceInfo ->
                             EnrollPlaceSearchItem(
                                 keyword = searchKeyword,
@@ -166,8 +167,10 @@ fun PlaceSearchBottomSheet(
                                 )
                             }
                         }
+                        item {
+                            Spacer(modifier = Modifier.height(12.dp))
+                        }
                     }
-                    Spacer(modifier = Modifier.height(12.dp))
                 } else {
                     EmptyPlaceSearchResult()
                 }
@@ -178,26 +181,26 @@ fun PlaceSearchBottomSheet(
 
 @Composable
 private fun EmptyPlaceSearchResult() {
-    Box(
+    Column(
         modifier = Modifier
-            .fillMaxSize()
-            .padding(bottom = 70.dp)
+            .height(472.dp)
+            .fillMaxWidth(),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center,
     ) {
-        Column(modifier = Modifier.align(Alignment.Center)) {
-            Image(
-                modifier = Modifier
-                    .width(167.dp)
-                    .height(191.dp),
-                painter = painterResource(R.drawable.img_place_search_no_match),
-                contentDescription = null
-            )
-            Spacer(modifier = Modifier.height(40.dp))
-            Text(
-                text = stringResource(R.string.enroll_place_search_no_match),
-                color = DateRoadTheme.colors.gray300,
-                style = DateRoadTheme.typography.titleBold18
-            )
-        }
+        Image(
+            modifier = Modifier
+                .width(167.dp)
+                .height(191.dp),
+            painter = painterResource(R.drawable.img_place_search_no_match),
+            contentDescription = null
+        )
+        Spacer(modifier = Modifier.height(38.dp))
+        Text(
+            text = stringResource(R.string.enroll_place_search_no_match),
+            color = DateRoadTheme.colors.gray300,
+            style = DateRoadTheme.typography.titleBold18
+        )
     }
 }
 

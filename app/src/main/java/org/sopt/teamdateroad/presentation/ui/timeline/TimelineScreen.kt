@@ -135,7 +135,6 @@ fun TimelineScreen(
                 )
             }
         )
-        Spacer(modifier = Modifier.height(52.dp))
 
         Column(
             modifier = Modifier
@@ -143,11 +142,13 @@ fun TimelineScreen(
                 .align(Alignment.CenterHorizontally)
         ) {
             if (uiState.timelines.isEmpty()) {
+                Spacer(modifier = Modifier.height(29.dp))
                 DateRoadEmptyView(
                     modifier = Modifier.fillMaxWidth(),
                     emptyViewType = EmptyViewType.TIMELINE
                 )
             } else {
+                Spacer(modifier = Modifier.height(52.dp))
                 HorizontalPager(
                     count = uiState.timelines.size,
                     state = pagerState,

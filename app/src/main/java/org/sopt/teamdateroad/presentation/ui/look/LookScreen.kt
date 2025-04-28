@@ -215,13 +215,16 @@ fun LookScreen(
                 )
             }
         }
-        Spacer(modifier = Modifier.height(20.dp))
+        Spacer(modifier = Modifier.height(10.dp))
         if (lookUiState.courses.isEmpty()) {
             Box(
                 modifier = Modifier
-                    .fillMaxSize()
+                    .fillMaxSize(),
+                contentAlignment = Alignment.TopCenter
             ) {
-                DateRoadEmptyView(emptyViewType = EmptyViewType.LOOK)
+                DateRoadEmptyView(
+                    emptyViewType = EmptyViewType.LOOK
+                )
             }
         }
         LazyVerticalGrid(
@@ -231,6 +234,9 @@ fun LookScreen(
             horizontalArrangement = Arrangement.spacedBy(12.dp),
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
+            item {
+                Spacer(modifier = Modifier.height(10.dp))
+            }
             items(lookUiState.courses.size) { index ->
                 LookCourseCard(course = lookUiState.courses[index], onClick = { onCourseCardClicked(lookUiState.courses[index].courseId) })
             }

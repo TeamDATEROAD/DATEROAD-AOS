@@ -4,6 +4,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -93,7 +94,11 @@ fun PastScreen(
             onLeftIconClick = popBackStack
         )
         if (pastUiState.timelines.isEmpty()) {
-            DateRoadEmptyView(emptyViewType = EmptyViewType.PAST)
+            Column(modifier = Modifier.fillMaxSize()) {
+                Spacer(modifier = Modifier.weight(69f))
+                DateRoadEmptyView(emptyViewType = EmptyViewType.PAST)
+                Spacer(modifier = Modifier.weight(165f))
+            }
         } else {
             LazyColumn(
                 modifier = Modifier.padding(start = 16.dp, end = 16.dp, top = 6.dp, bottom = 11.dp),
