@@ -1,7 +1,6 @@
 package org.sopt.teamdateroad.presentation.ui.pointhistory
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
@@ -29,7 +28,6 @@ import com.google.android.gms.ads.rewarded.RewardedAd
 import com.google.android.gms.ads.rewarded.RewardedAdLoadCallback
 import org.sopt.teamdateroad.BuildConfig
 import org.sopt.teamdateroad.R
-import org.sopt.teamdateroad.domain.model.Point
 import org.sopt.teamdateroad.domain.model.PointHistory
 import org.sopt.teamdateroad.domain.model.UserPoint
 import org.sopt.teamdateroad.presentation.type.EmptyViewType
@@ -201,32 +199,26 @@ fun PointHistoryScreen(
                 )
             }
         }
-        LazyColumn {
-            val pointHistory = when (pointHistoryUiState.pointHistoryTabType) {
-                PointHistoryTabType.GAINED_HISTORY -> pointHistoryUiState.pointHistory.gained
-                PointHistoryTabType.USED_HISTORY -> pointHistoryUiState.pointHistory.used
-            }
-            if (pointHistory.isEmpty()) {
-                item {
-                    Box(
-                        modifier = Modifier
-                            .fillParentMaxSize()
-                    ) {
-                        DateRoadEmptyView(
-                            emptyViewType = when (pointHistoryUiState.pointHistoryTabType) {
-                                PointHistoryTabType.USED_HISTORY -> EmptyViewType.POINT_HISTORY_USED_HISTORY
-                                PointHistoryTabType.GAINED_HISTORY -> EmptyViewType.POINT_HISTORY_GAINED_HISTORY
-                            }
-                        )
-                    }
+        val pointHistory = when (pointHistoryUiState.pointHistoryTabType) {
+            PointHistoryTabType.GAINED_HISTORY -> pointHistoryUiState.pointHistory.gained
+            PointHistoryTabType.USED_HISTORY -> pointHistoryUiState.pointHistory.used
+        }
+        if (pointHistory.isEmpty()) {
+            DateRoadEmptyView(
+                emptyViewType = when (pointHistoryUiState.pointHistoryTabType) {
+                    PointHistoryTabType.USED_HISTORY -> EmptyViewType.POINT_HISTORY_USED_HISTORY
+                    PointHistoryTabType.GAINED_HISTORY -> EmptyViewType.POINT_HISTORY_GAINED_HISTORY
                 }
-            }
-            items(pointHistory.size) { index ->
-                PointHistoryCard(point = pointHistory[index])
-                HorizontalDivider(
-                    color = DateRoadTheme.colors.gray100,
-                    thickness = 1.dp
-                )
+            )
+        } else {
+            LazyColumn {
+                items(pointHistory.size) { index ->
+                    PointHistoryCard(point = pointHistory[index])
+                    HorizontalDivider(
+                        color = DateRoadTheme.colors.gray100,
+                        thickness = 1.dp
+                    )
+                }
             }
         }
     }
@@ -263,9 +255,9 @@ fun PointHistoryPreview() {
                 loadState = LoadState.Success,
                 pointHistory = PointHistory(
                     gained = listOf(
-                        Point(point = "+150", description = "서버의 바다여행", createdAt = "2023.12.31"),
-                        Point(point = "+150", description = "서버의 바다여행", createdAt = "2023.12.31"),
-                        Point(point = "+150", description = "서버의 바다여행", createdAt = "2023.12.31")
+//                        Point(point = "+150", description = "서버의 바다여행", createdAt = "2023.12.31"),
+//                        Point(point = "+150", description = "서버의 바다여행", createdAt = "2023.12.31"),
+//                        Point(point = "+150", description = "서버의 바다여행", createdAt = "2023.12.31")
                     ),
                     used = listOf()
                 )

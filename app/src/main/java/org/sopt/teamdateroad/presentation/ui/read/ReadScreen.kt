@@ -107,6 +107,7 @@ fun ReadScreen(
                 text = stringResource(id = R.string.read_title_empty, readUiState.name),
                 style = DateRoadTheme.typography.titleExtra24
             )
+            Spacer(modifier = Modifier.height(16.dp))
             DateRoadEmptyView(emptyViewType = EmptyViewType.READ)
         } else {
             Text(

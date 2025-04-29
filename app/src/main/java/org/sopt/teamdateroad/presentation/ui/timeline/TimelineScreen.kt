@@ -135,7 +135,6 @@ fun TimelineScreen(
                 )
             }
         )
-        Spacer(modifier = Modifier.height(52.dp))
 
         Column(
             modifier = Modifier
@@ -143,11 +142,13 @@ fun TimelineScreen(
                 .align(Alignment.CenterHorizontally)
         ) {
             if (uiState.timelines.isEmpty()) {
+                Spacer(modifier = Modifier.height(29.dp))
                 DateRoadEmptyView(
                     modifier = Modifier.fillMaxWidth(),
                     emptyViewType = EmptyViewType.TIMELINE
                 )
             } else {
+                Spacer(modifier = Modifier.height(52.dp))
                 HorizontalPager(
                     count = uiState.timelines.size,
                     state = pagerState,
@@ -157,12 +158,13 @@ fun TimelineScreen(
                 ) { page ->
                     val date = uiState.timelines[page]
                     val timelineType = TimelineType.getTimelineTypeByIndex(page)
+                    val paddingEnd = if (uiState.timelines.lastIndex == page) 0.dp else 16.dp
                     TimelineCard(
                         timeline = date,
                         timelineType = timelineType,
                         onClick = { navigateToTimelineDetail(timelineType, date.timelineId) },
                         modifier = Modifier
-                            .padding(end = 16.dp)
+                            .padding(end = paddingEnd)
                     )
                 }
 

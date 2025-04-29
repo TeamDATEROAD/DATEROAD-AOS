@@ -3,10 +3,14 @@ package org.sopt.teamdateroad.presentation.ui.signin
 import android.content.Context
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -109,28 +113,43 @@ fun SignInScreen(
     if (signInUiState.isWebViewOpened) {
         DateRoadWebView(url = PRIVACY_POLICY_URL, onClose = webViewClose)
     } else {
-        Column(
+        Box(
             modifier = Modifier
                 .fillMaxSize()
                 .background(DateRoadTheme.colors.purple600),
-            horizontalAlignment = Alignment.CenterHorizontally
+            contentAlignment = Alignment.Center
         ) {
-            Spacer(modifier = Modifier.weight(226f))
-            Image(painter = painterResource(id = R.drawable.img_splash_logo), contentDescription = null)
-            Spacer(modifier = Modifier.weight(167f))
-            DateRoadKakaoLoginButton(
-                modifier = Modifier.padding(horizontal = 30.dp),
-                onClick = onSignInClicked
-            )
-            Spacer(modifier = Modifier.weight(16f))
-            Text(
-                text = "개인정보처리방침",
-                color = DateRoadTheme.colors.gray200,
-                style = DateRoadTheme.typography.bodyMed15,
-                textDecoration = TextDecoration.Underline,
-                modifier = Modifier.noRippleClickable(onClick = onWebViewClicked)
-            )
-            Spacer(modifier = Modifier.weight(37f))
+            Column(
+                modifier = Modifier
+                    .wrapContentWidth()
+                    .fillMaxHeight(),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Spacer(modifier = Modifier.weight(270f))
+                Image(painter = painterResource(id = R.drawable.img_splash_logo), contentDescription = null)
+                Spacer(modifier = Modifier.weight(328f))
+            }
+            Column(
+                modifier = Modifier
+                    .wrapContentWidth()
+                    .fillMaxHeight(),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Spacer(modifier = Modifier.weight(591f))
+                DateRoadKakaoLoginButton(
+                    modifier = Modifier.padding(horizontal = 30.dp),
+                    onClick = onSignInClicked
+                )
+                Spacer(modifier = Modifier.height(16.dp))
+                Text(
+                    text = "개인정보처리방침",
+                    color = DateRoadTheme.colors.gray200,
+                    style = DateRoadTheme.typography.bodyMed15,
+                    textDecoration = TextDecoration.Underline,
+                    modifier = Modifier.noRippleClickable(onClick = onWebViewClicked)
+                )
+                Spacer(modifier = Modifier.weight(124f))
+            }
         }
     }
 }
