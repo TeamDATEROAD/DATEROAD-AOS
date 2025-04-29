@@ -10,7 +10,6 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -118,13 +117,13 @@ fun SignInScreen(
             modifier = Modifier
                 .fillMaxSize()
                 .background(DateRoadTheme.colors.purple600),
-            contentAlignment = Alignment.Center,
+            contentAlignment = Alignment.Center
         ) {
             Column(
                 modifier = Modifier
                     .wrapContentWidth()
                     .fillMaxHeight(),
-                horizontalAlignment = Alignment.CenterHorizontally,
+                horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Spacer(modifier = Modifier.weight(270f))
                 Image(painter = painterResource(id = R.drawable.img_splash_logo), contentDescription = null)
@@ -134,7 +133,7 @@ fun SignInScreen(
                 modifier = Modifier
                     .wrapContentWidth()
                     .fillMaxHeight(),
-                horizontalAlignment = Alignment.CenterHorizontally,
+                horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Spacer(modifier = Modifier.weight(591f))
                 DateRoadKakaoLoginButton(

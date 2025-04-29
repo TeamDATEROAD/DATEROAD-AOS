@@ -47,7 +47,7 @@ fun EnrollThirdScreen(
                 if (newValue.all { it.isDigit() }) onCostValueChange(newValue)
             },
             keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Number),
-            visualTransformation = NumberCommaTransformation(),
+            visualTransformation = NumberCommaTransformation()
         )
         Spacer(modifier = Modifier.height(6.dp))
     }

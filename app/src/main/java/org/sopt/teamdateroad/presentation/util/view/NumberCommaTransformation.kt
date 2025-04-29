@@ -21,7 +21,6 @@ class NumberCommaTransformation : VisualTransformation {
             offsetMapping = object : OffsetMapping {
                 override fun originalToTransformed(offset: Int): Int {
                     return if (offset != newText.length) newText.length else text.length
-
                 }
 
                 override fun transformedToOriginal(offset: Int): Int {

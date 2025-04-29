@@ -3,8 +3,6 @@ package org.sopt.teamdateroad.presentation.ui.home.component
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -32,7 +30,7 @@ fun DateRoadHomeTopBar(
             .fillMaxWidth()
             .height(54.dp)
             .background(Color.Transparent)
-            .padding(start = 11.dp,end = 16.dp),
+            .padding(start = 11.dp, end = 16.dp)
     ) {
         Icon(
             painter = painterResource(id = R.drawable.ic_dateroad_logo),

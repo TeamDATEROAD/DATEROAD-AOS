@@ -126,7 +126,7 @@ fun MyCourseScreen(
                     emptyViewType = when (myCourseUiState.myCourseType) {
                         MyCourseType.ENROLL -> EmptyViewType.MY_COURSE_ENROLL
                         MyCourseType.READ -> EmptyViewType.MY_COURSE_READ
-                    },
+                    }
                 )
                 Spacer(modifier = Modifier.weight(165f))
             }
