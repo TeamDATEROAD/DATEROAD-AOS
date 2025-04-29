@@ -308,6 +308,27 @@ fun TimelineDetailScreen(
                         )
                     }
                 }
+            } else {
+                Column(
+                    modifier = Modifier
+                        .align(Alignment.BottomCenter)
+                        .padding(vertical = 16.dp, horizontal = 70.dp)
+                        .background(DateRoadTheme.colors.purple600, CircleShape)
+                        .noRippleClickable(onClick = TODO("일정 등록 화면으로 이동"))
+                ) {
+                    Box(
+                        modifier = Modifier
+                            .padding(vertical = 14.dp)
+                            .clip(CircleShape)
+                    ) {
+                        Text(
+                            text = stringResource(id = R.string.timeline_detail_point),
+                            style = DateRoadTheme.typography.bodyBold15,
+                            color = DateRoadTheme.colors.white,
+                            textAlign = TextAlign.Center,
+                        )
+                    }
+                }
             }
         }
     }
@@ -377,7 +398,7 @@ fun TimelineDetailScreenPreview() {
                 loadState = LoadState.Success,
                 timelineDetail = TimelineDetail(
                     date = "2024-08-17",
-                    dDay = "D-3",
+                    dDay = "",
                     title = "Seoul City Tour",
                     city = "Seoul",
                     startAt = "10:00 AM",
