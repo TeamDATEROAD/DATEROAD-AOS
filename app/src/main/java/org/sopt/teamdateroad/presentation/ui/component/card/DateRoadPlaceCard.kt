@@ -75,6 +75,7 @@ fun DateRoadPlaceCard(
                 Spacer(modifier = Modifier.width(10.dp))
 
                 DateRoadTextTag(
+                    modifier = Modifier.width(70.dp),
                     textContent = place.duration,
                     tagContentType = TagType.PLACE_CARD_TIME
                 )

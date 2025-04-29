@@ -153,7 +153,7 @@ object SignIn {
 }
 
 object Time {
-    const val TIME = " 시간"
+    const val TIME = "시간"
 }
 
 object TimelineAmplitude {
