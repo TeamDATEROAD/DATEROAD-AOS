@@ -146,6 +146,7 @@ fun MainNavHost(
 
             timelineDetailGraph(
                 popBackStack = navigator::popBackStackIfNotHome,
+                navigateToEnrollCourse = navigator::navigateToTimeLineToEnrollCourse,
                 viewPath = previousView
             )
         }

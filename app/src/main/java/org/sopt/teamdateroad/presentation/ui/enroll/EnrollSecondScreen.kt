@@ -36,6 +36,7 @@ import kotlinx.coroutines.launch
 import org.sopt.teamdateroad.R
 import org.sopt.teamdateroad.domain.model.Place
 import org.sopt.teamdateroad.domain.model.PlaceInfo
+import org.sopt.teamdateroad.presentation.type.EnrollType
 import org.sopt.teamdateroad.presentation.type.PlaceCardType
 import org.sopt.teamdateroad.presentation.ui.component.button.DateRoadTextButton
 import org.sopt.teamdateroad.presentation.ui.component.card.DateRoadPlaceCard
@@ -78,7 +79,10 @@ fun EnrollSecondScreen(
         Spacer(modifier = Modifier.height(11.dp))
         Text(
             modifier = Modifier.padding(horizontal = 16.dp),
-            text = stringResource(id = R.string.enroll_place_title),
+            text = when (enrollUiState.enrollType) {
+                EnrollType.COURSE -> stringResource(id = R.string.enroll_course_place_title)
+                EnrollType.TIMELINE -> stringResource(id = R.string.enroll_timeline_place_title)
+            },
             color = DateRoadTheme.colors.black,
             style = DateRoadTheme.typography.bodyBold17
         )

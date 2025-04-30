@@ -75,6 +75,7 @@ fun DateRoadPlaceCard(
                 Spacer(modifier = Modifier.width(10.dp))
 
                 DateRoadTextTag(
+                    modifier = Modifier.width(74.dp),
                     textContent = place.duration,
                     tagContentType = TagType.PLACE_CARD_TIME
                 )
@@ -130,7 +131,7 @@ fun DateRoadPlaceCardPreview() {
         DateRoadPlaceCard(
             placeCardType = PlaceCardType.COURSE_NORMAL,
             sequence = 0,
-            place = Place(title = "성수미술관 성수점성수미술관 성수점성수미술관 성수점성수미술관 성수점성수미술관 성수점", address = "서울 광진구 자양동 704-1", duration = "2.5시간")
+            place = Place(title = "성수미술관 성수점성수미술관 성수점성수미술관 성수점성수미술관 성수점성수미술관 성수점", address = "서울 광진구 자양동 704-1", duration = "4.0시간")
         )
         Spacer(modifier = Modifier.height(8.dp))
         DateRoadPlaceCard(

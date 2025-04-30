@@ -594,7 +594,7 @@ fun EnrollScreenPreview() {
                 loadState = LoadState.Success
             ),
             searchKeyword = "",
-            searchPlaceInfos = listOf<PlaceInfo>(),
+            searchPlaceInfos = emptyList(),
             onTopBarBackButtonClick = {},
             onTopBarLoadButtonClick = {},
             onEnrollButtonClick = {},
