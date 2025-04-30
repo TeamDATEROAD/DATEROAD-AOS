@@ -204,6 +204,7 @@ object ViewPath {
     const val MY_COURSE_READ = "내가 열람한 코스"
     const val COURSE_DETAIL = "코스 상세"
     const val LOOK = "코스 둘러보기"
+    const val TIMELINE_TO_ENROLL_COURSE = "일정을 데이트 코스로 등록"
     const val POINT_HISTORY = "포인트 내역"
 }
 

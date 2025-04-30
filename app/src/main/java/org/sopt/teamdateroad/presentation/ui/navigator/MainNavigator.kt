@@ -33,6 +33,7 @@ import org.sopt.teamdateroad.presentation.ui.signin.navigation.SignInRoute
 import org.sopt.teamdateroad.presentation.ui.signin.navigation.navigationSignIn
 import org.sopt.teamdateroad.presentation.ui.timeline.navigation.navigationTimeline
 import org.sopt.teamdateroad.presentation.ui.timelinedetail.navigation.navigateToTimelineDetail
+import org.sopt.teamdateroad.presentation.util.ViewPath
 
 class MainNavigator(
     val navHostController: NavHostController
@@ -76,6 +77,14 @@ class MainNavigator(
 
     fun navigateToEnroll(enrollType: EnrollType, viewPath: String, courseId: Int?) {
         navHostController.navigationEnroll(enrollType = enrollType, viewPath = viewPath, courseId = courseId)
+    }
+
+    fun navigateToTimeLineToEnrollCourse(courseId: Int) {
+        navHostController.navigationEnroll(
+            enrollType = EnrollType.COURSE,
+            viewPath = ViewPath.TIMELINE_TO_ENROLL_COURSE,
+            courseId = courseId
+        )
     }
 
     fun navigateToHome(navOptions: NavOptions? = null) {
