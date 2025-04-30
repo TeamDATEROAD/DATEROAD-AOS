@@ -172,7 +172,7 @@
     <!-- TopBarTitle -->
     <string name="top_bar_title_point_history">포인트 내역</string>
     <string name="top_bar_title_enroll_course">코스 등록하기</string>
-    <string name="top_bar_title_enroll_timeline">일정 등록하기</string>
+    <string name="top_bar_title_enroll_timeline">일정 계획하기</string>
     <string name="top_bar_title_my_course_read">내가 열람한 코스</string>
     <string name="top_bar_title_my_course_enroll">내가 등록한 코스</string>
     <string name="top_bar_title_look">코스 둘러보기</string>
@@ -206,6 +206,7 @@
     <!-- DateChipGroup -->
     <string name="date_chip_group_profile">나의 데이트 성향 (%1$d/%2$d)</string>
     <string name="date_chip_group_enroll_course">데이트코스와 어울리는 태그를 선택해 주세요 (%1$d/%2$d)</string>
+    <string name="date_chip_group_enroll_timeline">예정된 데이트와 어울리는 태그를 선택해 주세요 (%1$d/%2$d)</string>
 
     <!-- Course Detail -->
     <string name="course_detail_duration">%1$.1f 시간</string>
@@ -246,7 +247,8 @@
     <string name="enroll_city_placeholder">데이트 지역을 선택해 주세요 (필수)</string>
     <string name="enroll_place_insert_bar_enter_place_placeholder">장소명을 입력해주세요</string>
     <string name="enroll_place_insert_bar_select_course_time_placeholder">소요 시간</string>
-    <string name="enroll_place_title">어떤 코스로 이동하셨나요?</string>
+    <string name="enroll_course_place_title">어떤 코스로 이동하셨나요?</string>
+    <string name="enroll_timeline_place_title">어떤 코스를 계획하셨나요?</string>
     <string name="enroll_place_description">장소와 소요시간을 입력하여 코스를 추가해 주세요</string>
     <string name="enroll_place_guide">최소 2개의 장소를 추가해 주세요</string>
     <string name="enroll_description_title">코스에 대한 설명을 적어 주세요</string>

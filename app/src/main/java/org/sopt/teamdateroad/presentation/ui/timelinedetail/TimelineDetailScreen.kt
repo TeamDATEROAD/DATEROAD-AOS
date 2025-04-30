@@ -314,18 +314,18 @@ fun TimelineDetailScreen(
                         .align(Alignment.BottomCenter)
                         .padding(vertical = 16.dp, horizontal = 70.dp)
                         .background(DateRoadTheme.colors.purple600, CircleShape)
-                        .noRippleClickable(onClick = TODO("일정 등록 화면으로 이동"))
+//                        .noRippleClickable(onClick = TODO("일정 등록 화면으로 이동"))
                 ) {
                     Box(
                         modifier = Modifier
-                            .padding(vertical = 14.dp)
+                            .padding(14.dp)
                             .clip(CircleShape)
                     ) {
                         Text(
                             text = stringResource(id = R.string.timeline_detail_point),
                             style = DateRoadTheme.typography.bodyBold15,
                             color = DateRoadTheme.colors.white,
-                            textAlign = TextAlign.Center,
+                            textAlign = TextAlign.Center
                         )
                     }
                 }
