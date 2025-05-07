@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
@@ -20,7 +21,8 @@ fun DateRoadTag(
         modifier = modifier
             .clip(RoundedCornerShape(tagType.roundedCornerShape.dp))
             .background(color = tagType.backgroundColor)
-            .padding(horizontal = tagType.paddingHorizontal.dp, vertical = tagType.paddingVertical.dp)
+            .padding(horizontal = tagType.paddingHorizontal.dp, vertical = tagType.paddingVertical.dp),
+        contentAlignment = Alignment.Center
     ) {
         content()
     }

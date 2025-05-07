@@ -2,10 +2,7 @@ package org.sopt.teamdateroad.presentation.ui.component.button
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -41,7 +38,7 @@ fun DateRoadKakaoLoginButton(
         onClick = onClick
     ) {
         Box(
-          modifier.fillMaxWidth()
+            modifier.fillMaxWidth()
         ) {
             Image(
                 painter = painterResource(id = R.drawable.ic_kakao_logo),
