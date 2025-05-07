@@ -1,6 +1,7 @@
 package org.sopt.teamdateroad.presentation.ui.component.button
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -39,16 +40,16 @@ fun DateRoadKakaoLoginButton(
         paddingHorizontal = 14.dp,
         onClick = onClick
     ) {
-        Row(
-            verticalAlignment = Alignment.CenterVertically
+        Box(
+          modifier.fillMaxWidth()
         ) {
             Image(
                 painter = painterResource(id = R.drawable.ic_kakao_logo),
                 contentDescription = null,
                 modifier = Modifier
                     .clip(CircleShape)
+                    .align(Alignment.CenterStart)
             )
-            Spacer(modifier = Modifier.size(5.dp))
             Text(
                 text = stringResource(id = R.string.kakao_login),
                 fontSize = 15.sp,
@@ -57,7 +58,7 @@ fun DateRoadKakaoLoginButton(
                 color = contentColor,
                 textAlign = TextAlign.Center,
                 modifier = Modifier
-                    .align(Alignment.CenterVertically)
+                    .align(Alignment.Center)
                     .fillMaxWidth()
             )
         }
