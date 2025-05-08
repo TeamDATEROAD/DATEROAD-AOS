@@ -163,8 +163,7 @@ fun TimelineScreen(
                         timeline = date,
                         timelineType = timelineType,
                         onClick = { navigateToTimelineDetail(timelineType, date.timelineId) },
-                        modifier = Modifier
-                            .padding(end = paddingEnd)
+                        paddingEnd = paddingEnd
                     )
                 }
 
