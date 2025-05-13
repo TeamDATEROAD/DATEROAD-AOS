@@ -1,5 +1,6 @@
 package org.sopt.teamdateroad.presentation.ui.coursedetail
 
+import android.app.Activity
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Spacer
@@ -80,6 +81,7 @@ fun CourseDetailRoute(
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     val lifecycleOwner = LocalLifecycleOwner.current
     val context = LocalContext.current
+    val activity = context as? Activity
     val adRequest = remember { AdRequest.Builder().build() }
 
     LaunchedEffect(viewModel.sideEffect, lifecycleOwner) {
@@ -95,7 +97,11 @@ fun CourseDetailRoute(
                             adRequest,
                             object : RewardedAdLoadCallback() {
                                 override fun onAdLoaded(ad: RewardedAd) {
-                                    viewModel.postAdsPoint()
+                                    activity?.let {
+                                        ad.show(it) { rewardItem ->
+                                            viewModel.postAdsPoint()
+                                        }
+                                    }
                                 }
 
                                 override fun onAdFailedToLoad(error: LoadAdError) {

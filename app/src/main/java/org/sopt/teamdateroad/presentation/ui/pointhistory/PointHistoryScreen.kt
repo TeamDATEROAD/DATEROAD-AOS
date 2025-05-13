@@ -1,5 +1,6 @@
 package org.sopt.teamdateroad.presentation.ui.pointhistory
 
+import android.app.Activity
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -71,6 +72,7 @@ fun PointHistoryRoute(
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     val lifecycleOwner = LocalLifecycleOwner.current
     val context = LocalContext.current
+    val activity = context as? Activity
     val adRequest = remember { AdRequest.Builder().build() }
 
     LaunchedEffect(Unit) {
@@ -97,7 +99,11 @@ fun PointHistoryRoute(
                             adRequest,
                             object : RewardedAdLoadCallback() {
                                 override fun onAdLoaded(ad: RewardedAd) {
-                                    viewModel.postAdsPoint()
+                                    activity?.let {
+                                        ad.show(it) { rewardItem ->
+                                            viewModel.postAdsPoint()
+                                        }
+                                    }
                                 }
 
                                 override fun onAdFailedToLoad(error: LoadAdError) {
