@@ -55,7 +55,7 @@ jobs:
           KAKAO_REST_API_KEY: ${{ secrets.KAKAO_REST_API_KEY }}
           AMPLITUDE_API_KEY: ${{ secrets.AMPLITUDE_API_KEY }}
           GOOGLE_ADS_API_ID: ${{ secrets.GOOGLE_ADS_API_ID }}
-          GOOGLE_ADS_API_ID_MANIFEST: ${{ secrets.GOOGLE_ADS_API_ID }}
+          GOOGLE_ADS_API_ID_MANIFEST: ${{ secrets.GOOGLE_ADS_API_ID_MANIFEST }}
         run: |
           echo "dev.base.url=\"$BASE_URL\"" >> local.properties
           echo "kakao.base.url=\"$KAKAO_BASE_URL\"" >> local.properties

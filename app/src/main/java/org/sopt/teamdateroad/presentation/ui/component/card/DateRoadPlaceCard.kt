@@ -37,7 +37,7 @@ fun DateRoadPlaceCard(
     place: Place,
     onIconClick: (() -> Unit)? = null
 ) {
-    val paddingValues = Modifier.padding(start = placeCardType.startPadding, end = 17.dp)
+    val paddingValues = Modifier.padding(start = placeCardType.startPadding, end = 13.dp)
 
     Row(
         modifier = modifier
@@ -75,7 +75,7 @@ fun DateRoadPlaceCard(
                 Spacer(modifier = Modifier.width(10.dp))
 
                 DateRoadTextTag(
-                    modifier = Modifier.width(74.dp),
+                    modifier = Modifier.width(61.dp),
                     textContent = place.duration,
                     tagContentType = TagType.PLACE_CARD_TIME
                 )

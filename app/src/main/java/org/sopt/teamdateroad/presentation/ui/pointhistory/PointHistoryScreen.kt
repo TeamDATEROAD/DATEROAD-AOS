@@ -1,21 +1,30 @@
 package org.sopt.teamdateroad.presentation.ui.pointhistory
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -40,7 +49,6 @@ import org.sopt.teamdateroad.presentation.ui.component.dialog.DateRoadOneButtonD
 import org.sopt.teamdateroad.presentation.ui.component.tabbar.DateRoadTabBar
 import org.sopt.teamdateroad.presentation.ui.component.tabbar.DateRoadTabTitle
 import org.sopt.teamdateroad.presentation.ui.component.topbar.DateRoadBasicTopBar
-import org.sopt.teamdateroad.presentation.ui.component.view.DateRoadEmptyView
 import org.sopt.teamdateroad.presentation.ui.component.view.DateRoadErrorView
 import org.sopt.teamdateroad.presentation.ui.component.view.DateRoadIdleView
 import org.sopt.teamdateroad.presentation.ui.component.view.DateRoadLoadingView
@@ -204,12 +212,35 @@ fun PointHistoryScreen(
             PointHistoryTabType.USED_HISTORY -> pointHistoryUiState.pointHistory.used
         }
         if (pointHistory.isEmpty()) {
-            DateRoadEmptyView(
-                emptyViewType = when (pointHistoryUiState.pointHistoryTabType) {
-                    PointHistoryTabType.USED_HISTORY -> EmptyViewType.POINT_HISTORY_USED_HISTORY
-                    PointHistoryTabType.GAINED_HISTORY -> EmptyViewType.POINT_HISTORY_GAINED_HISTORY
-                }
-            )
+            val emptyViewType = when (pointHistoryUiState.pointHistoryTabType) {
+                PointHistoryTabType.USED_HISTORY -> EmptyViewType.POINT_HISTORY_USED_HISTORY
+                PointHistoryTabType.GAINED_HISTORY -> EmptyViewType.POINT_HISTORY_GAINED_HISTORY
+            }
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center,
+                modifier = Modifier.fillMaxSize()
+            ) {
+                Image(
+                    modifier = Modifier
+                        .wrapContentHeight()
+                        .fillMaxWidth(),
+                    painter = painterResource(id = emptyViewType.imageRes),
+                    contentDescription = null,
+                    contentScale = ContentScale.FillWidth
+                )
+                Spacer(modifier = Modifier.height(57.dp))
+                Text(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 20.dp),
+                    text = stringResource(id = emptyViewType.titleRes),
+                    color = DateRoadTheme.colors.gray300,
+                    style = DateRoadTheme.typography.titleBold18,
+                    textAlign = TextAlign.Center
+                )
+                Spacer(modifier = Modifier.height(20.dp))
+            }
         } else {
             LazyColumn {
                 items(pointHistory.size) { index ->
