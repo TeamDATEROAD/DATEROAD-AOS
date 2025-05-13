@@ -3,6 +3,7 @@ package org.sopt.teamdateroad.presentation.ui.mycourse
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -116,27 +117,32 @@ fun MyCourseScreen(
             backGroundColor = DateRoadTheme.colors.white,
             onLeftIconClick = onIconClick
         )
-        LazyColumn {
-            if (myCourseUiState.courses.isEmpty()) {
-                item {
-                    DateRoadEmptyView(
-                        emptyViewType = when (myCourseUiState.myCourseType) {
-                            MyCourseType.ENROLL -> EmptyViewType.MY_COURSE_ENROLL
-                            MyCourseType.READ -> EmptyViewType.MY_COURSE_READ
+        if (myCourseUiState.courses.isEmpty()) {
+            Column(
+                modifier = Modifier.fillMaxSize()
+            ) {
+                Spacer(modifier = Modifier.weight(60f))
+                DateRoadEmptyView(
+                    emptyViewType = when (myCourseUiState.myCourseType) {
+                        MyCourseType.ENROLL -> EmptyViewType.MY_COURSE_ENROLL
+                        MyCourseType.READ -> EmptyViewType.MY_COURSE_READ
+                    }
+                )
+                Spacer(modifier = Modifier.weight(165f))
+            }
+        } else {
+            LazyColumn {
+                items(myCourseUiState.courses) { course ->
+                    DateRoadCourseCard(
+                        course = course,
+                        onClick = {
+                            when (myCourseUiState.myCourseType) {
+                                MyCourseType.ENROLL -> navigateToCourseDetail(course.courseId)
+                                MyCourseType.READ -> navigateToEnroll(course.courseId)
+                            }
                         }
                     )
                 }
-            }
-            items(myCourseUiState.courses) { course ->
-                DateRoadCourseCard(
-                    course = course,
-                    onClick = {
-                        when (myCourseUiState.myCourseType) {
-                            MyCourseType.ENROLL -> navigateToCourseDetail(course.courseId)
-                            MyCourseType.READ -> navigateToEnroll(course.courseId)
-                        }
-                    }
-                )
             }
         }
     }
@@ -150,7 +156,7 @@ fun MyCourseScreenPreview() {
             padding = PaddingValues(0.dp),
             myCourseUiState = MyCourseContract.MyCourseUiState(
                 loadState = LoadState.Success,
-                myCourseType = MyCourseType.READ,
+                myCourseType = MyCourseType.ENROLL,
                 courses = listOf(
                     Course(
                         courseId = 1,

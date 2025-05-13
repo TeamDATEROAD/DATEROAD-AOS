@@ -44,6 +44,7 @@ import org.sopt.teamdateroad.presentation.type.EnrollType
 import org.sopt.teamdateroad.presentation.type.MyCourseType
 import org.sopt.teamdateroad.presentation.type.OneButtonDialogType
 import org.sopt.teamdateroad.presentation.type.OneButtonDialogWithDescriptionType
+import org.sopt.teamdateroad.presentation.ui.component.bottomsheet.DateRoadDatePickerBottomSheet
 import org.sopt.teamdateroad.presentation.ui.component.bottomsheet.DateRoadPickerBottomSheet
 import org.sopt.teamdateroad.presentation.ui.component.bottomsheet.DateRoadRegionBottomSheet
 import org.sopt.teamdateroad.presentation.ui.component.button.DateRoadBasicButton
@@ -56,7 +57,6 @@ import org.sopt.teamdateroad.presentation.ui.component.view.DateRoadErrorView
 import org.sopt.teamdateroad.presentation.ui.component.view.DateRoadLoadingView
 import org.sopt.teamdateroad.presentation.ui.enroll.component.EnrollPhotos
 import org.sopt.teamdateroad.presentation.util.DatePicker
-import org.sopt.teamdateroad.presentation.util.DatePicker.SEPARATOR
 import org.sopt.teamdateroad.presentation.util.EnrollAmplitude.CLICK_BRING_COURSE
 import org.sopt.teamdateroad.presentation.util.EnrollAmplitude.CLICK_COURSE1_BACK
 import org.sopt.teamdateroad.presentation.util.EnrollAmplitude.CLICK_COURSE2_BACK
@@ -501,17 +501,12 @@ fun EnrollScreen(
         Spacer(modifier = Modifier.height(16.dp))
     }
 
-    DateRoadPickerBottomSheet(
+    DateRoadDatePickerBottomSheet(
         isBottomSheetOpen = enrollUiState.isDatePickerBottomSheetOpen,
         isButtonEnabled = true,
         buttonText = stringResource(id = R.string.apply),
-        onButtonClick = {
-            onDatePickerBottomSheetButtonClick(
-                enrollUiState.datePickers.joinToString(separator = SEPARATOR) { it.pickerState.selectedItem.padStart(2, '0') }
-            )
-        },
-        onDismissRequest = onDatePickerBottomSheetDismissRequest,
-        pickers = enrollUiState.datePickers
+        onDatePickerBottomSheetButtonClick = onDatePickerBottomSheetButtonClick,
+        onDismissRequest = onDatePickerBottomSheetDismissRequest
     )
 
     DateRoadPickerBottomSheet(
@@ -594,7 +589,7 @@ fun EnrollScreenPreview() {
                 loadState = LoadState.Success
             ),
             searchKeyword = "",
-            searchPlaceInfos = listOf<PlaceInfo>(),
+            searchPlaceInfos = emptyList(),
             onTopBarBackButtonClick = {},
             onTopBarLoadButtonClick = {},
             onEnrollButtonClick = {},

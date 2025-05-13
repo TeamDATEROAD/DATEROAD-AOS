@@ -71,6 +71,7 @@ import org.sopt.teamdateroad.ui.theme.DateRoadTheme
 @Composable
 fun TimelineDetailRoute(
     popBackStack: () -> Unit,
+    navigateToEnrollCourse: (Int) -> Unit,
     timelineId: Int,
     timelineType: TimelineType,
     previousView: String
@@ -114,6 +115,7 @@ fun TimelineDetailRoute(
                 timelineType = timelineType,
                 onTopBarItemClick = popBackStack,
                 onButtonClick = { viewModel.setEvent(TimelineDetailContract.TimelineDetailEvent.SetShowDeleteBottomSheet(true)) },
+                onEnrollCourseButtonClick = navigateToEnrollCourse,
                 showKakaoClicked = {
                     viewModel.setEvent(TimelineDetailContract.TimelineDetailEvent.SetShowKakaoDialog(true))
                     AmplitudeUtils.trackEventWithProperties(
@@ -149,6 +151,7 @@ fun TimelineDetailScreen(
     timelineType: TimelineType,
     onTopBarItemClick: () -> Unit = {},
     onButtonClick: () -> Unit = {},
+    onEnrollCourseButtonClick: (Int) -> Unit = {},
     showKakaoClicked: () -> Unit = {},
     setShowKakaoDialog: (Boolean) -> Unit,
     setShowDeleteBottomSheet: (Boolean) -> Unit,
@@ -308,6 +311,27 @@ fun TimelineDetailScreen(
                         )
                     }
                 }
+            } else {
+                Column(
+                    modifier = Modifier
+                        .align(Alignment.BottomCenter)
+                        .padding(vertical = 16.dp, horizontal = 70.dp)
+                        .background(DateRoadTheme.colors.purple600, CircleShape)
+                        .noRippleClickable(onClick = { onEnrollCourseButtonClick(uiState.timelineDetail.timelineId) })
+                ) {
+                    Box(
+                        modifier = Modifier
+                            .padding(horizontal = 24.dp, vertical = 16.dp)
+                            .clip(CircleShape)
+                    ) {
+                        Text(
+                            text = stringResource(id = R.string.timeline_detail_point),
+                            style = DateRoadTheme.typography.bodyBold15,
+                            color = DateRoadTheme.colors.white,
+                            textAlign = TextAlign.Center
+                        )
+                    }
+                }
             }
         }
     }
@@ -377,7 +401,7 @@ fun TimelineDetailScreenPreview() {
                 loadState = LoadState.Success,
                 timelineDetail = TimelineDetail(
                     date = "2024-08-17",
-                    dDay = "D-3",
+                    dDay = "",
                     title = "Seoul City Tour",
                     city = "Seoul",
                     startAt = "10:00 AM",

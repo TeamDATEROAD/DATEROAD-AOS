@@ -19,6 +19,7 @@ import org.sopt.teamdateroad.domain.type.SeoulAreaType
 import org.sopt.teamdateroad.presentation.type.DateChipGroupType
 import org.sopt.teamdateroad.presentation.type.DateTagType
 import org.sopt.teamdateroad.presentation.type.DateTagType.Companion.getDateTagTypeByName
+import org.sopt.teamdateroad.presentation.type.EnrollType
 import org.sopt.teamdateroad.presentation.ui.component.chipgroup.DateRoadDateChipGroup
 import org.sopt.teamdateroad.presentation.ui.component.textfield.DateRoadBasicTextField
 import org.sopt.teamdateroad.presentation.util.view.LoadState
@@ -67,7 +68,10 @@ fun EnrollFirstScreen(
         )
         Spacer(modifier = Modifier.height(20.dp))
         DateRoadDateChipGroup(
-            dateChipGroupType = DateChipGroupType.ENROLL,
+            dateChipGroupType = when (enrollUiState.enrollType) {
+                EnrollType.COURSE -> DateChipGroupType.ENROLL
+                EnrollType.TIMELINE -> DateChipGroupType.TIMELINE
+            },
             selectedDateTags = enrollUiState.enroll.tags.mapNotNull { tag -> tag.getDateTagTypeByName() },
             onSelectedDateTagsChanged = onDateChipClicked
         )

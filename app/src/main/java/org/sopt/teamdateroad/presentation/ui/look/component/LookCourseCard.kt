@@ -50,6 +50,7 @@ fun LookCourseCard(
             .fillMaxWidth()
             .noRippleClickable(onClick = { onClick(course.courseId) })
     ) {
+        Spacer(modifier = Modifier.height(10.dp))
         Box {
             AsyncImage(
                 model = ImageRequest.Builder(context = context)

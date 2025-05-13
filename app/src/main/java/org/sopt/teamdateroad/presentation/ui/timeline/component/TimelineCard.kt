@@ -28,6 +28,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import org.sopt.teamdateroad.R
 import org.sopt.teamdateroad.domain.model.Timeline
@@ -42,15 +43,16 @@ import org.sopt.teamdateroad.ui.theme.defaultDateRoadColors
 
 @Composable
 fun TimelineCard(
-    modifier: Modifier,
     timeline: Timeline,
     timelineType: TimelineType,
-    onClick: (Int) -> Unit = {}
+    onClick: (Int) -> Unit = {},
+    paddingEnd: Dp = 0.dp
 ) {
     Box(
-        modifier = modifier
-            .clip(RoundedCornerShape(24.dp))
+        modifier = Modifier
             .aspectRatio(291 / 406f)
+            .padding(end = paddingEnd)
+            .clip(RoundedCornerShape(24.dp))
             .background(timelineType.backgroundColor)
             .noRippleClickable(onClick = { onClick(timeline.timelineId) })
     ) {
@@ -58,8 +60,7 @@ fun TimelineCard(
             painter = painterResource(id = R.drawable.bg_timeline_card),
             contentDescription = null,
             tint = timelineType.lineColor,
-            modifier = Modifier
-                .fillMaxSize()
+            modifier = Modifier.fillMaxSize()
         )
         Column(
             modifier = Modifier
@@ -170,7 +171,7 @@ fun TimelineCard(
                 modifier = Modifier
                     .weight(1f)
                     .fillMaxWidth()
-                    .padding(horizontal = 20.dp, vertical = 25.dp)
+                    .padding(horizontal = 20.dp, vertical = 24.dp)
             ) {
                 Text(
                     text = timeline.city,
@@ -185,8 +186,7 @@ fun TimelineCard(
                     color = DateRoadTheme.colors.black,
                     maxLines = 2,
                     overflow = TextOverflow.Ellipsis,
-                    modifier = Modifier
-                        .fillMaxWidth()
+                    modifier = Modifier.fillMaxWidth()
                 )
             }
         }
@@ -198,12 +198,11 @@ fun TimelineCard(
 fun TimelineCardPreview() {
     Column {
         TimelineCard(
-            modifier = Modifier,
             timelineType = TimelineType.PURPLE,
             timeline = Timeline(
                 timelineId = 0,
                 dDay = "3",
-                title = "성수동 당일치기 데이트\n가볼까요?",
+                title = "성수동 당일치기 데이트 가볼까요?",
                 date = "JUNE.23",
                 city = "건대/성수/왕십리",
                 tags = listOf(DateTagType.SHOPPING, DateTagType.DRIVE, DateTagType.EXHIBITION_POPUP)

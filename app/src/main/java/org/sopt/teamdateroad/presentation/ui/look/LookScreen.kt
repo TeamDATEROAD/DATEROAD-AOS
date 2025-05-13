@@ -215,13 +215,16 @@ fun LookScreen(
                 )
             }
         }
-        Spacer(modifier = Modifier.height(20.dp))
+        Spacer(modifier = Modifier.height(10.dp))
         if (lookUiState.courses.isEmpty()) {
             Box(
                 modifier = Modifier
-                    .fillMaxSize()
+                    .fillMaxSize(),
+                contentAlignment = Alignment.TopCenter
             ) {
-                DateRoadEmptyView(emptyViewType = EmptyViewType.LOOK)
+                DateRoadEmptyView(
+                    emptyViewType = EmptyViewType.LOOK
+                )
             }
         }
         LazyVerticalGrid(

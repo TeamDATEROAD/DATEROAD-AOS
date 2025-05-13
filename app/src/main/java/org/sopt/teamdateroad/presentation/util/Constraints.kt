@@ -18,7 +18,7 @@ object CourseDetailAmplitude {
 object DatePicker {
     const val DATE_PATTERN = "yyyy.MM.dd"
     const val YEAR_START = 2000
-    const val YEAR_END = 2026
+    const val YEAR_END = 2050
     const val YEAR_START_INDEX = 25
     const val MONTH_START = 1
     const val MONTH_END = 12
@@ -153,7 +153,7 @@ object SignIn {
 }
 
 object Time {
-    const val TIME = " 시간"
+    const val TIME = "시간"
 }
 
 object TimelineAmplitude {
@@ -204,6 +204,7 @@ object ViewPath {
     const val MY_COURSE_READ = "내가 열람한 코스"
     const val COURSE_DETAIL = "코스 상세"
     const val LOOK = "코스 둘러보기"
+    const val TIMELINE_TO_ENROLL_COURSE = "일정을 데이트 코스로 등록"
     const val POINT_HISTORY = "포인트 내역"
 }
 

@@ -19,5 +19,10 @@ enum class DateChipGroupType(
         titleRes = R.string.date_chip_group_enroll_course,
         titleTextStyle = defaultDateRoadTypography.bodySemi15,
         maxSize = 3
+    ),
+    TIMELINE(
+        titleRes = R.string.date_chip_group_enroll_timeline,
+        titleTextStyle = defaultDateRoadTypography.bodySemi15,
+        maxSize = 3
     )
 }

@@ -104,7 +104,7 @@ enum class TagType(
     PLACE_CARD_TIME(
         backgroundColor = defaultDateRoadColors.gray200,
         contentColor = defaultDateRoadColors.black,
-        paddingHorizontal = 14,
+        paddingHorizontal = 0,
         paddingVertical = 5,
         textStyle = defaultDateRoadTypography.bodyMed13,
         roundedCornerShape = 10
