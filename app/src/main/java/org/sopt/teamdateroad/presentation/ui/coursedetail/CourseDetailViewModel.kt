@@ -130,11 +130,11 @@ class CourseDetailViewModel @Inject constructor(
         }
     }
 
-    fun postAdsPoint() {
+    fun postAdsPoint(courseId: Int) {
         setState { copy(loadState = LoadState.Loading) }
         viewModelScope.launch {
             postAdsPointUseCase().onSuccess {
-                setState { copy(loadState = LoadState.Success) }
+                fetchCourseDetail(courseId)
             }.onFailure {
                 setState { copy(loadState = LoadState.Loading) }
             }

@@ -99,7 +99,7 @@ fun CourseDetailRoute(
                                 override fun onAdLoaded(ad: RewardedAd) {
                                     activity?.let {
                                         ad.show(it) { rewardItem ->
-                                            viewModel.postAdsPoint()
+                                            viewModel.postAdsPoint(courseId)
                                         }
                                     }
                                 }
